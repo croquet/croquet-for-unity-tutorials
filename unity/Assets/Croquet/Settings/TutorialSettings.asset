@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540c7dca5fc144cc69ed4119e2a7d831, type: 3}
   m_Name: TutorialSettings
   m_EditorClassIdentifier: 
-  apiKey: 
+  apiKey: yomomma
   appPrefix: io.croquet.worldcore
   preferredPort: 5555

@@ -29,7 +29,7 @@ Navigate and install the tutorial dependencies
 
 ```npm i```
 
-Note that this repository's large size is predominantly due to our including specific versions of NodeJS for MacOS and Windows.  On Windows we have to use NodeJS to run the JavaScript side of a C4U session, since Unity on Windows is currently unable to use the WebView mechanism that Croquet prefers.  On MacOS we use the WebView by default, but if a project has the necessary entry point for NodeJS execution (as the tutorials all do), NodeJS can be used on Mac as well.
+Note: that this repository's large size is predominantly due to our including specific versions of NodeJS for MacOS and Windows.  On Windows we have to use NodeJS to run the JavaScript side of a C4U session, since Unity on Windows is currently unable to use the WebView mechanism that Croquet prefers.  On MacOS we use the WebView by default, but if a project has the necessary entry point for NodeJS execution (as the tutorials all do), NodeJS can be used on Mac as well.
 
 ## Load the Unity Project
 
@@ -41,7 +41,7 @@ If, during this first loading, Unity complains that there appear to be script er
 
 In the Project Navigator (typically at bottom left), go to `Assets/Croquet/Settings` and click `TutorialSettings.asset`.  The main field that you need to set up is the `Api Key`.
 
-The Api Key is a token of around 40 characters that you can create for yourself at `https://croquet.io/keys`.  It provides access to the Croquet infrastructure.
+The Api Key is a token of around 40 characters that you can create for yourself at https://croquet.io/keys.  It provides access to the Croquet infrastructure.
 
 The App Prefix is the way of identifying with your organization the Croquet apps that you develop and run.  The combination of this prefix and the App Name provided on the Croquet Bridge component in each scene is a full App Id - for example, `io.croquet.worldcore.tutorial1`.  For running the tutorials it is fine to leave this prefix as is, but when you develop your own apps you must change the prefix so that the App Id is a globally unique identifier.  The Id must follow the Android reverse domain naming convention - i.e., each dot-separated segment must start with a letter, and only letters, digits, and underscores are allowed.
 
