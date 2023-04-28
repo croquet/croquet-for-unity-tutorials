@@ -11,13 +11,15 @@
 /[Mm]emoryCaptures/
 
 # Ignore Package Contents
-/Assets/Packages/
+/[Aa]ssets/[Pp]ackages/
+/[Aa]ssets/[Pp]ackages.meta
 
 # This captures user-specific settings like views
 /[Uu]serSettings/
 
 # Streaming Assets Build info
-/Assets/StreamingAssets/build_info*
+/[Aa]ssets/[Ss]treaming[Aa]ssets/build_info*
+/[Aa]ssets/[Ss]treaming[Aa]ssets.meta
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
