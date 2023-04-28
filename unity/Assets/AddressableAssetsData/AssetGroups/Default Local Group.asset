@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 3ffac8b43b7044398bfa119d7aecca3a
+  m_SerializeEntries:
+  - m_GUID: 31c3559c35e8943c29fcfec3f18d81a0
+    m_Address: yellowBox
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial6
+  - m_GUID: 07eaefeb2a3c643a0b93034aa9f6176d
+    m_Address: magentaBox
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial8
+    - tutorial6
+    - tutorial7
+    - tutorial9
+  - m_GUID: 2cf569cbd24764b23bab2be8a63b1dab
+    m_Address: groundPlane
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial8
+    - tutorial6
+    - tutorial7
+    - tutorial9
+  - m_GUID: 62b4a85a6d63d4084afb2386335ed9ad
+    m_Address: cyanBox
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial6
+    - tutorial7
+    - tutorial8
+    - tutorial9
+  - m_GUID: acdf37bccedd44df983112bad44b8d2e
+    m_Address: tallBox
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial9
+    - tutorial8
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1398c81f484a44649a064676c86f132e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c492b9e5938c8424dbdf319a61ff3428, type: 2}
+    - {fileID: 11400000, guid: 104db7e1c40c6498cad0de1e849be6f2, type: 2}

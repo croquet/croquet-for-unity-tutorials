@@ -1,0 +1,11 @@
+{
+  "name": "@croquet/worldcore-tutorial9",
+  "version": "1.4.0",
+  "description": "Worldcore Tutorial9",
+  "private": true,
+  "scripts": {
+    "build-dev": "webpack --config ../webpack.config.js --watch --mode development --env appName=tutorial9"
+  },
+  "author": "Croquet Corporation",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "croquet-for-unity-experiments",
+  "description": "project-global dependencies",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "eslint-plugin-import": "^2.22.1",
+    "eslint": "^7.23.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-import-resolver-parcel": "^1.10.6"
+  }
+}
