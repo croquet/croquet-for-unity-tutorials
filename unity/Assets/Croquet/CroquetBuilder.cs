@@ -104,7 +104,7 @@ public class CroquetBuilder
         string croquetRoot = Path.GetFullPath(Path.Combine(Application.streamingAssetsPath, $"../../../croquet/"));
         string builderPath = Path.Combine(croquetRoot, builderPathOffset);
     
-        string nodeEngine;
+        string nodeExecPath;
         string executable;
         string arguments = "";
         string target = "";
@@ -112,12 +112,12 @@ public class CroquetBuilder
         switch (Application.platform)
         {
             case RuntimePlatform.OSXEditor:
-                nodeEngine = "node";
+                nodeExecPath = "/usr/local/bin/node";
                 executable = Path.Combine(builderPath, "runwebpack.sh");
                 target = details.useNodeJS ? "node" : "web";
                 break;
             case RuntimePlatform.WindowsEditor:
-                nodeEngine = "node.exe";
+                nodeExecPath = Path.Combine(Application.streamingAssetsPath, "..", "Croquet", "NodeJS", "node.exe");
                 executable = "powershell.exe";
                 target = "node"; // actually not used
                 arguments = $"-NoProfile -file \"runwebpack.ps1\" ";
@@ -125,8 +125,6 @@ public class CroquetBuilder
             default:
                 throw new PlatformNotSupportedException("Don't know how to support automatic builds on this platform");
         }
-
-        string nodeExecPath = Path.Combine(Application.streamingAssetsPath, "..", "Croquet", "NodeJS", nodeEngine);
 
         // arguments to the runwebpack script, however it is invoked:
         // 1. full path to the platform-relevant node engine

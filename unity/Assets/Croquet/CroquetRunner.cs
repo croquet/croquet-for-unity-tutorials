@@ -76,7 +76,7 @@ public class CroquetRunner : MonoBehaviour
             // $$$ hack until we move old apps over to new build setup
             string nodeEntry = appSourcePath.Contains("tutorial") ? "node-main.js" : "node-starter.js";
             
-            croquetProcess.StartInfo.FileName = Path.Combine(nodeExecPath, nodeExecName);
+            croquetProcess.StartInfo.FileName = Path.Combine(nodeExecPath, nodeExecName); // on Mac, nodeExecName begins with / so will prevail
             croquetProcess.StartInfo.Arguments = $"{nodeEntry} {port}";
 
             croquetProcess.OutputDataReceived += OutputHandler;
@@ -200,7 +200,7 @@ public class CroquetRunner : MonoBehaviour
                 {
                     case RuntimePlatform.OSXEditor:
                     case RuntimePlatform.OSXPlayer:
-                        nodeExecName = "node";
+                        nodeExecName = "/usr/local/bin/node";
                         break;
                     case RuntimePlatform.WindowsEditor:
                     case RuntimePlatform.WindowsPlayer:
