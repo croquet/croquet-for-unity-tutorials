@@ -15,19 +15,29 @@ To install the repository and prepare for building the tutorials, carry out the 
 
 Clone the Repo
 
-```git clone https://github.com/croquet/croquet-for-unity-tutorials.git```
+```
+git clone https://github.com/croquet/croquet-for-unity-tutorials.git
+```
 
 Navigate and install the project dependencies
 
-```cd croquet-for-unity-tutorials```
+```
+cd croquet-for-unity-tutorials
+```
 
-```npm i```
+```
+npm i
+```
 
 Navigate and install the tutorial dependencies
 
-```cd croquet/tutorials```
+```
+cd croquet/tutorials
+```
 
-```npm i```
+```
+npm i
+```
 
 
 
@@ -47,11 +57,11 @@ The Api Key is a token of around 40 characters that you can create for yourself 
 
 The App Prefix is the way of identifying with your organization the Croquet apps that you develop and run.  The combination of this prefix and the App Name provided on the Croquet Bridge component in each scene is a full App ID - for example, `io.croquet.worldcore.tutorial1`.  For running the tutorials it is fine to leave this prefix as is, but when you develop your own apps you must change the prefix so that the App ID is a globally unique identifier.  The ID must follow the Android reverse domain naming convention - i.e., each dot-separated segment must start with a letter, and only letters, digits, and underscores are allowed.
 
-For Macs: Find your **Path to Node Executable**, which can be found by running
+For Macs: Find the Path to your Node Executable, which can be found by running
 ```
 which node
 ```
-On the Settings Asset, fill in the **Path to Node Executable** field with the path.
+On the Settings Asset, fill in the **Path to Node** field with the path.
 
 
 ## Run the Tutorials
