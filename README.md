@@ -33,7 +33,7 @@ Note: that this repository's large size is predominantly due to our including sp
 
 ## Load the Unity Project
 
-In the `Unity Hub` app, select `Open => Add project from disk`, then navigate to the `croquet-for-unity-tutorials/unity` folder and hit `Add Project`.  Make sure that it is opened with _exactly_ editor version 2021.3.19f1 (otherwise there's a serious chance of Unity getting confused, either immediately or at some later point).
+In the `Unity Hub` app, select `Open => Add project from disk`, then navigate to the `croquet-for-unity-tutorials/unity` folder and hit `Add Project`.  Make sure that it is opened with _exactly_ editor `version 2021.3.19f1` (otherwise there's a serious chance of Unity getting confused, either immediately or at some later point).
 
 If, during this first loading, Unity complains that there appear to be script errors, it's fine to hit `Ignore` and continue.
 
