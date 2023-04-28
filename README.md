@@ -44,8 +44,9 @@ npm i
 Note: that this repository's large size is predominantly due to our including specific versions of NodeJS for MacOS and Windows.  On Windows we have to use NodeJS to run the JavaScript side of a C4U session, since Unity on Windows is currently unable to use the WebView mechanism that Croquet prefers.  On MacOS we use the WebView by default, but if a project has the necessary entry point for NodeJS execution (as the tutorials all do), NodeJS can be used on Mac as well.
 
 ## Load the Unity Project
+Using _exactly_ Unity Editor Version `2021.3.19f1` is **strongly recommended** (for now) - otherwise there's a serious chance of confusion.
 
-In the `Unity Hub` app, select `Open => Add project from disk`, then navigate to the `croquet-for-unity-tutorials/unity` folder and hit `Add Project`.  Make sure that it is opened with _exactly_ editor `version 2021.3.19f1` (otherwise there's a serious chance of Unity getting confused, either immediately or at some later point).
+In the `Unity Hub` app, select `Open => Add project from disk`, then navigate to the `croquet-for-unity-tutorials/unity` folder and hit `Add Project`.  Make sure that it is opened with _exactly_ editor `version 2021.3.19f1` .
 
 If, during this first loading, Unity complains that there appear to be script errors, it's fine to hit `Ignore` and continue.
 
