@@ -247,8 +247,14 @@ public class CroquetBridge : MonoBehaviour
         {
             useNodeJS = true;
         }
+        
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+        string pathToNode = appProperties.pathToNode;
+#else
+        string pathToNode = "";
+#endif
 
-        StartCoroutine(croquetRunner.StartCroquetConnection(port, appName, useNodeJS));
+        StartCoroutine(croquetRunner.StartCroquetConnection(port, appName, useNodeJS, pathToNode));
     }
 
     void OnGetHandler(object sender, HttpRequestEventArgs e)

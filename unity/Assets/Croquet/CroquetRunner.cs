@@ -122,7 +122,7 @@ public class CroquetRunner : MonoBehaviour
     {
     }
 
-    public IEnumerator StartCroquetConnection(int port, string appName, bool useNodeJS)
+    public IEnumerator StartCroquetConnection(int port, string appName, bool useNodeJS, string pathToNode)
     {
         bridgeSourcePath = Path.Combine(Application.streamingAssetsPath, "croquet-bridge");
         appSourcePath = Path.Combine(Application.streamingAssetsPath, appName);
@@ -200,7 +200,7 @@ public class CroquetRunner : MonoBehaviour
                 {
                     case RuntimePlatform.OSXEditor:
                     case RuntimePlatform.OSXPlayer:
-                        nodeExecName = "/usr/local/bin/node";
+                        nodeExecName = pathToNode;
                         break;
                     case RuntimePlatform.WindowsEditor:
                     case RuntimePlatform.WindowsPlayer:
