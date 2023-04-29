@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   apiKey: 
   appPrefix: io.croquet.worldcore
-  preferredPort: 5555
+  preferredPort: 5556
