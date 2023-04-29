@@ -56,16 +56,18 @@ public class CroquetBuilder
 
     public struct JSBuildDetails
     {
-        public JSBuildDetails(string name, string path, bool useNode)
+        public JSBuildDetails(string name, string path, bool useNode, string pathToNode)
         {
             appName = name;
             builderPath = path;
             useNodeJS = useNode;
+            nodeExecutable = pathToNode;
         }
 
         public string appName;
         public string builderPath;
         public bool useNodeJS;
+        public string nodeExecutable;
     }
 
     public static JSBuildDetails GetSceneBuildDetails()
@@ -80,10 +82,15 @@ public class CroquetBuilder
 
         if (sceneBridgeComponent)
         {
+#if UNITY_EDITOR_OSX
+            string pathToNode = sceneBridgeComponent.appProperties.pathToNode;
+#else
+            string pathToNode = "";
+#endif
             return new JSBuildDetails(sceneBridgeComponent.appName, sceneBridgeComponent.builderPath,
-                sceneBridgeComponent.useNodeJS);
+                sceneBridgeComponent.useNodeJS, pathToNode);
         }
-        else return new JSBuildDetails("", "", false);;
+        else return new JSBuildDetails("", "", false, "");
     }
 
     public static bool KnowHowToBuildJS()
@@ -112,7 +119,7 @@ public class CroquetBuilder
         switch (Application.platform)
         {
             case RuntimePlatform.OSXEditor:
-                nodeExecPath = "/usr/local/bin/node";
+                nodeExecPath = details.nodeExecutable;
                 executable = Path.Combine(builderPath, "runwebpack.sh");
                 target = details.useNodeJS ? "node" : "web";
                 break;
