@@ -13,6 +13,10 @@ The most important directories are the following:
 
 To install the repository and prepare for building the tutorials, carry out the following steps:
 
+Install node.js and the node package manager (npm) for your platform here (LTS Recommended):
+https://nodejs.org/en/download
+
+
 Clone the Repo
 
 ```
