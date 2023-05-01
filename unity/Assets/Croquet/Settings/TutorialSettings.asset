@@ -15,3 +15,4 @@ MonoBehaviour:
   apiKey: 
   appPrefix: io.croquet.worldcore
   preferredPort: 5556
+  pathToNode: /usr/local/bin/node
