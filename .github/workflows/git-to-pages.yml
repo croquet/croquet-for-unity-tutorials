@@ -30,9 +30,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      - name: Create bare repo croquet-for-unity-tutorials.git
+      - name: Create repo croquet-for-unity-tutorials.git
         run: |
           git clone --bare . _site/croquet-for-unity-tutorials.git
+          git -C _site/croquet-for-unity-tutorials.git update-server-info
 
       - name: Upload _site
         uses: actions/upload-pages-artifact@v1
