@@ -13,7 +13,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useInstance("cyanBox");
+        this.useInstance("woodCube");
     }
 
 }
@@ -27,7 +27,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useInstance("magentaBox");
+        this.useInstance("woodCube");
         this.makeClickable();
     }
 

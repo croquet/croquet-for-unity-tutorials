@@ -19,7 +19,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useInstance("cyanBox");
+        this.useInstance("woodCube");
     }
 
 }
@@ -36,7 +36,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useInstance("magentaBox");
+        this.useInstance("woodCube");
         this.makeClickable();
     }
 
@@ -91,7 +91,7 @@ export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'primitiveCube', color: this.actor.color });
+        this.setGameObject({ type: 'woodCube', color: this.actor.color });
 
         this.listen("colorSet", this.onColorSet);
     }

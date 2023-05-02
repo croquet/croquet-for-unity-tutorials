@@ -17,19 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 3ffac8b43b7044398bfa119d7aecca3a
   m_SerializeEntries:
-  - m_GUID: 31c3559c35e8943c29fcfec3f18d81a0
-    m_Address: yellowBox
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - tutorial6
-  - m_GUID: 07eaefeb2a3c643a0b93034aa9f6176d
-    m_Address: magentaBox
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - tutorial8
-    - tutorial6
-    - tutorial7
-    - tutorial9
   - m_GUID: 2cf569cbd24764b23bab2be8a63b1dab
     m_Address: groundPlane
     m_ReadOnly: 0
@@ -38,20 +25,20 @@ MonoBehaviour:
     - tutorial6
     - tutorial7
     - tutorial9
-  - m_GUID: 62b4a85a6d63d4084afb2386335ed9ad
-    m_Address: cyanBox
+  - m_GUID: c7860142b8166774a80931aec25507fe
+    m_Address: woodColumn
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial8
+    - tutorial9
+  - m_GUID: d6b5720d36d30406fa312e065ee0a7c1
+    m_Address: woodCube
     m_ReadOnly: 0
     m_SerializedLabels:
     - tutorial6
     - tutorial7
     - tutorial8
     - tutorial9
-  - m_GUID: acdf37bccedd44df983112bad44b8d2e
-    m_Address: tallBox
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - tutorial9
-    - tutorial8
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1398c81f484a44649a064676c86f132e, type: 2}
   m_SchemaSet:
