@@ -24,14 +24,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
 
-      - name: Upload .git
+      - name: Create bare repo croquet-for-unity-tutorials.git
+        run: |
+          git clone --bare . _site/croquet-for-unity-tutorials.git
+
+      - name: Upload _site
         uses: actions/upload-pages-artifact@v1
-        with:
-          path: .git
 
       - name: Deploy to GitHub Pages
         id: deployment
