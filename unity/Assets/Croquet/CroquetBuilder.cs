@@ -176,7 +176,7 @@ public class CroquetBuilder
             newLines = errors.Split('\n');
             foreach (string line in newLines)
             {
-                if (!string.IsNullOrWhiteSpace(line)) Debug.Log("JS builder error: " + line);
+                if (!string.IsNullOrWhiteSpace(line)) Debug.LogError("JS builder error: " + line);
             }
         }
         else
