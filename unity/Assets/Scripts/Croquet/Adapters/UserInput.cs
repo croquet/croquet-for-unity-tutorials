@@ -15,7 +15,7 @@ namespace Croquet.Adapters
         public bool SendPointerHitEvents = true;
         public Camera userCamera;
         public float PointerHitDistance = 10.0f;
-    
+
         private UserInputActions inputActions;
         private InputAction keyboard;
         private InputAction pointer;
@@ -37,12 +37,12 @@ namespace Croquet.Adapters
         {
             if (eventPtr.type != StateEvent.Type && eventPtr.type != DeltaStateEvent.Type)
                 yield break;
- 
+
             foreach (var control in eventPtr.EnumerateControls(InputControlExtensions.Enumerate.IgnoreControlsInCurrentState))
             {
                 if (control.IsPressed())
                     continue;
- 
+
                 yield return control;
             }
         }
@@ -60,14 +60,14 @@ namespace Croquet.Adapters
                 yield return control;
             }
         }
-    
+
         void OnEnable()
         {
             inputActions.Enable();
-        
+
             // KEYBOARD
             keyboard = inputActions.User.Keyboard;
-        
+
             // POINTER - Touch and Mouse
             pointer = inputActions.User.PointerEvent;
             pointerValue = inputActions.User.PointerValue;
@@ -95,14 +95,14 @@ namespace Croquet.Adapters
         void SendKeyDown(InputControl control)
         {
             // Debug.Log($"[INPUT] KEYDOWN: " + control.name);
-        
+
             CroquetBridge.SendCroquet("event", "keyDown", control.name);
         }
 
         void SendKeyUp(InputControl control)
         {
             //Debug.Log($"[INPUT] KEYUP: " + control.name);
-        
+
             CroquetBridge.SendCroquet("event", "keyUp", control.name);
         }
 
@@ -121,7 +121,7 @@ namespace Croquet.Adapters
         void SendPointerHit()
         {
             // Debug.Log($"[INPUT] Looking for pointer hit");
-            
+
             // TODO: raycast against only an interactive-only bitmask.
             List<string> clickDetails = new List<string>();
             Ray ray = ((userCamera ? userCamera : Camera.main)!).ScreenPointToRay(Pointer.current.position.ReadValue());
@@ -165,11 +165,11 @@ namespace Croquet.Adapters
             {
                 List<string> eventArgs = new List<string>();
                 eventArgs.Add("event");
-                eventArgs.Add("pointerDown");
+                eventArgs.Add("pointerHit");
                 eventArgs.AddRange(clickDetails);
-                CroquetBridge.SendCroquet(eventArgs.ToArray()); 
+                CroquetBridge.SendCroquet(eventArgs.ToArray());
             }
         }
-    
+
     }
 }

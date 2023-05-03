@@ -821,7 +821,13 @@ export class GameInputManager extends ViewService {
                 this.publish('input', 'keyUp', { key: keyCode });
                 break;
             }
-            case 'pointerDown': {
+            case 'pointerDown':
+                this.publish('input', 'pointerDown');
+                break;
+            case 'pointerUp':
+                this.publish('input', 'pointerUp');
+                break;
+            case 'pointerHit': {
                 // each argument starting at 1 is a comma-separated list defining
                 // a hit on a single Croquet-registered game object.  its fields are:
                 //   id
@@ -841,7 +847,7 @@ export class GameInputManager extends ViewService {
                         hitList.push({ pawn, xyz, layers});
                     }
                 }
-                if (hitList.length) this.publish('input', 'pointerDown', { hits: hitList });
+                if (hitList.length) this.publish('input', 'pointerHit', { hits: hitList });
                 break;
             }
             default:

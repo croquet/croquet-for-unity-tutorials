@@ -2,7 +2,7 @@
 
 // All the code specific to this tutorial is in the definition of AvatarPawn.
 
-import { Pawn, mix, toRad, q_axisAngle } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix, toRad, q_axisAngle, v3_sub, v3_normalize, v3_scale } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
 import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered, PM_GameCamera } from "../../tutorials-common/unity-bridge";
 
 
@@ -31,10 +31,10 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
         this.useInstance("woodCube");
         this.makeClickable();
 
-        this.subscribe("input", "pointerDown", this.doPointerDown);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
     }
 
-    doPointerDown(e) {
+    doPointerHit(e) {
         // e has a list of hits { pawn, xyz, layers }
         if (e.hits[0].pawn === this) this.say("kill");
     }
@@ -51,8 +51,8 @@ ClickPawn.register("ClickPawn");
 // the object was assigned.  We use that to filter the hits list to find any avatar that
 // was hit by the raycast.
 //
-// When you click on another avatar, and that avatar doesn't have a driver, you "possess"
-// it by parking your current avatar and starting to drive the new one.
+// If you click another avatar with the left mouse button it's given a shove away from you,
+// even if it's controlled by another user.
 
 export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
 
@@ -62,26 +62,13 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
         this.setGameObject({ type: 'groundPlane' });
         this.makeClickable();
 
-        this.subscribe("input", "pointerDown", this.doPointerDown);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
     }
 
-    doPointerDown(e) {
+    doPointerHit(e) {
         // e has a list of hits { pawn, xyz, layers }
         const { pawn, xyz } = e.hits[0];
         if (pawn === this) this.say("spawn", xyz);
-        else {
-            // base wasn't the first hit; look for an avatar (even if behind other
-            // objects)
-            const avatarHits = e.hits.filter(hit => hit.layers.includes('avatar'));
-            if (avatarHits.length) this.possess(avatarHits[0].pawn);
-        }
-    }
-
-    possess(pawn) {
-        if (pawn.actor.driver === this.viewId) return; // it's already our avatar
-        if (pawn.actor.driver) return; // it's already someone else's
-
-        this.publish("app", "askToDrive", { actor: pawn.actor, viewId: this.viewId }); // can be rejected if someone else gets in first
     }
 
 }
@@ -122,10 +109,6 @@ ColorPawn.register("ColorPawn");
 // of the pitch of the camera and the yaw of the avatar object it is attached to. The yaw
 // updates are reported to all clients, while the pitch remains a private property of the
 // local camera.
-//
-// Every pawn has an update() method that's called every frame. We use each AvatarPawn's
-// update() to respond to changes in the driving state, grabbing or releasing the camera
-// appropriately.
 
 export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameAvatar, PM_GameCamera) {
 
@@ -136,28 +119,32 @@ export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed,
         this.makeClickable("avatar");
 
         this.listen("colorSet", this.onColorSet);
-        this.subscribe("app", "avatarAssigned", this.avatarAssigned);
 
-        this.cameraRotation = q_axisAngle([1, 0, 0], toRad(5));
-        this.cameraTranslation = [0, 5, -10];
+        if (this.driving) {
+            this.cameraRotation = q_axisAngle([1, 0, 0], toRad(5));
+            this.cameraTranslation = [0, 5, -10];
+            this.grabCamera();
+            this.subscribe("input", "pointerHit", this.doPointerHit);
+        }
     }
 
     onColorSet() {
         this.sendToUnity('setColor', this.actor.color);
     }
 
-    avatarAssigned(data) {
-        // If the viewId that was previously driving this avatar has been granted a
-        // request to drive a different one, reset our driver.
-        const { actor, viewId } = data;
-        if (this.actor !== actor && this.actor.driver === viewId) this.set({ driver: null });
+    doPointerHit(e) {
+        // e has a list of hits { pawn, xyz, layers }
+        // Iff the first hit is in the avatar layer, act on it.
+        const { pawn, layers } = e.hits[0];
+        if (layers.includes('avatar')) this.shove(pawn);
     }
 
-    update(time, delta) {
-        super.update(time, delta);
+    shove(pawn) {
+        console.log("pawn shove");
+        if (pawn === this) return; // You can't shove yourself
 
-        if (this.driving && !this.hasGrabbedCamera) this.grabCamera();
-        if (!this.driving && this.hasGrabbedCamera) this.releaseCamera();
+        const away = v3_normalize(v3_sub(pawn.translation, this.translation));
+        pawn.say("shove", v3_scale(away, 1));
     }
 
 }
