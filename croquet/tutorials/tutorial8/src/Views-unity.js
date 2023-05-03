@@ -35,10 +35,10 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
         this.useInstance("woodCube");
         this.makeClickable();
 
-        this.subscribe("input", "pointerDown", this.doPointerDown);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
     }
 
-    doPointerDown(e) {
+    doPointerHit(e) {
         // e has a list of hits { pawn, xyz, layers }
         if (e.hits[0].pawn === this) this.say("kill");
     }
@@ -58,10 +58,10 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
         this.setGameObject({ type: 'groundPlane' });
         this.makeClickable();
 
-        this.subscribe("input", "pointerDown", this.doPointerDown);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
     }
 
-    doPointerDown(e) {
+    doPointerHit(e) {
         // e has a list of hits { pawn, xyz, layers }
         const { pawn, xyz } = e.hits[0];
         if (pawn === this) this.say("spawn", xyz);
