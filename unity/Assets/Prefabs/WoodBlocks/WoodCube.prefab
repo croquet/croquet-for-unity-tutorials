@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9189988984234922137}
   - component: {fileID: 4076465484209271761}
+  - component: {fileID: 5163372599614568489}
   m_Layer: 0
-  m_Name: woodCube
+  m_Name: WoodCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,6 +51,19 @@ MonoBehaviour:
   recolorable: 0
   clickable: 0
   clickLayers: []
+--- !u!65 &5163372599614568489
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189988984234922136}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1247294650439926242
 PrefabInstance:
   m_ObjectHideFlags: 0

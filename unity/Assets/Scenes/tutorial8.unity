@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44403905, g: 0.49318177, b: 0.5722404, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -173,9 +173,7 @@ MonoBehaviour:
   appName: tutorial8
   builderPath: tutorials
   useNodeJS: 0
-  apiKey: 14rqAOsLG15ez7vcuJ9h3zIeoe29d5xf8c5rta9mz
   croquetSessionReady: 0
-  port: 5678
   showRigidbodyStateHighlight: 0
   localAvatarId: 
   cameraOwnerId: 
@@ -520,7 +518,7 @@ MonoBehaviour:
   SendPointerEvents: 0
   SendPointerHitEvents: 1
   userCamera: {fileID: 0}
-  PointerHitDistance: 10
+  PointerHitDistance: 100
 --- !u!4 &1963658002
 Transform:
   m_ObjectHideFlags: 0

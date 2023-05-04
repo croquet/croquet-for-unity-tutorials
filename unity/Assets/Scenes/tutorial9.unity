@@ -518,7 +518,7 @@ MonoBehaviour:
   SendPointerEvents: 0
   SendPointerHitEvents: 1
   userCamera: {fileID: 0}
-  PointerHitDistance: 10
+  PointerHitDistance: 50
 --- !u!4 &1963658002
 Transform:
   m_ObjectHideFlags: 0

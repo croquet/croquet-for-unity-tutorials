@@ -125,7 +125,7 @@ namespace Croquet.Adapters
             // TODO: raycast against only an interactive-only bitmask.
             List<string> clickDetails = new List<string>();
             Ray ray = ((userCamera ? userCamera : Camera.main)!).ScreenPointToRay(Pointer.current.position.ReadValue());
-            RaycastHit[] hits = Physics.RaycastAll(ray, 100f);
+            RaycastHit[] hits = Physics.RaycastAll(ray, PointerHitDistance);
             Array.Sort(hits, (x,y) => x.distance.CompareTo(y.distance));
             foreach (RaycastHit hit in hits)
             {
