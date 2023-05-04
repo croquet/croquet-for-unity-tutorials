@@ -125,8 +125,9 @@ public class CroquetBridge : MonoBehaviour
             {
                 foreach (var go in objects.Result)
                 {
+                    // $$$ workaround to case-sensitivity: index using all-lowercase
                     Debug.Log($"Addressable Loaded: {go.name}");
-                    addressableAssets.Add(go.name, go);
+                    addressableAssets.Add(go.name.ToLower(), go);
                 }
 
                 addressablesReady = true;
@@ -571,7 +572,8 @@ public class CroquetBridge : MonoBehaviour
         GameObject obj = null;
         if (!spec.type.StartsWith("primitive"))
         {
-            obj = Instantiate(addressableAssets[spec.type]);
+            // $$$ see comment in LoadAddressableAssetsWithLabel
+            obj = Instantiate(addressableAssets[spec.type.ToLower()]);
         }
         if (obj == null)
         {
