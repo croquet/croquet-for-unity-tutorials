@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44403905, g: 0.49318177, b: 0.5722404, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -182,8 +182,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 294985721}
-  - component: {fileID: 294985722}
-  - component: {fileID: 294985723}
   m_Layer: 0
   m_Name: CroquetBridge
   m_TagString: Bridge
@@ -206,40 +204,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &294985722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294985719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f141d67245a74fb7890d9eb5b9be7fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  appProperties: {fileID: 11400000, guid: bebfcb5cf5dd349cab180a2e6d7a5832, type: 2}
-  appName: tutorial1
-  builderPath: tutorials
-  useNodeJS: 0
-  croquetSessionReady: 0
-  showRigidbodyStateHighlight: 0
-  localAvatarId: 
-  cameraOwnerId: 
---- !u!114 &294985723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294985719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89630f63673ec4b688919c33fc00ebcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waitForUserLaunch: 0
-  showWebview: 0
 --- !u!1 &417734306
 GameObject:
   m_ObjectHideFlags: 0
