@@ -150,7 +150,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 54772485}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39c5f25e85e54f44a3ec4f76a830db6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8744ab26233b44256ae1c585a8c12b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SendAllKeysAsEvents: 1
@@ -182,6 +182,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 294985721}
+  - component: {fileID: 294985723}
+  - component: {fileID: 294985722}
   m_Layer: 0
   m_Name: CroquetBridge
   m_TagString: Bridge
@@ -204,6 +206,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &294985722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294985719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c98cc1d7bc374101816379b2a2ac02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitForUserLaunch: 0
+  showWebview: 0
+--- !u!114 &294985723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294985719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21fd7bd096a814120ab634e6ff8be7b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  appProperties: {fileID: 11400000, guid: d8a4c352ae9b743efa34611f46d63ff2, type: 2}
+  appName: tutorial1
+  builderPath: tutorials
+  useNodeJS: 0
+  croquetSessionReady: 0
+  showRigidbodyStateHighlight: 0
+  localAvatarId: 
+  cameraOwnerId: 
 --- !u!1 &417734306
 GameObject:
   m_ObjectHideFlags: 0
