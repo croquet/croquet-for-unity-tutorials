@@ -1,9 +1,17 @@
+# workflow to make a read-only anonymous copy of the git repo available at a "secret" URL:
+# git clone https://croquet.github.io/croquet-for-unity-tutorials/croquet-for-unity-tutorials.git
+
+# NOTE: to make this work, in GitHub Settings under Pages – Build and Deployment
+# change Source from "Deploy from a branch" to "GitHub Actions"!
+
 name: Git to Pages
 
 on:
+  # only execute on push to main
   push:
     branches:
       - main
+  # or manually in the GitHub UI
   workflow_dispatch:
 
 permissions:
@@ -25,7 +33,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0          # fetch full history
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
