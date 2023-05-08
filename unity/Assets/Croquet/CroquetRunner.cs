@@ -182,7 +182,7 @@ public class CroquetRunner : MonoBehaviour
 
                 // Use the port number determined by the bridge
                 var webViewURL = $"http://localhost:{port}/{appName}/index.html";
-                TimedLog("invoke LoadURL for copy destination: " + webViewURL);
+                TimedLog("invoke LoadURL on " + webViewURL);
 
                 webViewObject.LoadURL(webViewURL);
             }
