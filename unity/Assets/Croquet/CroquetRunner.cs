@@ -42,7 +42,7 @@ public class CroquetRunner : MonoBehaviour
     private static string bridgeSourcePath; // croquet-bridge folder under StreamingAssets
     private static string appSourcePath; // app's own folder under StreamingAssets
     private static string nodeExecName = "";
-    
+
     struct CroquetNodeProcess : IJob
     {
         public int port;
@@ -75,7 +75,7 @@ public class CroquetRunner : MonoBehaviour
 
             // $$$ hack until we move old apps over to new build setup
             string nodeEntry = appSourcePath.Contains("tutorial") ? "node-main.js" : "node-starter.js";
-            
+
             croquetProcess.StartInfo.FileName = Path.Combine(nodeExecPath, nodeExecName); // on Mac, nodeExecName begins with / so will prevail
             croquetProcess.StartInfo.Arguments = $"{nodeEntry} {port}";
 
@@ -182,7 +182,7 @@ public class CroquetRunner : MonoBehaviour
 
                 // Use the port number determined by the bridge
                 var webViewURL = $"http://localhost:{port}/{appName}/index.html";
-                TimedLog("invoke LoadURL on " + webViewURL);
+                TimedLog("invoke LoadURL for copy destination: " + webViewURL);
 
                 webViewObject.LoadURL(webViewURL);
             }
