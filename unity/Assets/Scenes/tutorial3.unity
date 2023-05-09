@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44403905, g: 0.49318177, b: 0.5722404, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -166,18 +166,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 294985719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f141d67245a74fb7890d9eb5b9be7fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 21fd7bd096a814120ab634e6ff8be7b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appProperties: {fileID: 11400000, guid: bebfcb5cf5dd349cab180a2e6d7a5832, type: 2}
+  appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
   appName: tutorial3
-  builderPath: tutorials
   useNodeJS: 0
-  apiKey: 14rqAOsLG15ez7vcuJ9h3zIeoe29d5xf8c5rta9mz
   croquetSessionReady: 0
-  port: 5678
   showRigidbodyStateHighlight: 0
   localAvatarId: 
+  cameraOwnerId: 
 --- !u!114 &294985723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +185,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 294985719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89630f63673ec4b688919c33fc00ebcd, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c98cc1d7bc374101816379b2a2ac02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   waitForUserLaunch: 0
@@ -512,7 +510,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1788511654}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39c5f25e85e54f44a3ec4f76a830db6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8744ab26233b44256ae1c585a8c12b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   SendAllKeysAsEvents: 1
