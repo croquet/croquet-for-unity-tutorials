@@ -282,6 +282,10 @@ export const GameEnginePawnManager = class extends ViewService {
         const { id } = unityViewSpec;
         if (pawn) this.registerPawn(pawn, id);
         this.sendDeferred(id, 'makeObject', JSON.stringify(unityViewSpec));
+        // any time a new object is created, we ensure that there is minimal delay in
+        // servicing the deferred messages and updating objects' geometries.
+        this.expediteMessageFlush();
+        this.expediteGeometryFlush();
         return id;
     }
 
@@ -370,6 +374,16 @@ export const GameEnginePawnManager = class extends ViewService {
             this.lastGeometryFlush = now;
             this.flushGeometries();
         }
+    }
+
+    expediteMessageFlush() {
+        // guarantee that messages will flush on next update
+        delete this.lastMessageFlush;
+    }
+
+    expediteGeometryFlush() {
+        // guarantee that geometries will flush on next update
+        delete this.lastGeometryFlush;
     }
 
     flushDeferredMessages() {
@@ -831,11 +845,24 @@ export class GameInputManager extends ViewService {
     constructor(name) {
         super(name || "GameInputManager");
 
+        this.customEventHandlers = {};
+
         theGameInputManager = this;
+    }
+
+    addEventHandlers(handlers) {
+        Object.assign(this.customEventHandlers, handlers);
     }
 
     handleEvent(args) {
         const event = args[0];
+
+        const custom = this.customEventHandlers[event];
+        if (custom) {
+            custom(args);
+            return;
+        }
+
         switch (event) {
             case 'keyDown': {
                 const keyCode = args[1];
@@ -849,12 +876,16 @@ export class GameInputManager extends ViewService {
                 this.publish('input', 'keyUp', { key: keyCode });
                 break;
             }
-            case 'pointerDown':
-                this.publish('input', 'pointerDown');
+            case 'pointerDown': {
+                const button = Number(args[1]);
+                this.publish('input', 'pointerDown', { button });
                 break;
-            case 'pointerUp':
-                this.publish('input', 'pointerUp');
+            }
+            case 'pointerUp': {
+                const button = Number(args[1]);
+                this.publish('input', 'pointerUp', { button });
                 break;
+            }
             case 'pointerHit': {
                 // each argument starting at 1 is a comma-separated list defining
                 // a hit on a single Croquet-registered game object.  its fields are:
