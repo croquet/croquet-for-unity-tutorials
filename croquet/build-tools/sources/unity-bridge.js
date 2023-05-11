@@ -17,6 +17,7 @@ let theGameInputManager;
 
 class BridgeToUnity {
     constructor() {
+        this.bridgeIsConnected = false;
         this.startWS();
         this.readyP = new Promise(resolve => this.setReady = resolve);
         this.measureIndex = 0;
@@ -44,6 +45,7 @@ console.log(`PORT ${portStr}`);
             // @@ uncomment following line to send all console logs through the websocket to Unity
             // console.log = console.warn = console.error = (...args) => sock.send(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
             globalThis.timedLog('opened socket');
+            this.bridgeIsConnected = true;
             this.resetMessageStats();
             sock.onmessage = event => {
                 const msg = event.data;
@@ -52,6 +54,7 @@ console.log(`PORT ${portStr}`);
         };
         sock.onclose = _evt => {
             globalThis.timedLog('bridge websocket closed');
+            this.bridgeIsConnected = false;
             session.leave();
             if (globalThis.CROQUET_NODE) process.exit(); // if on node, bail out
         };
@@ -210,7 +213,7 @@ export const GameEnginePawnManager = class extends ViewService {
     }
 
     destroy() {
-        theGameEngineBridge.sendCommand('croquetSessionDisconnected');
+        if (theGameEngineBridge.bridgeIsConnected) theGameEngineBridge.sendCommand('croquetSessionDisconnected');
         theGameEngineBridge.setCommandHandler(null);
     }
 
@@ -806,9 +809,20 @@ export const PM_GameCamera = superclass => class extends superclass {
 };
 
 export class GameViewRoot extends ViewRoot {
+
     static viewServices() {
         return [GameEnginePawnManager];
     }
+
+    constructor(model) {
+        super(model);
+
+        // we treat the construction of the view as a signal that the session is
+        // ready to talk across the bridge
+        theGameEngineBridge.sendCommand('croquetSessionReady');
+        globalThis.timedLog("session ready");
+    }
+
 }
 
 export class GameInputManager extends ViewService {
@@ -961,7 +975,7 @@ export async function StartSession(model, view) {
         }
     });
 
-    const STEP_DELAY = 26; // aiming to ensure that there will be a new 50ms pyhsics update on every other step
+    const STEP_DELAY = 26; // aiming to ensure that there will be a new 50ms physics update on every other step
     let stepHandler = null;
     let stepCount = 0;
     timerClient.setInterval(() => {
@@ -971,13 +985,14 @@ export async function StartSession(model, view) {
 
     let lastStep = 0;
     stepHandler = () => {
+        if (!session.view) return; // don't try stepping after leaving session (including during a rejoin)
+
         const now = Date.now();
         // don't try to service ticks that have bunched up
         if (now - lastStep < STEP_DELAY / 2) return;
         lastStep = now;
         session.step(now);
     };
-    globalThis.timedLog("session ready");
     theGameEngineBridge.announceTeatime(session.view.realm.vm.time);
-    theGameEngineBridge.sendCommand('croquetSessionReady');
+
 }
