@@ -13,6 +13,11 @@ NODE=$1
 APPNAME=$2
 TARGET=$3
 
+if [ ! -d ../node_modules/webpack ]; then
+	echo "Cannot find webpack.  Did you do 'npm install'?"
+	exit
+fi
+
 sed -e "s/__APP_SOURCE__/..\/..\/$APPNAME/g" sources/index.generic.js > sources/index.tmp.js
 sed -e "s/__APP_SOURCE__/..\/..\/$APPNAME/g" sources/index-node.generic.js > sources/index-node.tmp.js
 
