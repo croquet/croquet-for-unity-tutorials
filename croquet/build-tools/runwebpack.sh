@@ -24,4 +24,6 @@ if [ $# -eq 4 ]; then
 	echo "webpack=$!"
 else
 	"$NODE" ../node_modules/.bin/webpack --config webpack.config.js --mode development --env appName=$APPNAME --env buildTarget=$TARGET --no-color
+
+	echo "webpack-exit=$?"
 fi
