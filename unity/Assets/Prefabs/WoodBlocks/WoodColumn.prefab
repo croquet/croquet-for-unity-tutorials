@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   croquetActorId: 
   croquetGameHandle: 
-  recolorable: 0
+  recolorable: 1
   clickable: 0
   clickLayers: []
 --- !u!65 &-3317179677228686170

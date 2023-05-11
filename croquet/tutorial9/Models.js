@@ -67,7 +67,7 @@ class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
         this.listen("shove", this.doShove);
     }
 
-    get color() { return this._color || [0.5, 0.5, 0.5] }
+    get color() { return this._color || [-1, 0, 0] } // bridge treats r = -1 as "don't recolour"
 
     doShove(v) {
         const translation = v3_add(this.translation, v);
@@ -100,7 +100,6 @@ class MyUser extends User {
             pawn: "AvatarPawn",
             parent: base,
             driver: this.userId,
-            color: this.color,
             translation: [0, 1, -10] // y offset set view-side in three.js version
         });
     }
