@@ -196,8 +196,22 @@ export const GameEnginePawnManager = class extends ViewService {
             camera: 1
         };
         this.lastGameHandle = 99; // 0-99 are reserved
+        this.tellUnityReservedHandles();
 
         theGameEngineBridge.setCommandHandler(this.handleUnityCommand.bind(this));
+    }
+
+    tellUnityReservedHandles() {
+        const argStrings = [];
+        for (const [alias, id] of Object.entries(this.reservedGameHandles)) {
+            argStrings.push(alias, String(id));
+        }
+        theGameEngineBridge.sendCommand('setReservedIds', argStrings.join(','));
+    }
+
+    destroy() {
+        theGameEngineBridge.sendCommand('croquetSessionDisconnected');
+        theGameEngineBridge.setCommandHandler(null);
     }
 
     nextGameHandle() {
