@@ -4,7 +4,7 @@ This repository contains Croquet for Unity (C4U) ports of Brian Upton's introduc
 
 The most important directories are the following:
 * `unity/` - a loadable Unity project, from which you can run apps in the editor or build standalone apps for deployment on iOS and Android.
-* `unity/Assets/Scenes/tutorials` - the scenes for running and deploying the nine tutorial examples.
+* `unity/Assets/Scenes/` - the scenes for running and deploying the nine tutorial examples.
 * `croquet/{tutorial1..tutorial9}` - JavaScript source for building the Croquet side of the tutorial scenes.  You can edit the code under this directory to change the tutorials' behavior.
 
 # Setup
