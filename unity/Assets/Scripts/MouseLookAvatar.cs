@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.LowLevel;
-using UnityEngine.InputSystem.Utilities;
-using UnityEngine.Timeline;
 
 public class MouseLookAvatar : MonoBehaviour
 {
-    private readonly KeyCode[] keysOfInterest = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow, KeyCode.RightArrow };
+    private readonly KeyCode[] keysOfInterest = new KeyCode[]
+    {
+        KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow,
+        KeyCode.RightArrow
+    };
+
     private int fore = 0;
     private int back = 0;
     private int left = 0;
@@ -22,7 +22,7 @@ public class MouseLookAvatar : MonoBehaviour
     private CroquetBridge bridge;
     private GameObject mainCamera;
     private bool isActiveAvatar;
-    
+
     void Start()
     {
         bridge = GameObject.FindGameObjectWithTag("Bridge").GetComponent<CroquetBridge>();
@@ -46,10 +46,10 @@ public class MouseLookAvatar : MonoBehaviour
             Quaternion q = this.gameObject.transform.localRotation;
             yaw = Mathf.Rad2Deg * Mathf.Atan2(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * q.y * q.y - 2 * q.z * q.z);
             q = mainCamera.transform.localRotation;
-            pitch = Mathf.Rad2Deg * Mathf.Atan2(2*q.x*q.w - 2*q.y*q.z, 1 - 2*q.x*q.x - 2*q.z*q.z);
+            pitch = Mathf.Rad2Deg * Mathf.Atan2(2 * q.x * q.w - 2 * q.y * q.z, 1 - 2 * q.x * q.x - 2 * q.z * q.z);
             // Debug.Log($"MouseLookAvatar initial pitch: {pitch}");
         }
-        
+
         ProcessPointer();
         ProcessKeyboard();
         Drive();
@@ -71,11 +71,11 @@ public class MouseLookAvatar : MonoBehaviour
                 const yawQ = q_axisAngle([0,1,0], this.yawDelta);
                 this.cameraRotation = q_multiply(pitchQ, yawQ);
              */
-            
+
             // Debug.Log(Pointer.current.delta.ReadValue());
             Vector2 xyDelta = Pointer.current.delta.ReadValue();
             if (xyDelta.x == 0 && xyDelta.y == 0) return;
-            
+
             // @@ movement ratios currently chosen by trial and error.
             // +ve x delta => mouse moving right => object should spin clockwise when
             // seen from above, which (in Unity) means a +ve rotation around y.
@@ -97,7 +97,7 @@ public class MouseLookAvatar : MonoBehaviour
             if (Input.GetKeyUp(keyCode)) HandleKeyUp(keyCode);
         }
     }
-    
+
     void HandleKeyDown(KeyCode keyCode)
     {
         // Debug.Log($"KeyDown {keyCode}");
@@ -121,7 +121,7 @@ public class MouseLookAvatar : MonoBehaviour
                 break;
         }
     }
-    
+
     void HandleKeyUp(KeyCode keyCode)
     {
         switch (keyCode)
@@ -159,7 +159,7 @@ public class MouseLookAvatar : MonoBehaviour
          */
 
         if (right + left == 0 && fore + back == 0 && yawDelta == 0) return;
-        
+
         yaw += yawDelta;
         yawDelta = 0;
         // Debug.Log($"{gameHandle} yaw: {yaw}");
@@ -172,7 +172,7 @@ public class MouseLookAvatar : MonoBehaviour
         Vector3 newPos = trans.localPosition + tt;
         trans.localPosition = newPos;
         trans.localRotation = yawQ;
-        
+
         string positionStr = string.Join<float>(",", new[] { newPos.x, newPos.y, newPos.z });
         string rotationStr = string.Join<float>(",", new[] { yawQ.x, yawQ.y, yawQ.z, yawQ.w });
         CroquetBridge.SendCroquet("objectMoved", gameHandle, "p", positionStr, "r", rotationStr);
