@@ -190,6 +190,7 @@ export const GameEnginePawnManager = class extends ViewService {
 
         this.pawnsById = {}; // id => pawn
         this.deferredMessagesById = new Map(); // id => [msgs], iterable in the order the ids are mentioned
+        this.deferredGeometriesById = {}; // id => msg; order not important
         this.unityMessageThrottle = 45; // ms (every two updates at 26ms)
         this.unityGeometryThrottle = 90; // ms (every four updates at 26ms)
         this.lastMessageFlush = 0;
@@ -312,11 +313,16 @@ export const GameEnginePawnManager = class extends ViewService {
     }
 
     updateGeometry(id, updateSpec) {
-        const mergeHandler = (prevArgs, latestArgs) => {
+        // opportunistic updates to object geometries (only of non-pawn objects... which for
+        // now means just the camera).
+        // we keep a record of these updates independently from general deferred messages,
+        // gathering and sending them as part of the next geometry flush.
+        const previousSpec = this.deferredGeometriesById[id];
+        if (!previousSpec) this.deferredGeometriesById[id] = updateSpec; // end of story
+        else {
             // each of prev and latest can have updates to scale, translation,
-            // rotation (or their snap variants).  overwrite prevSpec with any
+            // rotation (or their snap variants).  overwrite previousSpec with any
             // new updates.
-            const prevSpec = prevArgs[1];
             const incompatibles = {
                 scale: 'scaleSnap',
                 scaleSnap: 'scale',
@@ -325,12 +331,11 @@ export const GameEnginePawnManager = class extends ViewService {
                 translation: 'translationSnap',
                 translationSnap: 'translation'
             };
-            for (const [prop, value] of Object.entries(latestArgs[1])) {
-                prevSpec[prop] = value;
-                delete prevSpec[incompatibles[prop]]; // in case one was there
+            for (const [prop, value] of Object.entries(updateSpec)) {
+                previousSpec[prop] = value;
+                delete previousSpec[incompatibles[prop]]; // in case one was there
             }
-        };
-        this.sendDeferredWithMerge(id, 'updateGeometry', mergeHandler, this.unityId(id), updateSpec);
+        }
     }
 
     sendDeferred(id, command, ...args) {
@@ -342,6 +347,7 @@ export const GameEnginePawnManager = class extends ViewService {
         deferredForSame.push({ command, args });
     }
 
+    // NOT USED
     sendDeferredWithMerge(id, command, mergeHandler, ...args) {
         const deferredForSame = this.deferredMessagesById.get(id);
         if (!deferredForSame) this.sendDeferred(id, command, ...args); // end of story
@@ -389,29 +395,10 @@ export const GameEnginePawnManager = class extends ViewService {
     flushDeferredMessages() {
 const pNow = performance.now();
 
-        // the precisions used here are consistent with the rounding used in
-        // GamePawn.setGameObject (not that consistency really matters)
-        const geomDigits = {
-            scale: 4,
-            scaleSnap: 4,
-            translation: 4,
-            translationSnap: 4,
-            rotation: 6,
-            rotationSnap: 6
-        };
-
+        // now that opportunistic updateGeometry is handled separately, there are
+        // currently no commands that need special treatment.  but we may as
+        // well keep the option available.
         const transformers = {
-            updateGeometry: args => {
-                // currently only used for moving non-pawns (i.e., the camera)
-                const [id, updateSpec] = args;
-                const strings = [String(id)];
-                Object.keys(updateSpec).forEach(key => {
-                    const digs = geomDigits[key];
-                    strings.push(key);
-                    strings.push(...(updateSpec[key].map(v => v.toFixed(digs))));
-                });
-                return strings;
-            },
             default: args => {
                 // currently just used to convert arrays to comma-separated strings
                 const strings = [];
@@ -452,6 +439,14 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
     flushGeometries() {
         const toBeMerged = [];
 
+        // it's possible that some pawns will have an explicit deferred update
+        // in addition to some changes since then that they now want to propagate.
+        // in that situation, we send the explicit update first.
+        for (const [id, update] of Object.entries(this.deferredGeometriesById)) {
+            toBeMerged.push([this.unityId(id), update]);
+        }
+        this.deferredGeometriesById = {};
+
         for (const [id, pawn] of Object.entries(this.pawnsById)) {
             const update = pawn.geometryUpdateIfNeeded();
             if (update) toBeMerged.push([this.unityId(id), update]);
@@ -467,26 +462,26 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
         let pos = 0;
         const writeVector = vec => vec.forEach(val => array[pos++] = val);
         toBeMerged.forEach(([id, spec]) => {
-            const { scale, scaleSnapped, translation, translationSnapped, rotation, rotationSnapped } = spec;
+            const { scale, scaleSnap, translation, translationSnap, rotation, rotationSnap } = spec;
             // first number encodes object id and (in bits 0 to 5) whether there is an
             // update to each of scale, rotation, translation, and for each one whether
             // it should be snapped.
             const idPos = pos++; // once we know the value
             let encodedId = id << 6;
-            if (scale) {
-                writeVector(scale);
+            if (scale || scaleSnap) {
+                writeVector(scale || scaleSnap);
                 encodedId += 32;
-                if (scaleSnapped) encodedId += 16;
+                if (scaleSnap) encodedId += 16;
             }
-            if (rotation) {
-                writeVector(rotation);
+            if (rotation || rotationSnap) {
+                writeVector(rotation || rotationSnap);
                 encodedId += 8;
-                if (rotationSnapped) encodedId += 4;
+                if (rotationSnap) encodedId += 4;
             }
-            if (translation) {
-                writeVector(translation);
+            if (translation || translationSnap) {
+                writeVector(translation || translationSnap);
                 encodedId += 2;
-                if (translationSnapped) encodedId += 1;
+                if (translationSnap) encodedId += 1;
             }
             intArray[idPos] = encodedId;
         });
@@ -656,21 +651,23 @@ export const PM_GameSpatial = superclass => class extends superclass {
 
         const updates = {};
         const { scale, rotation, translation } = this; // NB: the actor's direct property values
-        // @@ use scale.x to guess the scale magnitude, triggering on changes > 1%
-        if (!this.lastSentScale || !v3_equals(this.lastSentScale, scale, scale[0] * 0.01)) {
-            this.lastSentScale = scale.slice();
-            updates.scale = scale.slice();
-            updates.scaleSnapped = !!this._scaleSnapped;
+        // use smallest scale value as a guide to the scale magnitude, triggering on
+        // changes > 1%
+        const scaleMag = Math.min(...scale.map(Math.abs));
+        if (!this.lastSentScale || !v3_equals(this.lastSentScale, scale, scaleMag * 0.01)) {
+            const scaleCopy = scale.slice();
+            this.lastSentScale = scaleCopy;
+            updates[this._scaleSnapped ? 'scaleSnap' : 'scale'] = scaleCopy;
         }
         if (!this.lastSentRotation || !q_equals(this.lastSentRotation, rotation, 0.0001)) {
-            this.lastSentRotation = rotation.slice();
-            updates.rotation = rotation.slice();
-            updates.rotationSnapped = !!this._rotationSnapped;
+            const rotationCopy = rotation.slice();
+            this.lastSentRotation = rotationCopy;
+            updates[this._rotationSnapped ? 'rotationSnap' : 'rotation'] = rotationCopy;
         }
         if (!this.lastSentTranslation || !v3_equals(this.lastSentTranslation, translation, 0.01)) {
-            this.lastSentTranslation = translation.slice();
-            updates.translation = translation.slice();
-            updates.translationSnapped = !!this._translationSnapped;
+            const translationCopy = translation.slice();
+            this.lastSentTranslation = translationCopy;
+            updates[this._translationSnapped ? 'translationSnap' : 'translation'] = translationCopy;
         }
 
         this.resetGeometrySnapState();
