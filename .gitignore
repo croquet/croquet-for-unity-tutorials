@@ -67,3 +67,6 @@ $RECYCLE.BIN/
 
 # temporary build files
 *.tmp.js
+
+# Add Dev patch
+pkg-dev.patch
