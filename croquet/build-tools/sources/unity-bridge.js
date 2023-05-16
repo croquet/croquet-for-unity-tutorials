@@ -384,12 +384,12 @@ export const GameEnginePawnManager = class extends ViewService {
 
     expediteMessageFlush() {
         // guarantee that messages will flush on next update
-        delete this.lastMessageFlush;
+        this.lastMessageFlush = null;
     }
 
     expediteGeometryFlush() {
         // guarantee that geometries will flush on next update
-        delete this.lastGeometryFlush;
+        this.lastGeometryFlush = null;
     }
 
     flushDeferredMessages() {
