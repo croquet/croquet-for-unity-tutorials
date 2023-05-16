@@ -26,7 +26,7 @@ public class MouseLookAvatar : MonoBehaviour
     void Start()
     {
         bridge = GameObject.FindGameObjectWithTag("Bridge").GetComponent<CroquetBridge>();
-        gameHandle = this.gameObject.GetComponent<CroquetGameObject>().croquetGameHandle;
+        gameHandle = GetComponent<CroquetEntityComponent>().croquetGameHandle;
         mainCamera = GameObject.FindWithTag("MainCamera");
         // Debug.Log($"MouseLookAvatar on {gameHandle}");
     }

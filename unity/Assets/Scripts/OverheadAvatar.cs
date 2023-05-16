@@ -16,7 +16,7 @@ public class OverheadAvatar : MonoBehaviour
     void Start()
     {
         bridge = GameObject.FindGameObjectWithTag("Bridge").GetComponent<CroquetBridge>();
-        gameHandle = this.gameObject.GetComponent<CroquetGameObject>().croquetGameHandle;
+        gameHandle = this.gameObject.GetComponent<CroquetEntityComponent>().croquetGameHandle;
         // Debug.Log($"OverheadAvatar on {gameHandle}");
     }
 
