@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 294985725}
   - component: {fileID: 294985724}
   m_Layer: 0
-  m_Name: CroquetBridge
+  m_Name: Croquet
   m_TagString: Bridge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
