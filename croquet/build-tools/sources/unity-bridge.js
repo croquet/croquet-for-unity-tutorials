@@ -489,7 +489,7 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
         // send as a single binary-bodied message
         const buffer = array.buffer;
         const filledBytes = pos * 4;
-        const command = 'updateGeometry';
+        const command = 'updateSpatial';
         const cmdPrefix = `${String(Date.now())}\x02${command}\x03`;
         const message = new Uint8Array(cmdPrefix.length + filledBytes);
         for (let i = 0; i < cmdPrefix.length; i++) message[i] = cmdPrefix.charCodeAt(i);
