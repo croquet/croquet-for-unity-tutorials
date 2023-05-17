@@ -501,8 +501,8 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
 const buildStats = [], setupStats = [];
 
 export const PM_GameWorldPawn = superclass => class extends superclass {
-    constructor(...args) {
-        super(...args);
+    constructor(actor) {
+        super(actor);
 
         this.pawnManager = GetViewService('GameEnginePawnManager');
     }
@@ -516,9 +516,10 @@ export const PM_GameRendered = superclass => class extends superclass {
     // getters for pawnManager and gameHandle allow them to be accessed even from super constructor
     get pawnManager() { return this._pawnManager || (this._pawnManager = GetViewService('GameEnginePawnManager' ))}
     get gameHandle() { return this._gameHandle || (this._gameHandle = this.pawnManager.nextGameHandle()) }
+    get componentNames() { return this._componentNames || (this._componentNames = new Set()) }
 
-    constructor(...args) {
-        super(...args);
+    constructor(actor) {
+        super(actor);
 
         this.throttleFromUnity = 100; // ms
         this.messagesAwaitingCreation = []; // removed once creation is requested
@@ -543,6 +544,9 @@ export const PM_GameRendered = superclass => class extends superclass {
         const rotation = this.actor.rotation.map(val => roundVal(val, 100000));
         const translation = this.actor.translation.map(val => roundVal(val, 10000));
 
+        let allComponents = [...this.componentNames].join(',');
+        if (viewSpec.extraComponents) allComponents += `,${viewSpec.extraComponents}`;
+
         this.unityViewP = new Promise(resolve => this.setReady = resolve);
         const unityViewSpec = {
             id: String(this.gameHandle),
@@ -550,7 +554,7 @@ export const PM_GameRendered = superclass => class extends superclass {
             cC: !!viewSpec.confirmCreation,
             wTA: !!viewSpec.waitToActivate,
             type: viewSpec.type,
-            cs: viewSpec.extraComponents || "",
+            cs: allComponents,
             c: viewSpec.color || [1,0,0],
             a: viewSpec.alpha === undefined ? 1 : viewSpec.alpha,
             iLA: !!this.isMyAvatar, // if no getter, always false
@@ -630,9 +634,9 @@ setupStats[bucket] = (setupStats[bucket] || 0) + 1;
 
 export const PM_GameSpatial = superclass => class extends superclass {
 
-    constructor(...args) {
-        super(...args);
-
+    constructor(actor) {
+        super(actor);
+        this.componentNames.add('CroquetSpatialComponent');
         this.resetGeometrySnapState();
     }
 
@@ -687,8 +691,8 @@ export const PM_GameSpatial = superclass => class extends superclass {
 
 export const PM_GameSmoothed = superclass => class extends PM_GameSpatial(superclass) {
 
-    constructor(...args) {
-        super(...args);
+    constructor(actor) {
+        super(actor);
         this.tug = 0.2;
         this.throttle = 100; //ms
 
@@ -778,8 +782,8 @@ export const PM_GameAvatar = superclass => class extends superclass {
 
 export const PM_GameCamera = superclass => class extends superclass {
 
-    constructor(...args) {
-        super(...args);
+    constructor(actor) {
+        super(actor);
 
         this.cameraTranslation = [0, 0, 0]; // position of the camera relative to the pawn
         this.cameraRotation = q_identity();
