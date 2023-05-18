@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44403905, g: 0.49318177, b: 0.5722404, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 294985725}
   - component: {fileID: 294985724}
   m_Layer: 0
-  m_Name: CroquetBridge
+  m_Name: Croquet
   m_TagString: Bridge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -543,9 +543,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SendAllKeysAsEvents: 1
   SendPointerEvents: 0
-  SendPointerHitEvents: 0
-  userCamera: {fileID: 0}
-  PointerHitDistance: 10
 --- !u!4 &1788511656
 Transform:
   m_ObjectHideFlags: 0
