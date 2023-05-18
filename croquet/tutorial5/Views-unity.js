@@ -1,7 +1,7 @@
 // Tutorial 5 Views
 
 import { Pawn, mix, GetViewService, m4_rotation, m4_translation, m4_multiply, m4_getTranslation, m4_getRotation, toRad } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
-import { GameInputManager, GameViewRoot, PM_GameSmoothed, PM_GameRendered } from "../build-tools/sources/unity-bridge";
+import { GameInputManager, GameViewRoot, PM_GameSmoothed, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
 // TestPawn --------------------------------------------------------------------------------
@@ -11,7 +11,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'primitiveCube', color: [1, 1, 0] });
+        this.setGameObject({ type: 'primitiveCube'});
     }
 }
 TestPawn.register("TestPawn");
@@ -31,20 +31,13 @@ TestPawn.register("TestPawn");
 // local scope. Our pawn listens for "colorSet" so it can tell Unity to update the game object to
 // the new color.
 
-export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
+export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'primitiveCube', color: this.actor.color });
-
-        this.listen("colorSet", this.onColorSet);
+        this.setGameObject({ type: 'primitiveCube'});
     }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
-    }
-
 }
 ColorPawn.register("ColorPawn");
 
