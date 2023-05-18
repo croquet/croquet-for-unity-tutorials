@@ -456,6 +456,7 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
 
         if (!toBeMerged.length) return;
 
+        console.log(toBeMerged);
         const array = new Float32Array(toBeMerged.length * 11); // maximum length needed
         const intArray = new Uint32Array(array.buffer); // integer view into same data
 
