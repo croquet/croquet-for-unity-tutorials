@@ -18,7 +18,7 @@ public class MouseLookAvatar : MonoBehaviour
     private float yawDelta = 0;
     private float pitch = 0;
 
-    private string gameHandle;
+    private string croquetHandle;
     private CroquetBridge bridge;
     private GameObject mainCamera;
     private bool isActiveAvatar;
@@ -26,14 +26,14 @@ public class MouseLookAvatar : MonoBehaviour
     void Start()
     {
         bridge = GameObject.FindGameObjectWithTag("Bridge").GetComponent<CroquetBridge>();
-        gameHandle = GetComponent<CroquetEntityComponent>().croquetGameHandle;
+        croquetHandle = GetComponent<CroquetEntityComponent>().croquetHandle;
         mainCamera = GameObject.FindWithTag("MainCamera");
         // Debug.Log($"MouseLookAvatar on {gameHandle}");
     }
 
     void Update()
     {
-        if (bridge.localAvatarId != gameHandle)
+        if (bridge.localAvatarId != croquetHandle)
         {
             isActiveAvatar = false;
             return;
@@ -162,7 +162,7 @@ public class MouseLookAvatar : MonoBehaviour
 
         yaw += yawDelta;
         yawDelta = 0;
-        // Debug.Log($"{gameHandle} yaw: {yaw}");
+        // Debug.Log($"{croquetHandle} yaw: {yaw}");
 
         Quaternion yawQ = Quaternion.AngleAxis(yaw, new Vector3(0, 1, 0));
         float dt = Time.deltaTime;
@@ -175,6 +175,6 @@ public class MouseLookAvatar : MonoBehaviour
 
         string positionStr = string.Join<float>(",", new[] { newPos.x, newPos.y, newPos.z });
         string rotationStr = string.Join<float>(",", new[] { yawQ.x, yawQ.y, yawQ.z, yawQ.w });
-        CroquetBridge.SendCroquet("objectMoved", gameHandle, "p", positionStr, "r", rotationStr);
+        CroquetBridge.SendCroquet("objectMoved", croquetHandle, "p", positionStr, "r", rotationStr);
     }
 }

@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c98cc1d7bc374101816379b2a2ac02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitForUserLaunch: 1
+  waitForUserLaunch: 0
   showWebview: 0
 --- !u!114 &294985724
 MonoBehaviour:
@@ -459,9 +459,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SendAllKeysAsEvents: 1
   SendPointerEvents: 0
-  SendPointerHitEvents: 0
-  userCamera: {fileID: 0}
-  PointerHitDistance: 10
 --- !u!4 &1084332933
 Transform:
   m_ObjectHideFlags: 0

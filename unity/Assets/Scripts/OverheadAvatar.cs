@@ -8,7 +8,7 @@ public class OverheadAvatar : MonoBehaviour
     private int left = 0;
     private int right = 0;
 
-    private string gameHandle;
+    private string croquetHandle;
     private CroquetBridge bridge;
     private GameObject mainCamera;
     // private bool isActiveAvatar;
@@ -16,13 +16,13 @@ public class OverheadAvatar : MonoBehaviour
     void Start()
     {
         bridge = GameObject.FindGameObjectWithTag("Bridge").GetComponent<CroquetBridge>();
-        gameHandle = this.gameObject.GetComponent<CroquetEntityComponent>().croquetGameHandle;
-        // Debug.Log($"OverheadAvatar on {gameHandle}");
+        croquetHandle = this.gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
+        // Debug.Log($"OverheadAvatar on {croquetHandle}");
     }
 
     void Update()
     {
-        if (bridge.localAvatarId != gameHandle)
+        if (bridge.localAvatarId != croquetHandle)
         {
             // isActiveAvatar = false;
             return;
@@ -119,6 +119,6 @@ public class OverheadAvatar : MonoBehaviour
 
         string positionStr = string.Join<float>(",", new[] { newPos.x, newPos.y, newPos.z });
         string rotationStr = string.Join<float>(",", new[] { newRot.x, newRot.y, newRot.z, newRot.w });
-        CroquetBridge.SendCroquet("objectMoved", gameHandle, "p", positionStr, "r", rotationStr);
+        CroquetBridge.SendCroquet("objectMoved", croquetHandle, "p", positionStr, "r", rotationStr);
     }
 }
