@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -3317179677228686170}
   - component: {fileID: 231686426289623350}
   - component: {fileID: 3456680595313317299}
+  - component: {fileID: 2921503704906091023}
   m_Layer: 0
   m_Name: WoodColumn
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   croquetActorId: 
-  croquetGameHandle: 
+  croquetHandle: 
 --- !u!114 &3456680595313317299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +86,20 @@ MonoBehaviour:
   positionLerpFactor: 0.2
   rotationLerpFactor: 0.2
   scaleLerpFactor: 0.2
+--- !u!114 &2921503704906091023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733904753145427475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645445b11275e4e3382e8650847c35da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactable: 0
+  interactableLayers: []
 --- !u!1001 &1733904754247844551
 PrefabInstance:
   m_ObjectHideFlags: 0

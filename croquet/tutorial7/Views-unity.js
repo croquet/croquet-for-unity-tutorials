@@ -28,7 +28,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
     constructor(actor) {
         super(actor);
         this.useInstance("woodCube");
-        this.makeClickable();
+        this.makeInteractable();
     }
 
 }
@@ -45,7 +45,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
         super(actor);
 
         this.setGameObject({ type: 'groundPlane' });
-        this.makeClickable();
+        this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }

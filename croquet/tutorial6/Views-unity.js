@@ -4,7 +4,7 @@
 // use our mechanism for referring to named Unity prefabs.
 
 import { Pawn, mix, m4_rotation, m4_translation, m4_multiply, toRad, m4_getRotation, m4_getTranslation, GetViewService } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
-import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered } from "../build-tools/sources/unity-bridge";
+import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
 // TestPawn --------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
     constructor(actor) {
         super(actor);
         this.useInstance("woodCube");
-        this.makeClickable();
+        this.makeInteractable();
     }
 
 }
@@ -48,7 +48,7 @@ ClickPawn.register("ClickPawn");
 //------------------------------------------------------------------------------------------
 
 // On a pointerDown event, our default Unity InputAdapter performs a raycast and sends an
-// event listing all game objects (if they have been set as clickable) along that ray,
+// event listing all game objects (if they have been set as interactable) along that ray,
 // sorted by increasing distance.
 // BasePawn handles all reaction to those events. If BasePawn itself is clicked on, it
 // sends an event to the BaseActor, telling it to spawn a new child. But if a ClickPawn
@@ -64,13 +64,14 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
         super(actor);
 
         this.setGameObject({ type: 'groundPlane' });
-        this.makeClickable();
+        this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }
 
     doPointerHit(e) {
         // e has a list of hits { pawn, xyz, layers }
+        console.log(e.hits);
         const { pawn, xyz } = e.hits[0];
         if (pawn === this) {
             this.say("spawn", xyz);
@@ -86,20 +87,14 @@ BasePawn.register("BasePawn");
 // ColorPawn -------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
+
+export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'woodCube', color: this.actor.color });
-
-        this.listen("colorSet", this.onColorSet);
+        this.setGameObject({ type: 'woodCube'});
     }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
-    }
-
 }
 ColorPawn.register("ColorPawn");
 

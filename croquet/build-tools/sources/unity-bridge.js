@@ -627,8 +627,8 @@ setupStats[bucket] = (setupStats[bucket] || 0) + 1;
         this.setGameObject({ type: name });
     }
 
-    makeClickable(layers = "") {
-        this.sendToUnity('makeClickable', layers);
+    makeInteractable(layers = "") {
+        this.sendToUnity('makeInteractable', layers);
     }
 };
 
@@ -673,18 +673,21 @@ export const PM_GameSpatial = superclass => class extends superclass {
         const scaleMag = Math.min(...scale.map(Math.abs));
         if (!this.lastSentScale || !v3_equals(this.lastSentScale, scale, scaleMag * 0.01)) {
             const scaleCopy = scale.slice();
+            const doSnap = this._scaleSnapped || !this.lastSentScale;
             this.lastSentScale = scaleCopy;
-            updates[this._scaleSnapped ? 'scaleSnap' : 'scale'] = scaleCopy;
+            updates[doSnap ? 'scaleSnap' : 'scale'] = scaleCopy;
         }
         if (!this.lastSentRotation || !q_equals(this.lastSentRotation, rotation, 0.0001)) {
             const rotationCopy = rotation.slice();
+            const doSnap = this._rotationSnapped || !this.lastSentRotation;
             this.lastSentRotation = rotationCopy;
-            updates[this._rotationSnapped ? 'rotationSnap' : 'rotation'] = rotationCopy;
+            updates[doSnap ? 'rotationSnap' : 'rotation'] = rotationCopy;
         }
         if (!this.lastSentTranslation || !v3_equals(this.lastSentTranslation, translation, 0.01)) {
             const translationCopy = translation.slice();
+            const doSnap = this._translationSnapped || !this.lastSentTranslation;
             this.lastSentTranslation = translationCopy;
-            updates[this._translationSnapped ? 'translationSnap' : 'translation'] = translationCopy;
+            updates[doSnap ? 'translationSnap' : 'translation'] = translationCopy;
         }
 
         this.resetGeometrySnapState();

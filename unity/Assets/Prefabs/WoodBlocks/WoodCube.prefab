@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5163372599614568489}
   - component: {fileID: 9130752403095861212}
   - component: {fileID: 1948854031525020605}
+  - component: {fileID: 4632091387592354769}
+  - component: {fileID: 1875268959328263458}
   m_Layer: 0
   m_Name: WoodCube
   m_TagString: Untagged
@@ -61,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   croquetActorId: 
-  croquetGameHandle: 
+  croquetHandle: 
 --- !u!114 &1948854031525020605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,6 +87,32 @@ MonoBehaviour:
   positionLerpFactor: 0.2
   rotationLerpFactor: 0.2
   scaleLerpFactor: 0.2
+--- !u!114 &4632091387592354769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189988984234922136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87675f6857b7b48fb8fb428a9899b6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &1875268959328263458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189988984234922136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645445b11275e4e3382e8650847c35da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clickable: 1
 --- !u!1001 &1247294650439926242
 PrefabInstance:
   m_ObjectHideFlags: 0

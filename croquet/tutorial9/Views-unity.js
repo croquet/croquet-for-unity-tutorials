@@ -29,7 +29,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
     constructor(actor) {
         super(actor);
         this.useInstance("woodCube");
-        this.makeClickable();
+        this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }
@@ -46,7 +46,7 @@ ClickPawn.register("ClickPawn");
 //-- BasePawn ------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// When making each avatar pawn clickable (see below) we specify that it belongs to the
+// When making each avatar pawn interactable (see below) we specify that it belongs to the
 // "avatar" layer. Every hit-test event includes, for each hit object, any layers to which
 // the object was assigned.  We use that to filter the hits list to find any avatar that
 // was hit by the raycast.
@@ -60,7 +60,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
         super(actor);
 
         this.setGameObject({ type: 'groundPlane' });
-        this.makeClickable();
+        this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }
@@ -116,7 +116,7 @@ export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed,
         super(actor);
 
         this.setGameObject({ type: 'woodColumn', color: this.actor.color, extraComponents: this.isMyAvatar ? "MouseLookAvatar" : "" });
-        this.makeClickable("avatar");
+        this.makeInteractable("avatar");
 
         this.listen("colorSet", this.onColorSet);
 
