@@ -2,7 +2,7 @@
 
 // All the code specific to this tutorial is in the definition of AvatarPawn.
 
-import { Pawn, mix, toRad, m4_rotation, m4_getRotation, m4_multiply, m4_translation, m4_getTranslation, GetViewService } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
 import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 
@@ -14,7 +14,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useAddressable("woodCube");
+        this.setGameObject({ type: "woodCube" });
     }
 
 }
@@ -32,7 +32,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useAddressable("woodCube");
+        this.setGameObject({ type: "woodCube" });
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
@@ -55,7 +55,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.useAddressable("groundPlane");
+        this.setGameObject({ type: "groundPlane" });
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
@@ -111,7 +111,11 @@ export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed,
     constructor(actor) {
         super(actor);
 
-        this.useAddressable("woodColumn");
+        this.setGameObject({ type: 'woodColumn', extraComponents: "OverheadAvatar" });
+
+        // send initial position, in case this object is driven locally and
+        // will therefore be ignoring the update poll
+        this.updateGeometry({ translationSnap: this.translation, rotationSnap: this.rotation, scaleSnap: this.scale });
     }
 
 }

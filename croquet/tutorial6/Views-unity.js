@@ -3,23 +3,24 @@
 // NB: the THREE version uses instanced rendering.  Here as a placeholder we just
 // use our mechanism for referring to named Unity prefabs.
 
-import { Pawn, mix, m4_rotation, m4_translation, m4_multiply, toRad, m4_getRotation, m4_getTranslation, GetViewService } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
 import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
 // TestPawn --------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// useAddressable() takes a string value that is matched up against the short names of prefabs
-// in Unity's default local group of Addressables. For efficiency of loading assets at start
-// of play, only those addressables tagged with the application name (set in the Croquet Bridge
-// object) are loaded.
+// the 'type' element of the game-object spec takes a string value that can either be a
+// primitive (primitiveCube, primitiveSphere etc), or is matched up against the short
+// names of prefabs in Unity's default local group of Addressables. For efficiency,
+// only those addressables tagged with the application name (set in the Croquet Bridge
+// component) are made available for the app to load.
 
 export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useAddressable("woodCube");
+        this.setGameObject({ type: "woodCube" });
     }
 
 }
@@ -36,7 +37,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useAddressable("woodCube");
+        this.setGameObject({ type: "woodCube" });
         this.makeInteractable();
     }
 
@@ -63,7 +64,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.useAddressable("groundPlane");
+        this.setGameObject({ type: "groundPlane" });
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);

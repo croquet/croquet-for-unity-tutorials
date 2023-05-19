@@ -2,7 +2,7 @@
 
 // Identical code to the view in the previous tutorial.
 
-import { Pawn, mix, m4_rotation, m4_translation, m4_multiply, toRad, m4_getRotation, m4_getTranslation, GetViewService } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
 import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
@@ -13,7 +13,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useAddressable("woodCube");
+        this.setGameObject({ type: "woodCube" });
     }
 
 }
@@ -27,7 +27,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useAddressable("woodCube");
+        this.setGameObject({ type: "woodCube" });
         this.makeInteractable();
     }
 
@@ -44,7 +44,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.useAddressable("groundPlane");
+        this.setGameObject({ type: "groundPlane" });
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);

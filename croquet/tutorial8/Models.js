@@ -127,7 +127,7 @@ export class MyModelRoot extends ModelRoot {
         this.child.behavior.start({ name: "SpinBehavior", axis: [0, 0, 1], speed: 3 });
 
         this.subscribe("input", "cDown", this.colorChange);
-        this.versionBump = 0;
+this.versionBump = 1;
     }
 
     colorChange() {

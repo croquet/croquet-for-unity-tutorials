@@ -14,7 +14,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useAddressable("woodCube");
+        this.setGameObject({ type: "woodCube" });
     }
 
 }
@@ -28,7 +28,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useAddressable("woodCube");
+        this.setGameObject({ type: "woodCube" });
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
@@ -59,7 +59,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.useAddressable("groundPlane");
+        this.setGameObject({ type: "groundPlane" });
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);

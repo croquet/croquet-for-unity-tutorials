@@ -1,6 +1,6 @@
 // Tutorial 2 Views
 
-import { Pawn, mix, GetViewService, m4_rotation, m4_translation, m4_multiply, m4_getTranslation, m4_getRotation, toRad } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
 import { GameInputManager, GameViewRoot, PM_GameSmoothed, PM_GameRendered } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
@@ -23,13 +23,6 @@ TestPawn.register("TestPawn"); // All Worldcore pawns must be registered after t
 //------------------------------------------------------------------------------------------
 //-- MyViewRoot ----------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
-
-// In this example we explicitly tell Unity where to place the camera.  The camera could be
-// attached to a pawn (as seen in tutorial 9), but can also be referred to directly in
-// commands such as updateGeometry by the name 'camera' that is known to the bridge.
-
-// We use translationSnap and rotationSnap properties (instead of just translation, rotation)
-// so that the camera moves instantly to the specified position.
 
 export class MyViewRoot extends GameViewRoot {
 
