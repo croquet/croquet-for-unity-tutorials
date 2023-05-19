@@ -113,7 +113,12 @@ export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed,
         this.setGameObject({ type: 'woodColumn', extraComponents: this.isMyAvatar ? "MouseLookAvatar" : "" });
         this.makeInteractable("avatar");
 
-        if (this.driving) this.subscribe("input", "pointerHit", this.doPointerHit);
+        if (this.driving) {
+            // send initial position, because this object is driven locally and
+            // will therefore be ignoring the update poll
+            this.updateGeometry({ translationSnap: this.translation, rotationSnap: this.rotation, scaleSnap: this.scale });
+            this.subscribe("input", "pointerHit", this.doPointerHit);
+        }
     }
 
     doPointerHit(e) {
