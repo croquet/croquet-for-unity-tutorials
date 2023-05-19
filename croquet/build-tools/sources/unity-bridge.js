@@ -439,8 +439,6 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
         for (const [gameHandle, pawn] of Object.entries(this.pawnsByGameHandle)) {
             const update = pawn.geometryUpdateIfNeeded();
             if (update) toBeMerged.push([this.unityId(gameHandle), update]);
-            // const camUpdate = pawn.cameraUpdateIfNeeded?.();
-            // if (camUpdate) toBeMerged.push([this.unityId('camera'), camUpdate]);
         }
 
         if (!toBeMerged.length) return;
@@ -791,49 +789,6 @@ export const PM_GameAvatar = superclass => class extends superclass {
 
     park() { }
     drive() { }
-
-};
-
-export const PM_GameCamera = superclass => class extends superclass {
-
-    constructor(actor) {
-        super(actor);
-
-        this.cameraTranslation = [0, 0, 0]; // position of the camera relative to the pawn
-        this.cameraRotation = q_identity();
-        this.hasGrabbedCamera = false;
-    }
-
-    grabCamera() {
-        const rot = this.lastSentCameraRotation = this.cameraRotation.slice();
-        const pos = this.lastSentCameraTranslation = this.cameraTranslation.slice();
-        this.sendToUnity('grabCamera', rot, pos);
-        this.hasGrabbedCamera = true;
-    }
-
-    releaseCamera() {
-        this.hasGrabbedCamera = false;
-        this.sendToUnity('releaseCamera');
-    }
-
-    cameraUpdateIfNeeded() {
-        if (!this.isViewReady || this.doomed || !this.hasGrabbedCamera) return null;
-
-        const updates = {};
-        const { cameraRotation, cameraTranslation } = this;
-        if (!this.lastSentCameraRotation || !q_equals(this.lastSentCameraRotation, cameraRotation, 0.0001)) {
-            updates.rotation = cameraRotation.slice();
-            updates.rotationSnapped = !this.lastSentCameraRotation;
-            this.lastSentCameraRotation = cameraRotation.slice();
-        }
-        if (!this.lastSentCameraTranslation || !v3_equals(this.lastSentCameraTranslation, cameraTranslation, 0.01)) {
-            updates.translation = cameraTranslation.slice();
-            updates.translationSnapped = !this.lastSentCameraTranslation;
-            this.lastSentCameraTranslation = cameraTranslation.slice();
-        }
-
-        return Object.keys(updates).length ? updates : null;
-    }
 
 };
 

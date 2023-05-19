@@ -3,7 +3,7 @@
 // All the code specific to this tutorial is in the definition of AvatarPawn.
 
 import { Pawn, mix, toRad, q_axisAngle, v3_sub, v3_normalize, v3_scale } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
-import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered, PM_GameCamera } from "../build-tools/sources/unity-bridge";
+import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 
 //------------------------------------------------------------------------------------------
@@ -99,37 +99,21 @@ ColorPawn.register("ColorPawn");
 // AvatarPawn ------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// We added the PM_GameCamera mixin to our avatar. The camera follows the values of the pawn's
-// cameraRotation and cameraTranslation properties, allowing us to control its position
-// relative to the pawn. It automatically tracks the pawn's movement so our view changes as
-// our avatar moves.
-//
 // The "MouseLookAvatar" component that we assign to the user's avatar handles not just keystrokes
 // but also the pointer: when you hold down the right mouse button, you are in direct control
 // of the pitch of the camera and the yaw of the avatar object it is attached to. The yaw
 // updates are reported to all clients, while the pitch remains a private property of the
 // local camera.
 
-export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameAvatar, PM_GameCamera) {
+export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameAvatar, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'woodColumn', color: this.actor.color, extraComponents: this.isMyAvatar ? "MouseLookAvatar" : "" });
+        this.setGameObject({ type: 'woodColumn', extraComponents: this.isMyAvatar ? "MouseLookAvatar" : "" });
         this.makeInteractable("avatar");
 
-        this.listen("colorSet", this.onColorSet);
-
-        if (this.driving) {
-            this.cameraRotation = q_axisAngle([1, 0, 0], toRad(5));
-            this.cameraTranslation = [0, 5, -10];
-            this.grabCamera();
-            this.subscribe("input", "pointerHit", this.doPointerHit);
-        }
-    }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
+        if (this.driving) this.subscribe("input", "pointerHit", this.doPointerHit);
     }
 
     doPointerHit(e) {
