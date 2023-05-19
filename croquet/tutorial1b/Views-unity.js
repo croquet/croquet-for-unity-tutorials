@@ -23,7 +23,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'primitiveCube'});
+        this.setGameObject({ type: 'primitiveCube' });
     }
 }
 TestPawn.register("TestPawn"); // All Worldcore pawns must be registered after they're defined.

@@ -39,11 +39,11 @@ class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
         this.dying = true;
         const translation = v3_add(this.translation, [0, 2, 0]);
         this.set({ translation });
-        this.behavior.start({ name: "RiseBehavior", height: 5, speed: 1 });
-        this.behavior.start({ name: "SpinBehavior", axis: sphericalRandom(), speed: 0.2 });
+        this.behavior.start({ name: "RiseBehavior", height: 4, speed: 2 });
+        this.behavior.start({ name: "SpinBehavior", axis: sphericalRandom(), speed: 0.4 });
         this.behavior.start({
             name: "SequenceBehavior", behaviors: [
-                { name: "InflateBehavior", size: 4, speed: 0.2 },
+                { name: "InflateBehavior", size: 3, speed: 0.4 },
                 "DestroyBehavior"
             ]
         });
@@ -127,7 +127,7 @@ export class MyModelRoot extends ModelRoot {
         this.child.behavior.start({ name: "SpinBehavior", axis: [0, 0, 1], speed: 3 });
 
         this.subscribe("input", "cDown", this.colorChange);
-        this.versionBump = 0;
+this.versionBump = 1;
     }
 
     colorChange() {

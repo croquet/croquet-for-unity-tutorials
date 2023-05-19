@@ -2,8 +2,8 @@
 
 // All the code specific to this tutorial is in the definition of AvatarPawn.
 
-import { Pawn, mix, toRad, m4_rotation, m4_getRotation, m4_multiply, m4_translation, m4_getTranslation, GetViewService } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
-import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered } from "../build-tools/sources/unity-bridge";
+import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 
 //------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
+        this.setGameObject({ type: "woodCube" });
     }
 
 }
@@ -32,8 +32,8 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
-        this.makeClickable();
+        this.setGameObject({ type: "woodCube" });
+        this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }
@@ -55,8 +55,8 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'groundPlane' });
-        this.makeClickable();
+        this.setGameObject({ type: "groundPlane" });
+        this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }
@@ -74,18 +74,12 @@ BasePawn.register("BasePawn");
 // ColorPawn -------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
+export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'primitiveCube', color: this.actor.color });
-
-        this.listen("colorSet", this.onColorSet);
-    }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
+        this.setGameObject({ type: 'primitiveCube'});
     }
 
 }
@@ -112,18 +106,16 @@ ColorPawn.register("ColorPawn");
 // object immediately, and sends over the bridge the events that will be used by other
 // clients to synch to the avatar's position updates.
 
-export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameAvatar) {
+export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameAvatar, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'woodColumn', color: this.actor.color, extraComponents: "OverheadAvatar" });
+        this.setGameObject({ type: 'woodColumn', extraComponents: "OverheadAvatar" });
 
-        this.listen("colorSet", this.onColorSet);
-    }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
+        // send initial position, in case this object is driven locally and
+        // will therefore be ignoring the update poll
+        this.updateGeometry({ translationSnap: this.translation, rotationSnap: this.rotation, scaleSnap: this.scale });
     }
 
 }
@@ -138,23 +130,4 @@ export class MyViewRoot extends GameViewRoot {
     static viewServices() {
         return [GameInputManager].concat(super.viewServices());
     }
-
-    onStart() {
-        this.pawnManager = GetViewService('GameEnginePawnManager');
-        this.placeCamera();
-    }
-
-    placeCamera() {
-        const pitchMatrix = m4_rotation([1, 0, 0], toRad(45));
-        const yawMatrix = m4_rotation([0, 1, 0], toRad(30));
-
-        let cameraMatrix = m4_translation([0, 0, -50]);
-        cameraMatrix = m4_multiply(cameraMatrix, pitchMatrix);
-        cameraMatrix = m4_multiply(cameraMatrix, yawMatrix);
-
-        const translation = m4_getTranslation(cameraMatrix);
-        const rotation = m4_getRotation(cameraMatrix);
-        this.pawnManager.updateGeometry('camera', { translationSnap: translation, rotationSnap: rotation });
-    }
-
 }

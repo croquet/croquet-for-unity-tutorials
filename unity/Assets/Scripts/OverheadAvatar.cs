@@ -8,30 +8,25 @@ public class OverheadAvatar : MonoBehaviour
     private int left = 0;
     private int right = 0;
 
-    private string gameHandle;
-    private CroquetBridge bridge;
-    private GameObject mainCamera;
-    // private bool isActiveAvatar;
-
+    private string croquetHandle;
+    private CroquetAvatarComponent croquetAvatarComponent;
+    
     void Start()
     {
-        bridge = GameObject.FindGameObjectWithTag("Bridge").GetComponent<CroquetBridge>();
-        gameHandle = this.gameObject.GetComponent<CroquetGameObject>().croquetGameHandle;
-        // Debug.Log($"OverheadAvatar on {gameHandle}");
+        croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
+        croquetAvatarComponent = gameObject.GetComponent<CroquetAvatarComponent>();
+        // Debug.Log($"OverheadAvatar on {croquetHandle}");
     }
 
     void Update()
     {
-        if (bridge.localAvatarId != gameHandle)
+        if (croquetAvatarComponent == null || !croquetAvatarComponent.isActiveAvatar)
         {
-            // isActiveAvatar = false;
             return;
         }
 
         ProcessKeyboard();
         Drive();
-
-        // isActiveAvatar = true;
     }
 
     void ProcessKeyboard()
@@ -106,19 +101,15 @@ public class OverheadAvatar : MonoBehaviour
         if (right + left == 0 && fore + back == 0) return;
         
         float dt = Time.deltaTime;
-        Transform trans = this.gameObject.transform;
-        Quaternion rotation = trans.localRotation;
+        Quaternion rotation = transform.localRotation;
         float yaw = (right + left) * -3f * dt;
         Quaternion yawQ = Quaternion.AngleAxis(yaw * Mathf.Rad2Deg, new Vector3(0, -1, 0));
         Quaternion newRot = rotation * yawQ;
         Vector3 t = new Vector3(0, 0, fore + back) * (5f * dt);
         Vector3 tt = newRot * t;
-        Vector3 newPos = trans.localPosition + tt;
-        trans.localPosition = newPos;
-        trans.localRotation = newRot;
+        Vector3 newPos = transform.localPosition + tt;
 
-        string positionStr = string.Join<float>(",", new[] { newPos.x, newPos.y, newPos.z });
-        string rotationStr = string.Join<float>(",", new[] { newRot.x, newRot.y, newRot.z, newRot.w });
-        CroquetBridge.SendCroquet("objectMoved", gameHandle, "p", positionStr, "r", rotationStr);
+        CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, newPos, newRot);
+        CroquetSpatialSystem.Instance.SnapObjectInCroquet(croquetHandle, newPos, newRot);
     }
 }

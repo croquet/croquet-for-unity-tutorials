@@ -3,23 +3,24 @@
 // NB: the THREE version uses instanced rendering.  Here as a placeholder we just
 // use our mechanism for referring to named Unity prefabs.
 
-import { Pawn, mix, m4_rotation, m4_translation, m4_multiply, toRad, m4_getRotation, m4_getTranslation, GetViewService } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
-import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered } from "../build-tools/sources/unity-bridge";
+import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
 // TestPawn --------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// useInstance() takes a string value that is matched up against the short names of prefabs
-// in Unity's default local group of Addressables. For efficiency of loading assets at start
-// of play, only those addressables tagged with the application name (set in the Croquet Bridge
-// object) are loaded.
+// the 'type' element of the game-object spec takes a string value that can either be a
+// primitive (primitiveCube, primitiveSphere etc), or is matched up against the short
+// names of prefabs in Unity's default local group of Addressables. For efficiency,
+// only those addressables tagged with the application name (set in the Croquet Bridge
+// component) are made available for the app to load.
 
 export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
+        this.setGameObject({ type: "woodCube" });
     }
 
 }
@@ -36,8 +37,8 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
-        this.makeClickable();
+        this.setGameObject({ type: "woodCube" });
+        this.makeInteractable();
     }
 
 }
@@ -48,7 +49,7 @@ ClickPawn.register("ClickPawn");
 //------------------------------------------------------------------------------------------
 
 // On a pointerDown event, our default Unity InputAdapter performs a raycast and sends an
-// event listing all game objects (if they have been set as clickable) along that ray,
+// event listing all game objects (if they have been set as interactable) along that ray,
 // sorted by increasing distance.
 // BasePawn handles all reaction to those events. If BasePawn itself is clicked on, it
 // sends an event to the BaseActor, telling it to spawn a new child. But if a ClickPawn
@@ -63,8 +64,8 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'groundPlane' });
-        this.makeClickable();
+        this.setGameObject({ type: "groundPlane" });
+        this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }
@@ -86,20 +87,14 @@ BasePawn.register("BasePawn");
 // ColorPawn -------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
+
+export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'woodCube', color: this.actor.color });
-
-        this.listen("colorSet", this.onColorSet);
+        this.setGameObject({ type: 'woodCube'});
     }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
-    }
-
 }
 ColorPawn.register("ColorPawn");
 
@@ -110,23 +105,5 @@ ColorPawn.register("ColorPawn");
 export class MyViewRoot extends GameViewRoot {
     static viewServices() {
         return [GameInputManager].concat(super.viewServices());
-    }
-
-    onStart() {
-        this.pawnManager = GetViewService('GameEnginePawnManager');
-        this.placeCamera();
-    }
-
-    placeCamera() {
-        const pitchMatrix = m4_rotation([1, 0, 0], toRad(45));
-        const yawMatrix = m4_rotation([0, 1, 0], toRad(30));
-
-        let cameraMatrix = m4_translation([0, 0, -50]);
-        cameraMatrix = m4_multiply(cameraMatrix, pitchMatrix);
-        cameraMatrix = m4_multiply(cameraMatrix, yawMatrix);
-
-        const translation = m4_getTranslation(cameraMatrix);
-        const rotation = m4_getRotation(cameraMatrix);
-        this.pawnManager.updateGeometry('camera', { translationSnap: translation, rotationSnap: rotation });
     }
 }

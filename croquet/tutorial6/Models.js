@@ -42,7 +42,6 @@ class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
         super.init(options);
         this.listen("kill", this.destroy);
     }
-
 }
 TestActor.register('TestActor');
 
@@ -65,7 +64,7 @@ export class MyModelRoot extends ModelRoot {
 
     init(options) {
         super.init(options);
-        console.log("Start model root!");
+        console.log("Starting model root!");
         this.base = BaseActor.create();
         this.parent = TestActor.create({pawn: "TestPawn", parent: this.base, translation:[0,1,0]});
         this.child = ColorActor.create({pawn: "ColorPawn", parent: this.parent, translation:[0,0,-2]});

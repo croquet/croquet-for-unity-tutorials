@@ -22,7 +22,7 @@ Install node.js and the node package manager (npm) for your platform here (LTS R
 git clone https://github.com/croquet/croquet-for-unity-tutorials.git
 ```
 
-Note: this repository's large size is predominantly due to our including a specific version of NodeJS for Windows.  On Windows we have to use NodeJS to run the JavaScript side of a C4U session, since Unity on Windows is currently unable to use the WebView mechanism that Croquet prefers.  On MacOS we use the WebView by default, but if a project has the necessary entry point for NodeJS execution (as the tutorials all do), NodeJS can be used on Mac as well.
+Note: this repository's large size is predominantly due to our including a specific version of NodeJS for Windows.  On Windows we normally use NodeJS to run the JavaScript side of a C4U session, since Unity on Windows is currently unable to use the WebView mechanism that Croquet prefers.  On MacOS we use the WebView by default, but if a project has the necessary entry point for NodeJS execution (as the tutorials all do), NodeJS can be used on Mac as well.
 
 ## Navigate and install the project dependencies
 
@@ -72,9 +72,9 @@ Press the play button.  Because this is the first time you have built the app, i
 
 ## Debug with Chrome
 
-On MacOS (not on Windows, where the Croquet side is always run using NodeJS) you can use an external browser such as Chrome to run the JavaScript code.  For debugging, this is more convenient than letting the C4U bridge start up an invisible WebView.
+On both MacOS and Windows, you can choose to use an external browser such as Chrome to run the JavaScript code.  For debugging, this is more convenient than letting the C4U bridge start up an invisible WebView.
 
-In any of the tutorial scenes (while play is *not* in progress), select "CroquetBridge" in the hierarchy (typically at top left), then in that object's "Croquet Runner" component (seen on the right) select the **Wait For User Launch** checkbox.
+In any of the tutorial scenes (while play is *not* in progress), select the "Croquet" object in the scene's hierarchy (typically at top left), then in that object's "Croquet Runner" component select the **Wait For User Launch** checkbox.
 
 Now whenever you press play on that scene, the console output will stop at a line of the form "ready for browser to load from http://localhost:...".  Copy that address (if you click on the line, it will appear as selectable text in the view below the console) then use it to launch a new browser tab.  This should complete the startup of the app.
 
