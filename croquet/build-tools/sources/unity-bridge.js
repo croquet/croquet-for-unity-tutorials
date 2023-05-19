@@ -188,29 +188,17 @@ export const GameEnginePawnManager = class extends ViewService {
     constructor(name) {
         super(name || "GameEnginePawnManager");
 
-        this.pawnsById = {}; // id => pawn
-        this.deferredMessagesById = new Map(); // id => [msgs], iterable in the order the ids are mentioned
-        this.deferredGeometriesById = {}; // id => msg; order not important
+        this.lastGameHandle = 0;
+        this.pawnsByGameHandle = {}; // handle => pawn
+        this.deferredMessagesByGameHandle = new Map(); // handle => [msgs], iterable in the order the handles are mentioned
+        this.deferredGeometriesByGameHandle = {}; // handle => msg; order not important
+
         this.unityMessageThrottle = 45; // ms (every two updates at 26ms)
         this.unityGeometryThrottle = 90; // ms (every four updates at 26ms)
         this.lastMessageFlush = 0;
         this.lastGeometryFlush = 0;
 
-        this.reservedGameHandles = {
-            camera: 1
-        };
-        this.lastGameHandle = 99; // 0-99 are reserved
-        this.tellUnityReservedHandles();
-
         theGameEngineBridge.setCommandHandler(this.handleUnityCommand.bind(this));
-    }
-
-    tellUnityReservedHandles() {
-        const argStrings = [];
-        for (const [alias, id] of Object.entries(this.reservedGameHandles)) {
-            argStrings.push(alias, String(id));
-        }
-        theGameEngineBridge.sendCommand('setReservedIds', argStrings.join(','));
     }
 
     destroy() {
@@ -222,12 +210,13 @@ export const GameEnginePawnManager = class extends ViewService {
         return ++this.lastGameHandle;
     }
 
-    unityId(id) {
-        return this.reservedGameHandles[id] || id;
+    unityId(gameHandle) {
+        // currently redundant.  previously checked for reserved handles.
+        return gameHandle;
     }
 
-    getPawn(id) {
-        return this.pawnsById[id] || null;
+    getPawn(gameHandle) {
+        return this.pawnsByGameHandle[gameHandle] || null;
     }
 
     handleUnityCommand(command, args) {
@@ -235,20 +224,20 @@ export const GameEnginePawnManager = class extends ViewService {
         let pawn;
         switch (command) {
             case 'objectCreated': {
-                // args[0] is id
+                // args[0] is gameHandle
                 // args[1] is time when Unity created the pawn
-                const [id, timeStr] = args;
-                pawn = this.pawnsById[id];
+                const [gameHandle, timeStr] = args;
+                pawn = this.pawnsByGameHandle[gameHandle];
                 if (pawn) pawn.unityViewReady(Number(timeStr));
                 break;
             }
             case 'objectMoved': {
-                // args[0] is pawnId
+                // args[0] is gameHandle
                 // remaining args are taken in pairs <property, value>
                 // where property is one of "s", "r", "p" for scale, rot, pos
                 // followed by a comma-separated list of values for the property
                 // i.e., 3 or 4 floats
-                pawn = this.pawnsById[args[0]];
+                pawn = this.pawnsByGameHandle[args[0]];
                 if (pawn && pawn.geometryUpdateFromUnity) {
                     try {
                         const update = {};
@@ -279,46 +268,45 @@ export const GameEnginePawnManager = class extends ViewService {
         }
     }
 
-    makeObject(pawn, unityViewSpec) {
-        const { id } = unityViewSpec;
-        if (pawn) this.registerPawn(pawn, id);
-        this.sendDeferred(id, 'makeObject', JSON.stringify(unityViewSpec));
+    makeGameObject(pawn, unityViewSpec) {
+        const gameHandle = unityViewSpec.cH;
+        if (pawn) this.registerPawn(pawn, gameHandle);
+        this.sendDeferred(gameHandle, 'makeObject', JSON.stringify(unityViewSpec));
         // any time a new object is created, we ensure that there is minimal delay in
         // servicing the deferred messages and updating objects' geometries.
         this.expediteMessageFlush();
         this.expediteGeometryFlush();
-        return id;
+        return gameHandle;
     }
 
-    destroyObject(id) {
-        this.unregisterPawn(id); // will also remove any pending messages for the id
-        this.sendDeferred(id, 'destroyObject', this.unityId(id));
+    destroyObject(gameHandle) {
+        this.unregisterPawn(gameHandle); // will also remove any pending messages for the handle
+        this.sendDeferred(gameHandle, 'destroyObject', this.unityId(gameHandle));
     }
 
-    registerPawn(pawn, id) {
-        this.pawnsById[id] = pawn;
+    registerPawn(pawn, gameHandle) {
+        this.pawnsByGameHandle[gameHandle] = pawn;
     }
 
-    unregisterPawn(id) {
-        delete this.pawnsById[id];
-        this.deferredMessagesById.delete(id); // if any
+    unregisterPawn(gameHandle) {
+        delete this.pawnsByGameHandle[gameHandle];
+        this.deferredMessagesByGameHandle.delete(gameHandle); // if any
     }
 
-    addChild(parentId, childId) {
-        this.sendDeferred(childId, 'setParent', this.unityId(childId), this.unityId(parentId));
+    setParent(childHandle, parentHandle) {
+        this.sendDeferred(childHandle, 'setParent', this.unityId(childHandle), this.unityId(parentHandle));
     }
 
-    unparent(childId) {
-        this.sendDeferred(childId, 'unparent', this.unityId(childId));
+    unparent(childHandle) {
+        this.sendDeferred(childHandle, 'unparent', this.unityId(childHandle));
     }
 
-    updateGeometry(id, updateSpec) {
-        // opportunistic updates to object geometries (only of non-pawn objects... which for
-        // now means just the camera).
+    updatePawnGeometry(gameHandle, updateSpec) {
+        // opportunistic updates to object geometries.
         // we keep a record of these updates independently from general deferred messages,
         // gathering and sending them as part of the next geometry flush.
-        const previousSpec = this.deferredGeometriesById[id];
-        if (!previousSpec) this.deferredGeometriesById[id] = updateSpec; // end of story
+        const previousSpec = this.deferredGeometriesByGameHandle[gameHandle];
+        if (!previousSpec) this.deferredGeometriesByGameHandle[gameHandle] = updateSpec; // end of story
         else {
             // each of prev and latest can have updates to scale, translation,
             // rotation (or their snap variants).  overwrite previousSpec with any
@@ -338,19 +326,19 @@ export const GameEnginePawnManager = class extends ViewService {
         }
     }
 
-    sendDeferred(id, command, ...args) {
-        let deferredForSame = this.deferredMessagesById.get(id);
+    sendDeferred(gameHandle, command, ...args) {
+        let deferredForSame = this.deferredMessagesByGameHandle.get(gameHandle);
         if (!deferredForSame) {
             deferredForSame = [];
-            this.deferredMessagesById.set(id, deferredForSame);
+            this.deferredMessagesByGameHandle.set(gameHandle, deferredForSame);
         }
         deferredForSame.push({ command, args });
     }
 
     // NOT USED
-    sendDeferredWithMerge(id, command, mergeHandler, ...args) {
-        const deferredForSame = this.deferredMessagesById.get(id);
-        if (!deferredForSame) this.sendDeferred(id, command, ...args); // end of story
+    sendDeferredWithMerge(gameHandle, command, mergeHandler, ...args) {
+        const deferredForSame = this.deferredMessagesByGameHandle.get(gameHandle);
+        if (!deferredForSame) this.sendDeferred(gameHandle, command, ...args); // end of story
         else {
             const previous = deferredForSame.find(spec => spec.command === command);
             if (previous) mergeHandler(previous.args, args);
@@ -358,9 +346,9 @@ export const GameEnginePawnManager = class extends ViewService {
         }
     }
 
-    sendDeferredFromPawn(id, command, ...args) {
-        // for every command from a pawn, prepend its unity id as the first arg
-        this.sendDeferred(id, command, this.unityId(id), ...args);
+    sendDeferredFromPawn(gameHandle, command, ...args) {
+        // for every command from a pawn, prepend its croquet handle as the first arg
+        this.sendDeferred(gameHandle, command, this.unityId(gameHandle), ...args);
     }
 
     update(time, delta) {
@@ -395,7 +383,7 @@ export const GameEnginePawnManager = class extends ViewService {
     flushDeferredMessages() {
 const pNow = performance.now();
 
-        // now that opportunistic updateGeometry is handled separately, there are
+        // now that opportunistic updatePawnGeometry is handled separately, there are
         // currently no commands that need special treatment.  but we may as
         // well keep the option available.
         const transformers = {
@@ -412,7 +400,7 @@ const pNow = performance.now();
         };
 
         const messages = [];
-        this.deferredMessagesById.forEach(msgSpecs => {
+        this.deferredMessagesByGameHandle.forEach(msgSpecs => {
             msgSpecs.forEach(spec => {
                 const { command } = spec;
                 let { args } = spec;
@@ -424,7 +412,7 @@ const pNow = performance.now();
             });
         });
 
-        this.deferredMessagesById.clear();
+        this.deferredMessagesByGameHandle.clear();
 
         const numMessages = messages.length; // before sendBundle messes with it
         if (numMessages > 1) {
@@ -442,16 +430,17 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
         // it's possible that some pawns will have an explicit deferred update
         // in addition to some changes since then that they now want to propagate.
         // in that situation, we send the explicit update first.
-        for (const [id, update] of Object.entries(this.deferredGeometriesById)) {
-            toBeMerged.push([this.unityId(id), update]);
+        for (const [gameHandle, update] of Object.entries(this.deferredGeometriesByGameHandle)) {
+            toBeMerged.push([this.unityId(gameHandle), update]);
+            console.warn(`deferred geom for ${gameHandle}`, update);
         }
-        this.deferredGeometriesById = {};
+        this.deferredGeometriesByGameHandle = {};
 
-        for (const [id, pawn] of Object.entries(this.pawnsById)) {
+        for (const [gameHandle, pawn] of Object.entries(this.pawnsByGameHandle)) {
             const update = pawn.geometryUpdateIfNeeded();
-            if (update) toBeMerged.push([this.unityId(id), update]);
-            const camUpdate = pawn.cameraUpdateIfNeeded?.();
-            if (camUpdate) toBeMerged.push([this.unityId('camera'), camUpdate]);
+            if (update) toBeMerged.push([this.unityId(gameHandle), update]);
+            // const camUpdate = pawn.cameraUpdateIfNeeded?.();
+            // if (camUpdate) toBeMerged.push([this.unityId('camera'), camUpdate]);
         }
 
         if (!toBeMerged.length) return;
@@ -461,13 +450,13 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
 
         let pos = 0;
         const writeVector = vec => vec.forEach(val => array[pos++] = val);
-        toBeMerged.forEach(([id, spec]) => {
+        toBeMerged.forEach(([gameHandle, spec]) => {
             const { scale, scaleSnap, translation, translationSnap, rotation, rotationSnap } = spec;
-            // first number encodes object id and (in bits 0 to 5) whether there is an
+            // first number encodes object gameHandle and (in bits 0 to 5) whether there is an
             // update to each of scale, rotation, translation, and for each one whether
             // it should be snapped.
             const idPos = pos++; // once we know the value
-            let encodedId = id << 6;
+            let encodedId = gameHandle << 6;
             if (scale || scaleSnap) {
                 writeVector(scale || scaleSnap);
                 encodedId += 32;
@@ -523,6 +512,7 @@ export const PM_GameRendered = superclass => class extends superclass {
 
         this.throttleFromUnity = 100; // ms
         this.messagesAwaitingCreation = []; // removed once creation is requested
+        this.geometryAwaitingCreation = null; // can be written by PM_Spatial and its subclasses
         this.isViewReady = false;
     }
 
@@ -549,18 +539,12 @@ export const PM_GameRendered = superclass => class extends superclass {
 
         this.unityViewP = new Promise(resolve => this.setReady = resolve);
         const unityViewSpec = {
-            id: String(this.gameHandle),
+            cH: String(this.gameHandle),
             cN: this.actor.id,
             cC: !!viewSpec.confirmCreation,
             wTA: !!viewSpec.waitToActivate,
             type: viewSpec.type,
             cs: allComponents,
-            c: viewSpec.color || [1,0,0],
-            a: viewSpec.alpha === undefined ? 1 : viewSpec.alpha,
-            iLA: !!this.isMyAvatar, // if no getter, always false
-            s: scale,
-            r: rotation,
-            t: translation
         };
 // every pawn tracks the delay between its creation on the Croquet
 // side and receipt of a message from Unity confirming the corresponding
@@ -571,11 +555,17 @@ if (this.gameHandle % 100 === 0) {
     globalThis.timedLog(`pawn ${this.gameHandle} created`);
 }
 
-        this.pawnManager.makeObject(this, unityViewSpec);
+        this.pawnManager.makeGameObject(this, unityViewSpec);
         this.messagesAwaitingCreation.forEach(cmdAndArgs => {
             this.pawnManager.sendDeferredFromPawn(...[this.gameHandle, ...cmdAndArgs]);
         });
         delete this.messagesAwaitingCreation;
+
+        // PM_GameSpatial introduces geometryAwaitingCreation
+        if (this.geometryAwaitingCreation) {
+            this.pawnManager.updatePawnGeometry(this.gameHandle, this.geometryAwaitingCreation);
+            this.geometryAwaitingCreation = null;
+        }
     }
 
     unityViewReady(estimatedReadyTime) {
@@ -596,7 +586,7 @@ setupStats[bucket] = (setupStats[bucket] || 0) + 1;
 
     addChild(pawn) {
         super.addChild(pawn);
-        this.pawnManager.addChild(this.gameHandle, pawn.gameHandle);
+        this.pawnManager.setParent(pawn.gameHandle, this.gameHandle);
     }
 
     removeChild(pawn) {
@@ -620,11 +610,6 @@ setupStats[bucket] = (setupStats[bucket] || 0) + 1;
         // console.log(`pawn ${this.gameHandle} destroyed`);
         this.pawnManager.destroyObject(this.gameHandle);
         super.destroy();
-    }
-
-    useAddressable(name) {
-        // expects a named prefab in the default Addressables group on the Unity side, labelled with the app name
-        this.setGameObject({ type: name });
     }
 
     makeInteractable(layers = "") {
@@ -699,6 +684,18 @@ export const PM_GameSpatial = superclass => class extends superclass {
         this._scaleSnapped = this._rotationSnapped = this._translationSnapped = true;
     }
 
+    updateGeometry(updateSpec) {
+        // opportunistic geometry update.
+        // if the game pawn hasn't been created yet, store this update to be
+        // delivered once the creation has been requested.
+        if (this.messagesAwaitingCreation) {
+            // not ready yet.  store it (overwriting any previous value)
+            this.geometryAwaitingCreation = updateSpec;
+        } else {
+            this.pawnManager.updatePawnGeometry(this.gameHandle, updateSpec);
+        }
+    }
+
     geometryUpdateFromUnity(update) {
         this.set(update, this.throttleFromUnity);
     }
@@ -768,6 +765,7 @@ export const PM_GameAvatar = superclass => class extends superclass {
 
     constructor(actor) {
         super(actor);
+        this.componentNames.add('CroquetAvatarComponent');
         this.onDriverSet();
         this.listenOnce("driverSet", this.onDriverSet);
     }
@@ -778,8 +776,8 @@ export const PM_GameAvatar = superclass => class extends superclass {
 
     onDriverSet() {
         // on creation, this method is sending a message to Unity that precedes
-        // the makeObject message itself.  however, it will automatically be held
-        // back until immediately after makeObject has been sent.
+        // the makeGameObject message itself.  however, it will automatically be held
+        // back until immediately after makeGameObject has been sent.
         if (this.isMyAvatar) {
             this.driving = true;
             this.drive();
@@ -850,7 +848,7 @@ export class GameViewRoot extends ViewRoot {
 
         // we treat the construction of the view as a signal that the session is
         // ready to talk across the bridge
-        theGameEngineBridge.sendCommand('croquetSessionReady');
+        theGameEngineBridge.sendCommand('croquetSessionReady', this.viewId);
         globalThis.timedLog("session ready");
     }
 
@@ -906,7 +904,7 @@ export class GameInputManager extends ViewService {
             case 'pointerHit': {
                 // each argument starting at 1 is a comma-separated list defining
                 // a hit on a single Croquet-registered game object.  its fields are:
-                //   id
+                //   gameHandle
                 //   hitPoint x
                 //   hitPoint y
                 //   hitPoint z
@@ -916,8 +914,8 @@ export class GameInputManager extends ViewService {
                 const hitList = [];
                 for (let i = 1; i < args.length; i++) {
                     const parsedArg = args[i].split(',');
-                    const [id, x, y, z, ...layers] = parsedArg;
-                    const pawn = this.pawnManager.getPawn(id);
+                    const [gameHandle, x, y, z, ...layers] = parsedArg;
+                    const pawn = this.pawnManager.getPawn(gameHandle);
                     if (pawn) {
                         const xyz = [x, y, z].map(Number);
                         hitList.push({ pawn, xyz, layers});

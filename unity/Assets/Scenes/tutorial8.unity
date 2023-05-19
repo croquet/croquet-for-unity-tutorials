@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44403905, g: 0.49318177, b: 0.5722404, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -139,8 +139,9 @@ GameObject:
   - component: {fileID: 294985727}
   - component: {fileID: 294985726}
   - component: {fileID: 294985725}
+  - component: {fileID: 294985729}
   m_Layer: 0
-  m_Name: CroquetBridge
+  m_Name: Croquet
   m_TagString: Bridge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,6 +178,7 @@ MonoBehaviour:
   appName: tutorial8
   useNodeJS: 0
   croquetSessionReady: 0
+  croquetViewId: 
   showRigidbodyStateHighlight: 0
   localAvatarId: 
   cameraOwnerId: 
@@ -194,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c98cc1d7bc374101816379b2a2ac02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitForUserLaunch: 1
+  waitForUserLaunch: 0
   showWebview: 0
 --- !u!114 &294985725
 MonoBehaviour:
@@ -209,7 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SendPointerHitEvents: 1
-  PointerHitDistance: 50
+  PointerHitDistance: 100
   userCamera: {fileID: 1148729239}
 --- !u!114 &294985726
 MonoBehaviour:
@@ -245,6 +247,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 102e0a86589084572930d87fc4be9b31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &294985729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294985719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28b46b536afa74ea5aacf53a0241e66c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &417734306
@@ -449,8 +463,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1148729237}
-  m_LocalRotation: {x: -0.031678546, y: 0.94230306, z: -0.31993032, w: -0.09330582}
-  m_LocalPosition: {x: 2.8571126, y: 14.346614, z: 16.78127}
+  m_LocalRotation: {x: -0.3751807, y: -0.3712747, z: 0.16727196, w: -0.8327153}
+  m_LocalPosition: {x: -14.631426, y: 35.334316, z: -10.935852}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
