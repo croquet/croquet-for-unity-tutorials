@@ -3,7 +3,7 @@
 // Identical code to the view in the previous tutorial.
 
 import { Pawn, mix, m4_rotation, m4_translation, m4_multiply, toRad, m4_getRotation, m4_getTranslation, GetViewService } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
-import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered } from "../build-tools/sources/unity-bridge";
+import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
 // TestPawn --------------------------------------------------------------------------------
@@ -13,7 +13,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
+        this.useAddressable("woodCube");
     }
 
 }
@@ -27,7 +27,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
+        this.useAddressable("woodCube");
         this.makeInteractable();
     }
 
@@ -44,7 +44,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'groundPlane' });
+        this.useAddressable("groundPlane");
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
@@ -67,20 +67,13 @@ BasePawn.register("BasePawn");
 // ColorPawn -------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
+export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'primitiveCube', color: this.actor.color });
-
-        this.listen("colorSet", this.onColorSet);
+        this.setGameObject({ type: 'woodCube'});
     }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
-    }
-
 }
 ColorPawn.register("ColorPawn");
 

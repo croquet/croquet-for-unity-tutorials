@@ -15,7 +15,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'primitiveCube', color: [1, 1, 0] });
+        this.setGameObject({ type: 'primitiveCube' });
     }
 }
 TestPawn.register("TestPawn"); // All Worldcore pawns must be registered after they're defined.

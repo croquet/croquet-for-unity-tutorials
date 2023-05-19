@@ -3,7 +3,7 @@
 // All the code specific to this tutorial is in the definition of AvatarPawn.
 
 import { Pawn, mix, toRad, m4_rotation, m4_getRotation, m4_multiply, m4_translation, m4_getTranslation, GetViewService } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
-import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered } from "../build-tools/sources/unity-bridge";
+import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 
 //------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
+        this.useAddressable("woodCube");
     }
 
 }
@@ -32,7 +32,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
+        this.useAddressable("woodCube");
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
@@ -55,7 +55,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'groundPlane' });
+        this.useAddressable("groundPlane");
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
@@ -79,13 +79,7 @@ export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'primitiveCube', color: this.actor.color });
-
-        this.listen("colorSet", this.onColorSet);
-    }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
+        this.setGameObject({ type: 'primitiveCube'});
     }
 
 }
@@ -112,18 +106,12 @@ ColorPawn.register("ColorPawn");
 // object immediately, and sends over the bridge the events that will be used by other
 // clients to synch to the avatar's position updates.
 
-export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameAvatar) {
+export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameAvatar, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'woodColumn', color: this.actor.color, extraComponents: "OverheadAvatar" });
-
-        this.listen("colorSet", this.onColorSet);
-    }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
+        this.useAddressable("woodColumn");
     }
 
 }

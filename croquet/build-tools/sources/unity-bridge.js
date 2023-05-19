@@ -622,7 +622,7 @@ setupStats[bucket] = (setupStats[bucket] || 0) + 1;
         super.destroy();
     }
 
-    useInstance(name) {
+    useAddressable(name) {
         // @@ temporary mechanism - just expects a named prefab on the Unity side
         this.setGameObject({ type: name });
     }

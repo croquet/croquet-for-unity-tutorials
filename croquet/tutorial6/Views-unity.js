@@ -10,7 +10,7 @@ import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_Gam
 // TestPawn --------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// useInstance() takes a string value that is matched up against the short names of prefabs
+// useAddressable() takes a string value that is matched up against the short names of prefabs
 // in Unity's default local group of Addressables. For efficiency of loading assets at start
 // of play, only those addressables tagged with the application name (set in the Croquet Bridge
 // object) are loaded.
@@ -19,7 +19,7 @@ export class TestPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
+        this.useAddressable("woodCube");
     }
 
 }
@@ -36,7 +36,7 @@ export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) 
 
     constructor(actor) {
         super(actor);
-        this.useInstance("woodCube");
+        this.useAddressable("woodCube");
         this.makeInteractable();
     }
 
@@ -63,7 +63,7 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
     constructor(actor) {
         super(actor);
 
-        this.setGameObject({ type: 'groundPlane' });
+        this.useAddressable("groundPlane");
         this.makeInteractable();
 
         this.subscribe("input", "pointerHit", this.doPointerHit);
@@ -71,7 +71,6 @@ export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
 
     doPointerHit(e) {
         // e has a list of hits { pawn, xyz, layers }
-        console.log(e.hits);
         const { pawn, xyz } = e.hits[0];
         if (pawn === this) {
             this.say("spawn", xyz);
