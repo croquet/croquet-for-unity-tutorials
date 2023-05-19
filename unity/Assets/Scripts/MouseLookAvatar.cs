@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class MouseLookAvatar : MonoBehaviour
 {
+    public Camera avatarCamera;
+    
     private readonly KeyCode[] keysOfInterest = new KeyCode[]
     {
         KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow,
@@ -18,33 +20,33 @@ public class MouseLookAvatar : MonoBehaviour
     private float yawDelta = 0;
     private float pitch = 0;
 
-    private string croquetHandle;
-    private CroquetBridge bridge;
-    private GameObject mainCamera;
-    private bool isActiveAvatar;
+    private string croquetHandle;    
+    private CroquetAvatarComponent croquetAvatarComponent;
 
+    private bool isActiveAvatarLastFrame = false;
+    
     void Start()
     {
-        bridge = GameObject.FindGameObjectWithTag("Bridge").GetComponent<CroquetBridge>();
         croquetHandle = GetComponent<CroquetEntityComponent>().croquetHandle;
-        mainCamera = GameObject.FindWithTag("MainCamera");
+        croquetAvatarComponent = gameObject.GetComponent<CroquetAvatarComponent>();
+        avatarCamera = Camera.main;
     }
 
     void Update()
     {
-        if (bridge.localAvatarId != croquetHandle)
+        if (croquetAvatarComponent == null || !croquetAvatarComponent.isActiveAvatar)
         {
-            isActiveAvatar = false;
+            isActiveAvatarLastFrame = false;
             return;
         }
 
-        if (!isActiveAvatar)
+        if (!isActiveAvatarLastFrame)
         {
             // being (re)activated.  set the local yaw in accordance with where the
             // object is now facing, and the camera pitch to the value seen on the camera.
             Quaternion q = this.gameObject.transform.localRotation;
             yaw = Mathf.Rad2Deg * Mathf.Atan2(2 * q.y * q.w - 2 * q.x * q.z, 1 - 2 * q.y * q.y - 2 * q.z * q.z);
-            q = mainCamera.transform.localRotation;
+            q = avatarCamera.transform.localRotation;
             pitch = Mathf.Rad2Deg * Mathf.Atan2(2 * q.x * q.w - 2 * q.y * q.z, 1 - 2 * q.x * q.x - 2 * q.z * q.z);
             // Debug.Log($"MouseLookAvatar initial pitch: {pitch}");
         }
@@ -53,7 +55,7 @@ public class MouseLookAvatar : MonoBehaviour
         ProcessKeyboard();
         Drive();
 
-        isActiveAvatar = true;
+        isActiveAvatarLastFrame = true;
     }
 
     void ProcessPointer()
@@ -84,7 +86,7 @@ public class MouseLookAvatar : MonoBehaviour
             pitch = Mathf.Clamp(pitch, -180, 180);
             // Debug.Log($"yawDelta {yawDelta} pitch {pitch}");
             Quaternion pitchQ = Quaternion.AngleAxis(pitch, new Vector3(1, 0, 0));
-            mainCamera.transform.localRotation = pitchQ;
+            //avatarCamera.transform.localRotation = pitchQ;
         }
     }
 
@@ -165,15 +167,14 @@ public class MouseLookAvatar : MonoBehaviour
 
         Quaternion yawQ = Quaternion.AngleAxis(yaw, new Vector3(0, 1, 0));
         float dt = Time.deltaTime;
-        Vector3 t = new Vector3(left + right, 0, fore + back) * (5f * dt);
+        Vector3 t = new Vector3(left + right, 0, fore + back) * (10f * dt);
         Vector3 tt = yawQ * t;
         Transform trans = this.gameObject.transform;
         Vector3 newPos = trans.localPosition + tt;
         trans.localPosition = newPos;
         trans.localRotation = yawQ;
 
-        string positionStr = string.Join<float>(",", new[] { newPos.x, newPos.y, newPos.z });
-        string rotationStr = string.Join<float>(",", new[] { yawQ.x, yawQ.y, yawQ.z, yawQ.w });
-        CroquetBridge.SendCroquet("objectMoved", croquetHandle, "p", positionStr, "r", rotationStr);
+        CroquetSpatialSystem.Instance.SnapObjectTo(croquetHandle, newPos, yawQ);
+        CroquetSpatialSystem.Instance.SnapObjectInCroquet(croquetHandle, newPos, yawQ);
     }
 }
