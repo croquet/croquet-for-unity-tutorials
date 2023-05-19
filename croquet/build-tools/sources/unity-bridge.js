@@ -623,7 +623,7 @@ setupStats[bucket] = (setupStats[bucket] || 0) + 1;
     }
 
     useAddressable(name) {
-        // @@ temporary mechanism - just expects a named prefab on the Unity side
+        // expects a named prefab in the default Addressables group on the Unity side, labelled with the app name
         this.setGameObject({ type: name });
     }
 
