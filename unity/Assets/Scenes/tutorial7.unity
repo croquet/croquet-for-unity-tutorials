@@ -222,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SendPointerHitEvents: 1
   PointerHitDistance: 50
-  userCamera: {fileID: 0}
+  userCamera: {fileID: 1148729239}
 --- !u!114 &294985726
 MonoBehaviour:
   m_ObjectHideFlags: 0
