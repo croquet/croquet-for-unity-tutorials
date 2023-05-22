@@ -18,8 +18,6 @@ Install node.js and the node package manager (npm) for your platform here (LTS R
 
 ## Clone the Repo
 
-**Note (22 May 2023): we discovered that C4U is currently wrong-footed if the path to the repository contains space characters.  We are working to remedy that, but for now please clone to a location that does not have this issue.**
-
 ```
 git clone https://github.com/croquet/croquet-for-unity-tutorials.git
 ```
