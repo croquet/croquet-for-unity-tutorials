@@ -2,7 +2,7 @@
 //
 // Croquet Corporation, 2023
 
-import { v3_equals, q_identity, q_equals, ViewService, GetViewService, StartWorldcore, ViewRoot } from "@croquet/worldcore-kernel";
+import { v3_equals, q_equals, ViewService, GetViewService, StartWorldcore, ViewRoot } from "@croquet/worldcore-kernel";
 
 globalThis.timedLog = msg => {
     const toLog = `${(globalThis.CroquetViewDate || Date).now() % 100000}: ${msg}`;
@@ -23,8 +23,6 @@ class BridgeToUnity {
         this.measureIndex = 0;
     }
 
-    // @@ for now, we assume that a given C4U app only uses one type of
-    // message communication between the Croquet and Unity instances
     setCommandHandler(handler) {
         this.commandHandler = handler;
     }
@@ -42,8 +40,13 @@ class BridgeToUnity {
 console.log(`PORT ${portStr}`);
         const sock = this.socket = new WebSocket(`ws://127.0.0.1:${portStr}/Bridge`);
         sock.onopen = _evt => {
-            // @@ uncomment following line to send all console logs through the websocket to Unity
-            // console.log = console.warn = console.error = (...args) => sock.send(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+            // prepare for Unity to ask for some of the JS logs (see 'setJSLogForwarding' below)
+            if (!console.q_log) {
+                console.q_log = console.log;
+                console.q_warn = console.warn;
+                console.q_error = console.error;
+            }
+
             globalThis.timedLog('opened socket');
             this.bridgeIsConnected = true;
             this.resetMessageStats();
@@ -110,6 +113,17 @@ console.log(`PORT ${portStr}`);
     handleUnityCommand(command, args) {
         // console.log('command from Unity: ', { command, args });
         switch (command) {
+            case 'setJSLogForwarding': {
+                // args[0] is comma-separated list of log types (log,warn,error)
+                // that are to be sent over to Unity
+                const toForward = args[0].split(',');
+                const forwarder = (logType, logVals) => this.sendCommand('logFromJS', logType, logVals.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+                ['log', 'warn', 'error'].forEach(logType => {
+                    if (toForward.includes(logType)) console[logType] = (...logVals) => forwarder(logType, logVals);
+                    else console[logType] = console[`q_${logType}`];
+                });
+                break;
+            }
             case 'readyForSession': {
                 // args are [apiKey, appId, sessionName ]
                 const [apiKey, appId, sessionName ] = args;
