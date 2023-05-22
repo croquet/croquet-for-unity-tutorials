@@ -78,18 +78,12 @@ BasePawn.register("BasePawn");
 // ColorPawn -------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
+export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameMaterial) {
 
     constructor(actor) {
         super(actor);
 
         this.setGameObject({ type: 'primitiveCube', color: this.actor.color });
-
-        this.listen("colorSet", this.onColorSet);
-    }
-
-    onColorSet() {
-        this.sendToUnity('setColor', this.actor.color);
     }
 
 }

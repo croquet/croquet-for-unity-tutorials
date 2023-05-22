@@ -18,6 +18,8 @@ Install node.js and the node package manager (npm) for your platform here (LTS R
 
 ## Clone the Repo
 
+**Note (22 May 2023): we discovered that C4U is currently wrong-footed if the path to the repository contains space characters.  We are working to remedy that, but for now please clone to a location that does not have this issue.**
+
 ```
 git clone https://github.com/croquet/croquet-for-unity-tutorials.git
 ```
@@ -49,17 +51,16 @@ The API Key is a token of around 40 characters that you can create for yourself 
 
 The App Prefix is the way of identifying with your organization the Croquet apps that you develop and run.  The combination of this prefix and the App Name provided on the Croquet Bridge component in each scene is a full App ID - for example, `io.croquet.worldcore.tutorial1`.  For running the tutorials it is fine to leave this prefix as is, but when you develop your own apps you must change the prefix so that the App ID is a globally unique identifier.  The ID must follow the Android reverse domain naming convention - i.e., each dot-separated segment must start with a letter, and only letters, digits, and underscores are allowed.
 
-For Macs: Find the Path to your Node executable, by running
+**For MacOS:** Find the Path to your Node executable, by going to a terminal and running
 ```
 which node
 ```
 On the Settings asset, fill in the **Path to Node** field with the path.
 
-For Windows: Your system may complain about "Script Execution Policy" which will prevent our setup scripts from running. The following command allows script execution on Windows for the current user:
+**For Windows:** Your system may complain about "Script Execution Policy" which will prevent our setup scripts from running. The following command allows script execution on Windows for the current user (respond **Yes to [A]ll** when prompted):
 ```
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
-then Yes to [A]ll.
 
 ## Run the Tutorials
 
@@ -74,9 +75,9 @@ Press the play button.  Because this is the first time you have built the app, i
 
 On both MacOS and Windows, you can choose to use an external browser such as Chrome to run the JavaScript code.  For debugging, this is more convenient than letting the C4U bridge start up an invisible WebView.
 
-In any of the tutorial scenes (while play is *not* in progress), select the "Croquet" object in the scene's hierarchy (typically at top left), then in that object's "Croquet Runner" component select the **Wait For User Launch** checkbox.
+In any of the tutorial scenes (while play is stopped), select the "Croquet" object in the scene's hierarchy (typically at top left), then in that object's "Croquet Runner" component select the **Wait For User Launch** checkbox.
 
-Now whenever you press play on that scene, the console output will stop at a line of the form "ready for browser to load from http://localhost:...".  Copy that address (if you click on the line, it will appear as selectable text in the view below the console) then use it to launch a new browser tab.  This should complete the startup of the app.
+Now whenever you press play on that scene, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Copy that address (if you click on the line, it will appear as selectable text in the view below the console) then use it to launch a new browser tab.  This should complete the startup of the app.
 
 When you stop play in the Unity editor, the browser tab will automatically leave the Croquet session.  If you restart play, you will need to reload the tab to join the session again.
 
