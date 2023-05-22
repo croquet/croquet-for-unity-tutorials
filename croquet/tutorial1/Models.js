@@ -4,7 +4,7 @@
 // automatically instantiates a corresponding pawn. The actor is replicated
 // across all clients, while the pawn is unique to each client.
 
-import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
 
 //------------------------------------------------------------------------------------------
 // TestActor -------------------------------------------------------------------------------

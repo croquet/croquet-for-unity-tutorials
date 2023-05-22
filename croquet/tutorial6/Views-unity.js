@@ -3,7 +3,7 @@
 // NB: the THREE version uses instanced rendering.  Here as a placeholder we just
 // use our mechanism for referring to named Unity prefabs.
 
-import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel";
 import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
@@ -30,8 +30,8 @@ TestPawn.register("TestPawn");
 // ClickPawn -------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// In addition to using an instance (another one of the prefabs), ClickPawn also
-// registers for click detection by the Unity raycaster.
+// In addition to using a prefab, ClickPawn also registers for click detection by
+// the Croquet Interactable system on the Unity side.
 
 export class ClickPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed) {
 
@@ -48,14 +48,14 @@ ClickPawn.register("ClickPawn");
 //-- BasePawn ------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// On a pointerDown event, our default Unity InputAdapter performs a raycast and sends an
+// On a pointerDown event, our default Croquet Interactable performs a raycast and sends an
 // event listing all game objects (if they have been set as interactable) along that ray,
 // sorted by increasing distance.
 // BasePawn handles all reaction to those events. If BasePawn itself is clicked on, it
 // sends an event to the BaseActor, telling it to spawn a new child. But if a ClickPawn
 // was clicked on, the ClickPawn tells its actor to delete itself.
 //
-// Raycasting happens entirely in the view, with the pawns routing the appropriate events
+// Hit-handling happens entirely in the view, with the pawns routing the appropriate events
 // to the model through the reflector. Clicking on a pawn on any client therefore kills
 // its actor everywhere. Requesting a spawn on one client spawns an actor on all the clients.
 
@@ -86,7 +86,6 @@ BasePawn.register("BasePawn");
 //------------------------------------------------------------------------------------------
 // ColorPawn -------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
-
 
 export class ColorPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed, PM_GameMaterial) {
 

@@ -1,6 +1,6 @@
 // Tutorial 2 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
 
 //------------------------------------------------------------------------------------------
 // ParentActor -----------------------------------------------------------------------------

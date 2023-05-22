@@ -2,7 +2,7 @@
 
 // All the code specific to this tutorial is in the definition of AvatarPawn.
 
-import { Pawn, mix, toRad, q_axisAngle, v3_sub, v3_normalize, v3_scale } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix, v3_sub, v3_normalize, v3_scale } from "@croquet/worldcore-kernel";
 import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 
@@ -115,7 +115,7 @@ export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed,
         }
     }
 
-    doPointerHit(e) {
+    doPointerHit(e) { console.log(e.hits);
         // e has a list of hits { pawn, xyz, layers }
         // Iff the first hit is in the avatar layer, act on it.
         const { pawn, layers } = e.hits[0];

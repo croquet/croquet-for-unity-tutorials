@@ -1,6 +1,6 @@
 // Tutorial 8 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User, AM_Avatar } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User, AM_Avatar } from "@croquet/worldcore-kernel";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ class MyUser extends User {
             parent: base,
             driver: this.userId,
             color: this.color,
-            translation: [0, 1, -10] // y offset set view-side in three.js version
+            translation: [0, 1, -10]
         });
     }
 
@@ -127,7 +127,6 @@ export class MyModelRoot extends ModelRoot {
         this.child.behavior.start({ name: "SpinBehavior", axis: [0, 0, 1], speed: 3 });
 
         this.subscribe("input", "cDown", this.colorChange);
-this.versionBump = 1;
     }
 
     colorChange() {

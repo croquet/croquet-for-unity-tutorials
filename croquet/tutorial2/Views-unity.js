@@ -1,6 +1,6 @@
 // Tutorial 2 Views
 
-import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel";
 import { GameInputManager, GameViewRoot, PM_GameSmoothed, PM_GameRendered } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------

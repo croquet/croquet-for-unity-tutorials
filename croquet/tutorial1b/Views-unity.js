@@ -4,7 +4,7 @@
 // automatically instantiates a corresponding pawn. The actor is replicated
 // across all clients, while the pawn is unique to each client.
 
-import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel";
 import { GameInputManager, PM_GameRendered, PM_GameSpatial, GameViewRoot } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------

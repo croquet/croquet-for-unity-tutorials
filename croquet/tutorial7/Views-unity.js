@@ -2,7 +2,7 @@
 
 // Identical code to the view in the previous tutorial.
 
-import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel";
 import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 //------------------------------------------------------------------------------------------
@@ -37,7 +37,6 @@ ClickPawn.register("ClickPawn");
 //------------------------------------------------------------------------------------------
 //-- BasePawn ------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
-
 
 export class BasePawn extends mix(Pawn).with(PM_GameRendered, PM_GameSpatial) {
 

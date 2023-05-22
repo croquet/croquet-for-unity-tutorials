@@ -2,7 +2,7 @@
 
 // All the code specific to this tutorial is in the definition of AvatarPawn.
 
-import { Pawn, mix } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { Pawn, mix } from "@croquet/worldcore-kernel";
 import { GameInputManager, GameViewRoot, PM_GameSpatial, PM_GameSmoothed, PM_GameAvatar, PM_GameRendered, PM_GameMaterial } from "../build-tools/sources/unity-bridge";
 
 
@@ -89,12 +89,12 @@ ColorPawn.register("ColorPawn");
 // AvatarPawn ------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// We've added the mixin PM_Avatar. Previously when we subscribed to control inputs, we've done
+// We've added the mixin PM_GameAvatar. Previously when we subscribed to control inputs, we've done
 // it directly in the model, but since we only want one person to control the avatar, we use
 // the AvatarPawn as a go-between. An AvatarPawn exists for the avatar on every client, but
 // only one should accept control inputs.
 //
-// A crucial behavior provided by PM_Avatar is for a client to "drive" the avatar that is
+// A crucial behavior provided by PM_GameAvatar is for a client to "drive" the avatar that is
 // currently assigned to it. Driving means that the client updates the avatar position in
 // its own view instantly (without a round-trip journey to the reflector), while also emitting
 // position-update events that travel via the reflector to all clients. The originating pawn
@@ -114,7 +114,7 @@ export class AvatarPawn extends mix(Pawn).with(PM_GameRendered, PM_GameSmoothed,
         this.setGameObject({ type: 'woodColumn', extraComponents: "OverheadAvatar" });
 
         // send initial position, in case this object is driven locally and
-        // will therefore be ignoring the update poll
+        // will therefore be ignoring updates from the model
         this.updateGeometry({ translationSnap: this.translation, rotationSnap: this.rotation, scaleSnap: this.scale });
     }
 

@@ -1,6 +1,6 @@
 // Tutorial 3 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral } from "@croquet/worldcore-kernel";
 
 //------------------------------------------------------------------------------------------
 // ParentActor -----------------------------------------------------------------------------
@@ -39,9 +39,7 @@ ParentActor.register('ParentActor');
 
 // We also define another actor that doesn't subscribe to input events.
 
-class ChildActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
-
-}
+class ChildActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {}
 ChildActor.register('ChildActor');
 
 //------------------------------------------------------------------------------------------

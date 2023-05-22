@@ -1,6 +1,6 @@
 // Tutorial 9 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-extraneous-dependencies
+import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
@@ -55,11 +55,6 @@ TestActor.register('TestActor');
 //-- ColorActor ----------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// We add the AM_Avatar mixin to the ColorActor. This lets us use a ColorActor as an
-// avatar. Avatars have a driver property that holds the viewId of the user controlling
-// them. We also create an event so users can shove each other.  If the avatar has a driver we
-// snap it to its new position, so as not to interfere with its user's control inputs.
-
 class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
 
     init(options) {
@@ -100,7 +95,7 @@ class MyUser extends User {
             pawn: "AvatarPawn",
             parent: base,
             driver: this.userId,
-            translation: [0, 1, -10] // y offset set view-side in three.js version
+            translation: [0, 1, -10]
         });
     }
 
