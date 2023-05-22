@@ -7,7 +7,8 @@
 # 4. full path to a temporary file to be used for watcher output (if not provided,
 #    that means we should perform a one-time build)
 
-cd `dirname "$0"`
+DIR=`dirname "$0"`
+cd "$DIR"
 
 NODE=$1
 APPNAME=$2
