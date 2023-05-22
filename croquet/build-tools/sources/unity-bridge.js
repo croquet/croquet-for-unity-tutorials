@@ -432,7 +432,6 @@ performance.measure(`to U (batch ${this.msgBatch}): ${numMessages} msgs in ${bat
         // in that situation, we send the explicit update first.
         for (const [gameHandle, update] of Object.entries(this.deferredGeometriesByGameHandle)) {
             toBeMerged.push([this.unityId(gameHandle), update]);
-            console.warn(`deferred geom for ${gameHandle}`, update);
         }
         this.deferredGeometriesByGameHandle = {};
 
