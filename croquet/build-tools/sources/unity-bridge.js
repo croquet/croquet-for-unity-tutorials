@@ -216,7 +216,7 @@ export const GameEnginePawnManager = class extends ViewService {
     }
 
     destroy() {
-        if (theGameEngineBridge.bridgeIsConnected) theGameEngineBridge.sendCommand('croquetSessionDisconnected');
+        if (theGameEngineBridge.bridgeIsConnected) theGameEngineBridge.sendCommand('tearDownSession');
         theGameEngineBridge.setCommandHandler(null);
     }
 
@@ -816,8 +816,8 @@ export class GameViewRoot extends ViewRoot {
 
         // we treat the construction of the view as a signal that the session is
         // ready to talk across the bridge
-        theGameEngineBridge.sendCommand('croquetSessionReady', this.viewId);
-        globalThis.timedLog("session ready");
+        theGameEngineBridge.sendCommand('croquetSessionRunning', this.viewId);
+        globalThis.timedLog("session running");
     }
 
 }
