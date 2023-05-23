@@ -235,6 +235,7 @@ MonoBehaviour:
   appName: tutorial1
   useNodeJS: 0
   croquetSessionReady: 0
+  croquetViewId: 
   showRigidbodyStateHighlight: 0
   localAvatarId: 
   cameraOwnerId: 
