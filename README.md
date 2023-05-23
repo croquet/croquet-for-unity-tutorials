@@ -5,7 +5,7 @@ This repository contains Croquet for Unity (C4U) ports of Brian Upton's introduc
 The most important directories are the following:
 * `unity/` - a loadable Unity project, from which you can run apps in the editor or build standalone apps for deployment on iOS and Android.
 * `unity/Assets/Scenes/` - the scenes for running and deploying the nine tutorial examples.
-* `croquet/{tutorial1..tutorial9}` - JavaScript source for building the Croquet side of the tutorial scenes.  You can edit the code under this directory to change the tutorials' behavior.
+* `unity/Assets/CroquetJS/{tutorial1..tutorial9}` - JavaScript source for building the Croquet side of the tutorial scenes.  You can edit the code under this directory to change the tutorials' behavior.
 
 # Setup
 
@@ -24,22 +24,25 @@ git clone https://github.com/croquet/croquet-for-unity-tutorials.git
 
 Note: this repository's large size is predominantly due to our including a specific version of NodeJS for Windows.  On Windows we normally use NodeJS to run the JavaScript side of a C4U session, since Unity on Windows is currently unable to use the WebView mechanism that Croquet prefers.  On MacOS we use the WebView by default, but if a project has the necessary entry point for NodeJS execution (as the tutorials all do), NodeJS can be used on Mac as well.
 
-## Navigate and install the project dependencies
-
-```
-cd croquet-for-unity-tutorials/croquet
-```
-
-```
-npm install
-```
-
 ## Load the Unity Project
 For now, we **strongly recommend** using _exactly_ Unity Editor Version `2021.3.19f1` for C4U projects, to reduce the risk of confusing Unity when we publish updates. 2021.3.19f1 can be downloaded by pasting the following in your browser: `unityhub://2021.3.19f1/c9714fde33b6` (a deeplink to open hub to the correct version).
 
 In the `Unity Hub` app, select `Open => Add project from disk`, then navigate to the `croquet-for-unity-tutorials/unity` folder and hit `Add Project`.
 
 **Note:** During this first loading, Unity might warn that there appear to be script errors. It's fine to hit `Ignore` and continue.  It appears to be related to the project's dependencies, and to be harmless.
+
+## Install the JavaScript build tools and their dependencies
+
+In the editor's top menu, go to the `Croquet` drop-down and select `Copy JS Build Tools`. This will copy some files into `Assets/CroquetJS`, and others into the root of the repository (i.e., the parent directory of the Unity project itself).
+
+Now install the dependencies, in the repository root:
+
+```
+cd croquet-for-unity-tutorials
+npm install
+```
+
+**Note: whenever you download an update to the C4U package using the package manager, you should immediately repeat this copy action and dependency installation.**
 
 ## Set up your Croquet Developer Credentials
 
