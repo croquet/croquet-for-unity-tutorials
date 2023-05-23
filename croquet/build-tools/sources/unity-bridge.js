@@ -537,14 +537,6 @@ export const PM_GameRendered = superclass => class extends superclass {
 
         if (!viewSpec.confirmCreation) this.isViewReady = true; // not going to wait
 
-        // no need to send full-precision values.  scale is the one that can legitimately
-        // vary enormously (e.g., to be applied to very large/very small models),
-        // so for that we pass small values as-is.
-        const roundVal = (val, scaler) => Math.round(val * scaler) / scaler;
-        const scale = this.actor.scale.map(val => Math.abs(val) < 0.1 ? val : roundVal(val, 10000));
-        const rotation = this.actor.rotation.map(val => roundVal(val, 100000));
-        const translation = this.actor.translation.map(val => roundVal(val, 10000));
-
         let allComponents = [...this.componentNames].join(',');
         if (viewSpec.extraComponents) allComponents += `,${viewSpec.extraComponents}`;
 
