@@ -65,7 +65,9 @@ $RECYCLE.BIN/
 # GitHub pages
 /_site/
 
-# temporary build files
+# JS installation and temporary build files
+/package*.json
+/.eslintrc.json
 *.tmp.js
 
 # Add Dev patch
