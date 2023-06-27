@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.croquet.multiplayer": "https://github.com/croquet/croquet-for-unity-package.git",
+    "com.croquet.multiplayer": "file:../../../croquet-for-unity-package",
     "com.unity.addressables": "1.19.19",
     "com.unity.collab-proxy": "2.0.0",
     "com.unity.ide.rider": "3.0.18",
