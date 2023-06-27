@@ -13,14 +13,25 @@ import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral } from "@croquet/world
 class BaseActor extends mix(Actor).with(AM_Spatial) {
 
     get pawn() {return "BasePawn"} // Always uses the same pawn
+    get gamePawnType() { return "groundPlane" }
 
     init(options) {
         super.init(options);
-        this.listen("spawn", this.doSpawn);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
+    }
+
+    doPointerHit(e) {
+        // e has a list of hits { actor, xyz, layers }
+        const { actor, xyz } = e.hits[0];
+        if (actor === this) {
+            this.doSpawn(xyz);
+        } else {
+            this.publish(actor.id, "kill");
+        }
     }
 
     doSpawn(xyz) {
-        TestActor.create({pawn:"ClickPawn", parent: this, translation:xyz});
+        TestActor.create({ pawn: "ClickPawn", gamePawnType: "interactableCube", parent: this, translation:xyz});
     }
 
 }
@@ -37,6 +48,7 @@ BaseActor.register('BaseActor');
 // says "kill", the actor will destroy itself for all clients.
 
 class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return this._gamePawnType || "woodCube" }
 
     init(options) {
         super.init(options);
@@ -50,6 +62,7 @@ TestActor.register('TestActor');
 //------------------------------------------------------------------------------------------
 
 class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "colorableCube" }
 
     get color() { return this._color || [0.5,0.5,0.5] }
 

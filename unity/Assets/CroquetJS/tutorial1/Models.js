@@ -20,6 +20,8 @@ import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
 
 class TestActor extends mix(Actor).with(AM_Spatial) {
 
+    get gamePawnType() { return "basicCube" }
+
     init(options) {
         super.init(options);
         this.subscribe("input", "zDown", this.moveLeft);

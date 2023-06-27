@@ -63,16 +63,27 @@ RiseBehavior.register('RiseBehavior');
 
 class BaseActor extends mix(Actor).with(AM_Spatial) {
 
-    get pawn() {return "BasePawn"}
+    get pawn() {return "BasePawn" }
+    get gamePawnType() { return "groundPlane" }
 
     init(options) {
         super.init(options);
-        this.listen("spawn", this.doSpawn);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
+    }
+
+    doPointerHit(e) {
+        // e has a list of hits { actor, xyz, layers }
+        const { actor, xyz } = e.hits[0];
+        if (actor === this) {
+            this.doSpawn(xyz);
+        } else {
+            this.publish(actor.id, "kill");
+        }
     }
 
     doSpawn(xyz) {
         const translation = [...xyz];
-        TestActor.create({pawn:"ClickPawn", parent: this, translation});
+        TestActor.create({pawn: "ClickPawn", gamePawnType: "interactableCube", parent: this, translation});
     }
 
 }
@@ -93,6 +104,7 @@ BaseActor.register('BaseActor');
 // the actor after it inflates to maximum size.
 
 class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return this._gamePawnType || "woodCube" }
 
     init(options) {
         super.init(options);
@@ -119,6 +131,7 @@ TestActor.register('TestActor');
 //------------------------------------------------------------------------------------------
 
 class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "woodCube" }
 
     get color() { return this._color || [0.5,0.5,0.5] }
 

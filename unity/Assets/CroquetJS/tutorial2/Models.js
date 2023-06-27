@@ -7,6 +7,7 @@ import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
 //------------------------------------------------------------------------------------------
 
 class ParentActor extends mix(Actor).with(AM_Spatial) {
+    get gamePawnType() { return "smoothedCube" }
 
     init(options) {
         super.init(options);
@@ -38,7 +39,7 @@ ParentActor.register('ParentActor');
 // We also define another actor that doesn't subscribe to input events.
 
 class ChildActor extends mix(Actor).with(AM_Spatial) {
-
+    get gamePawnType() { return "basicCube" }
 }
 ChildActor.register('ChildActor');
 

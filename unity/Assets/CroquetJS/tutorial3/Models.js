@@ -9,6 +9,7 @@ import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral } from "@croquet/world
 // AM_Behavioral lets us attach behaviors to actors to control them.
 
 class ParentActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "smoothedCube" }
 
     init(options) {
         super.init(options);
@@ -39,7 +40,9 @@ ParentActor.register('ParentActor');
 
 // We also define another actor that doesn't subscribe to input events.
 
-class ChildActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {}
+class ChildActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "smoothedCube" }
+}
 ChildActor.register('ChildActor');
 
 //------------------------------------------------------------------------------------------

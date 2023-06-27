@@ -91,6 +91,10 @@ MonoBehaviour:
     - tutorial7
     - tutorial8
     - tutorial9
+    - tutorial1
+    - tutorial2
+    - tutorial3
+    - tutorial4
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 2e2c9bdcc4dbd4fe1b46554d72be675b, type: 2}

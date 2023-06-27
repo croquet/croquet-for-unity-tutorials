@@ -34,7 +34,8 @@ public class MouseLookAvatar : MonoBehaviour
 
     void Update()
     {
-        if (croquetAvatarComponent == null || !croquetAvatarComponent.isActiveAvatar)
+        CroquetAvatarComponent activeAvatar = CroquetAvatarSystem.Instance.GetActiveAvatarComponent();
+        if (croquetAvatarComponent != activeAvatar)
         {
             isActiveAvatarLastFrame = false;
             return;

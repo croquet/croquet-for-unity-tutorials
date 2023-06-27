@@ -39,6 +39,42 @@ MonoBehaviour:
     - tutorial7
     - tutorial8
     - tutorial9
+  - m_GUID: aaec8e24ba41f4fcdbb4496de825be20
+    m_Address: basicCube
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial1
+    - tutorial2
+  - m_GUID: c1613ff204ce04f689f13bb3102ba7a8
+    m_Address: smoothedCube
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial2
+    - tutorial3
+    - tutorial4
+    - tutorial5
+  - m_GUID: 78e641be5a5a64ba1b3cf7613b5c36e5
+    m_Address: colorableCube
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial5
+    - tutorial6
+  - m_GUID: 773aec16c560c4a4a81b374be2a86d86
+    m_Address: interactableCube
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial7
+    - tutorial6
+  - m_GUID: fdd6fc2f3a96e48c99e579752e60ffeb
+    m_Address: tutorial8Avatar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial8
+  - m_GUID: 575db292ec2ca46709a63c4faf0e759a
+    m_Address: tutorial9Avatar
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - tutorial9
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1398c81f484a44649a064676c86f132e, type: 2}
   m_SchemaSet:

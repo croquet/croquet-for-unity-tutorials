@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1733904753145427476}
-  - component: {fileID: -3317179677228686170}
+  - component: {fileID: 2411925777865388871}
   - component: {fileID: 42176118890698242}
   m_Layer: 0
-  m_Name: woodColumn
+  m_Name: tutorial8Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,19 +34,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &-3317179677228686170
-BoxCollider:
+--- !u!114 &2411925777865388871
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1733904753145427475}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748e98befe9b84f809afcbc9c2c8c50b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &42176118890698242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,8 +61,10 @@ MonoBehaviour:
   mixins:
   - Smoothed
   - Material
+  - Avatar
   staticProperties: []
-  watchedProperties: []
+  watchedProperties:
+  - driver
 --- !u!1001 &1733904754247844551
 PrefabInstance:
   m_ObjectHideFlags: 0

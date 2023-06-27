@@ -7,6 +7,7 @@ import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, q_identity } from "@c
 //------------------------------------------------------------------------------------------
 
 class ParentActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "smoothedCube" }
 
     init(options) {
         super.init(options);
@@ -47,6 +48,7 @@ ParentActor.register('ParentActor');
 // its default value.
 
 class ChildActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "colorableCube" }
 
     get color() { return this._color || [0.5,0.5,0.5] }
 
