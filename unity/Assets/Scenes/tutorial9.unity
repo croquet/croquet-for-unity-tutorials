@@ -177,13 +177,12 @@ MonoBehaviour:
   appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
   appName: tutorial9
   useNodeJS: 0
-  croquetSessionReady: 0
+  croquetSessionRunning: 0
   croquetViewId: 
-  showRigidbodyStateHighlight: 0
-  localAvatarId: 
-  cameraOwnerId: 
   loadingInProgress: 1
   sessionNameValue: -999
+  simulateNetworkGlitch: 0
+  networkGlitchDuration: 3
 --- !u!114 &294985723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitForUserLaunch: 0
+  localReflector: 
   showWebview: 0
 --- !u!114 &294985724
 MonoBehaviour:
@@ -222,6 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 102e0a86589084572930d87fc4be9b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assetManifestString: 
+  addressablesReady: 0
 --- !u!114 &294985726
 MonoBehaviour:
   m_ObjectHideFlags: 0

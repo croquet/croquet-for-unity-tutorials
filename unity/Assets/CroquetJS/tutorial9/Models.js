@@ -102,14 +102,14 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) 
     }
 
     doPointerHit(e) {
+        if (!this.driver) return; // only a driven actor can shove
+
         // e has a list of hits { actor, xyz, layers }
         const { actor, layers } = e.hits[0];
-        if (layers.includes('avatar')) this.shoveOther(actor);
+        if (layers.includes('avatar') && actor !== this) this.shoveOther(actor);
     }
 
     shoveOther(actor) {
-        if (actor === this) return; // you can't shove yourself
-
         const away = v3_normalize(v3_sub(actor.translation, this.translation));
         this.publish(actor.id, "shove", away);
     }
@@ -178,14 +178,14 @@ export class MyModelRoot extends ModelRoot {
         this.parent.behavior.start({ name: "SpinBehavior", axis: [0, -1, 0], tickRate: 500 });
         this.child.behavior.start({ name: "SpinBehavior", axis: [0, 0, 1], speed: 3 });
 
-        this.spare0 = ColorActor.create({
+        this.spare0 = AvatarActor.create({
             parent: this.base,
             driver: null,
             translation: [-2, 1, 10],
             rotation: q_axisAngle([0, 1, 0], toRad(-170))
         });
 
-        this.spare1 = ColorActor.create({
+        this.spare1 = AvatarActor.create({
             parent: this.base,
             driver: null,
             translation: [2, 1, 10],
