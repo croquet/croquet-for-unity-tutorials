@@ -11,8 +11,6 @@ import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral } from "@croquet/world
 // so we can recognize them and click on them.
 
 class BaseActor extends mix(Actor).with(AM_Spatial) {
-
-    get pawn() {return "BasePawn"} // Always uses the same pawn
     get gamePawnType() { return "groundPlane" }
 
     init(options) {
@@ -20,7 +18,7 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }
 
-    doPointerHit(e) {
+    doPointerHit(e) { console.log(e.hits);
         // e has a list of hits { actor, xyz, layers }
         const { actor, xyz } = e.hits[0];
         if (actor === this) {
@@ -31,7 +29,7 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
     }
 
     doSpawn(xyz) {
-        TestActor.create({ pawn: "ClickPawn", gamePawnType: "interactableCube", parent: this, translation:xyz});
+        TestActor.create({gamePawnType: "interactableCube", parent: this, translation: xyz});
     }
 
 }
@@ -52,6 +50,7 @@ class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
 
     init(options) {
         super.init(options);
+        console.log(`init TestActor of type ${this.gamePawnType}`);
         this.listen("kill", this.destroy);
     }
 }
@@ -79,8 +78,8 @@ export class MyModelRoot extends ModelRoot {
         super.init(options);
         console.log("Starting model root!");
         this.base = BaseActor.create();
-        this.parent = TestActor.create({pawn: "TestPawn", parent: this.base, translation:[0,1,0]});
-        this.child = ColorActor.create({pawn: "ColorPawn", parent: this.parent, translation:[0,0,-2]});
+        this.parent = TestActor.create({parent: this.base, translation:[0,1,0]});
+        this.child = ColorActor.create({parent: this.parent, translation:[0,0,-2]});
 
         this.parent.behavior.start({name: "SpinBehavior", axis: [0,-1,0], tickRate:500});
         this.child.behavior.start({name: "SpinBehavior", axis: [0,0,1], speed: 3});

@@ -7,8 +7,6 @@ import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRa
 //------------------------------------------------------------------------------------------
 
 class BaseActor extends mix(Actor).with(AM_Spatial) {
-
-    get pawn() { return "BasePawn" }
     get gamePawnType() { return "groundPlane" }
 
     init(options) {
@@ -143,7 +141,6 @@ class MyUser extends User {
         const base = this.wellKnownModel("ModelRoot").base;
         this.color = [this.random(), this.random(), this.random()];
         this.avatar = AvatarActor.create({
-            pawn: "AvatarPawn",
             parent: base,
             driver: this.userId,
             translation: [0, 1, -10]
@@ -175,14 +172,13 @@ export class MyModelRoot extends ModelRoot {
         super.init(options);
         console.log("Start model root!");
         this.base = BaseActor.create();
-        this.parent = TestActor.create({ pawn: "TestPawn", parent: this.base, translation: [0, 1, 0] });
-        this.child = ColorActor.create({ pawn: "ColorPawn", parent: this.parent, translation: [0, 0, -2] });
+        this.parent = TestActor.create({parent: this.base, translation: [0, 1, 0]});
+        this.child = ColorActor.create({parent: this.parent, translation: [0, 0, -2]});
 
         this.parent.behavior.start({ name: "SpinBehavior", axis: [0, -1, 0], tickRate: 500 });
         this.child.behavior.start({ name: "SpinBehavior", axis: [0, 0, 1], speed: 3 });
 
         this.spare0 = ColorActor.create({
-            pawn: "AvatarPawn",
             parent: this.base,
             driver: null,
             translation: [-2, 1, 10],
@@ -190,7 +186,6 @@ export class MyModelRoot extends ModelRoot {
         });
 
         this.spare1 = ColorActor.create({
-            pawn: "AvatarPawn",
             parent: this.base,
             driver: null,
             translation: [2, 1, 10],

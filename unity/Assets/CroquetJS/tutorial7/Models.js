@@ -62,8 +62,6 @@ RiseBehavior.register('RiseBehavior');
 //------------------------------------------------------------------------------------------
 
 class BaseActor extends mix(Actor).with(AM_Spatial) {
-
-    get pawn() {return "BasePawn" }
     get gamePawnType() { return "groundPlane" }
 
     init(options) {
@@ -83,7 +81,7 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
 
     doSpawn(xyz) {
         const translation = [...xyz];
-        TestActor.create({pawn: "ClickPawn", gamePawnType: "interactableCube", parent: this, translation});
+        TestActor.create({gamePawnType: "interactableCube", parent: this, translation});
     }
 
 }
@@ -148,8 +146,8 @@ export class MyModelRoot extends ModelRoot {
         super.init(options);
         console.log("Start model root!");
         this.base = BaseActor.create();
-        this.parent = TestActor.create({pawn: "TestPawn", parent: this.base, translation:[0,1,0]});
-        this.child = ColorActor.create({pawn: "ColorPawn", parent: this.parent, translation:[0,0,-2]});
+        this.parent = TestActor.create({parent: this.base, translation:[0,1,0]});
+        this.child = ColorActor.create({parent: this.parent, translation:[0,0,-2]});
 
         this.parent.behavior.start({name: "SpinBehavior", axis: [0,-1,0], tickRate:500});
         this.child.behavior.start({name: "SpinBehavior", axis: [0,0,1], speed: 3});

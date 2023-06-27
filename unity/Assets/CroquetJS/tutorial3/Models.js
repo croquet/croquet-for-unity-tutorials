@@ -57,8 +57,8 @@ export class MyModelRoot extends ModelRoot {
     init(options) {
         super.init(options);
         console.log("Start model root!");
-        const parent = ParentActor.create({pawn: "TestPawn", translation:[0,0,0]});
-        const child = ChildActor.create({pawn: "TestPawn", parent, translation:[0,2,0]});
+        const parent = ParentActor.create({translation:[0,0,0]});
+        const child = ChildActor.create({parent, translation:[0,2,0]});
 
         parent.behavior.start({name: "SpinBehavior", axis: [0,0,1], tickRate:500});
         child.behavior.start({name: "SpinBehavior", axis: [0,-1,0], speed: 3});
