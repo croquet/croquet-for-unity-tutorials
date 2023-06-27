@@ -9,9 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6516842241868768712}
-  - component: {fileID: 1577215882908776099}
-  - component: {fileID: 4312668157041336679}
-  - component: {fileID: 2423249868855631347}
+  - component: {fileID: 222599472176174032}
   m_Layer: 0
   m_Name: groundPlane
   m_TagString: Untagged
@@ -35,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1577215882908776099
+--- !u!114 &222599472176174032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,47 +42,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3919986360764292849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ba7f904bbc740cd8ca66afc5eb26ff, type: 3}
+  m_Script: {fileID: 11500000, guid: fe750c9735f1c4d079e419ab461df5b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  croquetActorId: 
-  croquetHandle: 
---- !u!114 &4312668157041336679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3919986360764292849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84d8c949960f5442e9e066e26035fb1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 1}
-  scale: {x: 1, y: 1, z: 1}
-  initializeWithSceneTransform: 0
-  positionDeltaEpsilon: 0.01
-  rotationDeltaEpsilon: 0.01
-  scaleDeltaEpsilon: 0.01
-  linearInterpolation: 0
-  positionLerpFactor: 0.2
-  rotationLerpFactor: 0.2
-  scaleLerpFactor: 0.2
---- !u!114 &2423249868855631347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3919986360764292849}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 645445b11275e4e3382e8650847c35da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickable: 1
+  mixins:
+  - Spatial
+  - Interactable
+  staticProperties: []
+  watchedProperties: []
 --- !u!1 &4723118699679084920
 GameObject:
   m_ObjectHideFlags: 0

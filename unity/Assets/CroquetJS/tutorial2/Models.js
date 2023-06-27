@@ -7,6 +7,7 @@ import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
 //------------------------------------------------------------------------------------------
 
 class ParentActor extends mix(Actor).with(AM_Spatial) {
+    get gamePawnType() { return "smoothedCube" }
 
     init(options) {
         super.init(options);
@@ -38,7 +39,7 @@ ParentActor.register('ParentActor');
 // We also define another actor that doesn't subscribe to input events.
 
 class ChildActor extends mix(Actor).with(AM_Spatial) {
-
+    get gamePawnType() { return "basicCube" }
 }
 ChildActor.register('ChildActor');
 
@@ -54,9 +55,9 @@ export class MyModelRoot extends ModelRoot {
     init(options) {
         super.init(options);
         console.log("Start model root!");
-        const parent = ParentActor.create({pawn: "TestPawn", translation:[0,0,0]});
-        const child = ChildActor.create({pawn: "TestPawn", parent: parent, translation:[0,0,3]}); // eslint-disable-line object-shorthand
-        const _grandchild = ChildActor.create({pawn: "TestPawn", parent: child, translation:[0,2,0]});
+        const parent = ParentActor.create({translation:[0,0,0]});
+        const child = ChildActor.create({parent: parent, translation:[0,0,3]}); // eslint-disable-line object-shorthand
+        const _grandchild = ChildActor.create({parent: child, translation:[0,2,0]});
     }
 
 }

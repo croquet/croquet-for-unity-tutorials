@@ -19,6 +19,7 @@ import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
 // will move to the left. Pressing 'x' moves it right.
 
 class TestActor extends mix(Actor).with(AM_Spatial) {
+    get gamePawnType() { return "basicCube" }
 
     init(options) {
         super.init(options);
@@ -58,7 +59,7 @@ export class MyModelRoot extends ModelRoot {
     init(options) {
         super.init(options);
         console.log("Start model root!");
-        this.test = TestActor.create({pawn: "TestPawn", translation:[0,0,0]});
+        this.test = TestActor.create({translation:[0,0,0]});
     }
 
 }

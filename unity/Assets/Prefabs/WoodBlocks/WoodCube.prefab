@@ -9,13 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9189988984234922137}
-  - component: {fileID: 5163372599614568489}
-  - component: {fileID: 9130752403095861212}
-  - component: {fileID: 1948854031525020605}
-  - component: {fileID: 4632091387592354769}
-  - component: {fileID: 1875268959328263458}
+  - component: {fileID: 5976533874015831447}
+  - component: {fileID: -3406483136474457105}
   m_Layer: 0
-  m_Name: WoodCube
+  m_Name: woodCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5163372599614568489
+--- !u!65 &5976533874015831447
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,7 +47,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9130752403095861212
+--- !u!114 &-3406483136474457105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,60 +56,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 9189988984234922136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ba7f904bbc740cd8ca66afc5eb26ff, type: 3}
+  m_Script: {fileID: 11500000, guid: fe750c9735f1c4d079e419ab461df5b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  croquetActorId: 
-  croquetHandle: 
---- !u!114 &1948854031525020605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9189988984234922136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84d8c949960f5442e9e066e26035fb1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 1}
-  scale: {x: 1, y: 1, z: 1}
-  initializeWithSceneTransform: 0
-  positionDeltaEpsilon: 0.01
-  rotationDeltaEpsilon: 0.01
-  scaleDeltaEpsilon: 0.01
-  linearInterpolation: 0
-  positionLerpFactor: 0.2
-  rotationLerpFactor: 0.2
-  scaleLerpFactor: 0.2
---- !u!114 &4632091387592354769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9189988984234922136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87675f6857b7b48fb8fb428a9899b6f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: {r: 0, g: 0, b: 0, a: 0}
---- !u!114 &1875268959328263458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9189988984234922136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 645445b11275e4e3382e8650847c35da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickable: 1
+  mixins:
+  - Smoothed
+  - Material
+  - Interactable
+  staticProperties: []
+  watchedProperties: []
 --- !u!1001 &1247294650439926242
 PrefabInstance:
   m_ObjectHideFlags: 0

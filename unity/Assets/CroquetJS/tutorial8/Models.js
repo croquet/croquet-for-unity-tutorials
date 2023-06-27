@@ -7,17 +7,22 @@ import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRa
 //------------------------------------------------------------------------------------------
 
 class BaseActor extends mix(Actor).with(AM_Spatial) {
-
-    get pawn() { return "BasePawn" }
+    get gamePawnType() { return "groundPlane" }
 
     init(options) {
         super.init(options);
-        this.listen("spawn", this.doSpawn);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
+    }
+
+    doPointerHit(e) {
+        // e has a list of hits { actor, xyz, layers }
+        const { actor, xyz } = e.hits[0];
+        if (actor === this) this.doSpawn(xyz);
     }
 
     doSpawn(xyz) {
         const translation = [...xyz];
-        TestActor.create({ pawn: "ClickPawn", parent: this, translation });
+        ClickableActor.create({parent: this, translation});
     }
 
 }
@@ -28,10 +33,26 @@ BaseActor.register('BaseActor');
 //------------------------------------------------------------------------------------------
 
 class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "woodCube" }
+}
+TestActor.register('TestActor');
+
+//------------------------------------------------------------------------------------------
+//--ClickableActor ------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+class ClickableActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "woodCube" }
 
     init(options) {
         super.init(options);
-        this.listen("kill", this.doKill);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
+    }
+
+    doPointerHit(e) {
+        // e has a list of hits { actor, xyz, layers }
+        const { actor } = e.hits[0];
+        if (actor === this) this.doKill();
     }
 
     doKill() {
@@ -49,22 +70,32 @@ class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
         });
     }
 }
-TestActor.register('TestActor');
+ClickableActor.register('ClickableActor');
 
 //------------------------------------------------------------------------------------------
 //-- ColorActor ----------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// We add the AM_Avatar mixin to the ColorActor. This lets us use a ColorActor as an
-// avatar. Avatars have a driver property that holds the viewId of the user controlling
-// them.
+class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "woodCube" }
 
-class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
-
-    get color() { return this._color || [0.5, 0.5, 0.5] }
+    get color() { return this._color || [-1, 0, 0] } // bridge treats r = -1 as "don't recolour"
 
 }
 ColorActor.register('ColorActor');
+
+//------------------------------------------------------------------------------------------
+//-- AvatarActor ----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+// AvatarActor includes the AM_Avatar mixin.  Avatars have a driver property that holds the viewId of the user controlling them.
+
+class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
+    get gamePawnType() { return "tutorial8Avatar" }
+
+    get color() { return this._color || [0.5, 0.5, 0.5] }
+}
+AvatarActor.register('AvatarActor');
 
 //------------------------------------------------------------------------------------------
 //-- Users ---------------------------------------------------------------------------------
@@ -88,8 +119,7 @@ class MyUser extends User {
         super.init(options);
         const base = this.wellKnownModel("ModelRoot").base;
         this.color = [this.random(), this.random(), this.random()];
-        this.avatar = ColorActor.create({
-            pawn: "AvatarPawn",
+        this.avatar = AvatarActor.create({
             parent: base,
             driver: this.userId,
             color: this.color,
@@ -120,8 +150,8 @@ export class MyModelRoot extends ModelRoot {
         super.init(options);
         console.log("Start model root!");
         this.base = BaseActor.create();
-        this.parent = TestActor.create({ pawn: "TestPawn", parent: this.base, translation: [0, 1, 0] });
-        this.child = ColorActor.create({ pawn: "ColorPawn", parent: this.parent, translation: [0, 0, -2] });
+        this.parent = TestActor.create({parent: this.base, translation: [0, 1, 0]});
+        this.child = ColorActor.create({parent: this.parent, translation: [0, 0, -2]});
 
         this.parent.behavior.start({ name: "SpinBehavior", axis: [0, -1, 0], tickRate: 500 });
         this.child.behavior.start({ name: "SpinBehavior", axis: [0, 0, 1], speed: 3 });

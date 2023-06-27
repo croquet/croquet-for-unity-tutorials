@@ -18,6 +18,7 @@ import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, q_euler, toRad } from
 // helper functions like q_euler() or q_axisAngle().
 
 class ParentActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "smoothedCube" }
 
     init(options) {
         super.init(options);
@@ -52,7 +53,9 @@ ParentActor.register('ParentActor');
 // -- ChildActor ---------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-class ChildActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {}
+class ChildActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "smoothedCube" }
+}
 ChildActor.register('ChildActor');
 
 //------------------------------------------------------------------------------------------
@@ -64,8 +67,8 @@ export class MyModelRoot extends ModelRoot {
     init(options) {
         super.init(options);
         console.log("Start model root!");
-        const parent = ParentActor.create({pawn: "TestPawn", translation:[0,0,0]});
-        const child = ChildActor.create({pawn: "TestPawn", parent, translation:[0,2,0]});
+        const parent = ParentActor.create({ translation:[0,0,0] });
+        const child = ChildActor.create({ parent, translation:[0,2,0] });
 
         parent.behavior.start({name: "SpinBehavior", axis: [0,0,1]});
         child.behavior.start({name: "SpinBehavior", axis: [0,-1,0], speed: 3});

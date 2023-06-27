@@ -7,6 +7,7 @@ import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, q_identity } from "@c
 //------------------------------------------------------------------------------------------
 
 class ParentActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "smoothedCube" }
 
     init(options) {
         super.init(options);
@@ -47,6 +48,7 @@ ParentActor.register('ParentActor');
 // its default value.
 
 class ChildActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "colorableCube" }
 
     get color() { return this._color || [0.5,0.5,0.5] }
 
@@ -71,8 +73,8 @@ export class MyModelRoot extends ModelRoot {
     init(options) {
         super.init(options);
         console.log("Start model root!");
-        this.parent = ParentActor.create({pawn: "TestPawn", translation:[0,0,0]});
-        this.child = ChildActor.create({pawn: "ColorPawn", parent: this.parent, color: [1,0,0], translation:[0,2,0]});
+        this.parent = ParentActor.create({translation:[0,0,0]});
+        this.child = ChildActor.create({parent: this.parent, color: [1,0,0], translation:[0,2,0]});
 
         this.parent.behavior.start({name: "SpinBehavior", axis: [0,0,1], tickRate:500});
         this.child.behavior.start({name: "SpinBehavior", axis: [0,-1,0], speed: 3});

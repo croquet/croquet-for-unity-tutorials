@@ -1,23 +1,28 @@
 // Tutorial 9 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
+import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
 class BaseActor extends mix(Actor).with(AM_Spatial) {
-
-    get pawn() { return "BasePawn" }
+    get gamePawnType() { return "groundPlane" }
 
     init(options) {
         super.init(options);
-        this.listen("spawn", this.doSpawn);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
+    }
+
+    doPointerHit(e) {
+        // e has a list of hits { actor, xyz, layers }
+        const { actor, xyz } = e.hits[0];
+        if (actor === this) this.doSpawn(xyz);
     }
 
     doSpawn(xyz) {
         const translation = [...xyz];
-        TestActor.create({ pawn: "ClickPawn", parent: this, translation });
+        ClickableActor.create({ pawn: "ClickPawn", parent: this, translation });
     }
 
 }
@@ -28,10 +33,26 @@ BaseActor.register('BaseActor');
 //------------------------------------------------------------------------------------------
 
 class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "woodCube" }
+}
+TestActor.register('TestActor');
+
+//------------------------------------------------------------------------------------------
+//--ClickableActor ------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+class ClickableActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "woodCube" }
 
     init(options) {
         super.init(options);
-        this.listen("kill", this.doKill);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
+    }
+
+    doPointerHit(e) {
+        // e has a list of hits { actor, xyz, layers }
+        const { actor } = e.hits[0];
+        if (actor === this) this.doKill();
     }
 
     doKill() {
@@ -39,43 +60,71 @@ class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
         this.dying = true;
         const translation = v3_add(this.translation, [0, 2, 0]);
         this.set({ translation });
-        this.behavior.start({ name: "RiseBehavior", height: 5, speed: 1 });
-        this.behavior.start({ name: "SpinBehavior", axis: sphericalRandom(), speed: 0.2 });
+        this.behavior.start({ name: "RiseBehavior", height: 4, speed: 2 });
+        this.behavior.start({ name: "SpinBehavior", axis: sphericalRandom(), speed: 0.4 });
         this.behavior.start({
             name: "SequenceBehavior", behaviors: [
-                { name: "InflateBehavior", size: 4, speed: 0.2 },
+                { name: "InflateBehavior", size: 3, speed: 0.4 },
                 "DestroyBehavior"
             ]
         });
     }
 }
-TestActor.register('TestActor');
+ClickableActor.register('ClickableActor');
 
 //------------------------------------------------------------------------------------------
 //-- ColorActor ----------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
-
-    init(options) {
-        super.init(options);
-        this.listen("shove", this.doShove);
-    }
+class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
+    get gamePawnType() { return "woodCube" }
 
     get color() { return this._color || [-1, 0, 0] } // bridge treats r = -1 as "don't recolour"
 
-    doShove(v) {
+}
+ColorActor.register('ColorActor');
+
+//------------------------------------------------------------------------------------------
+//-- AvatarActor ----------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+// AvatarActor includes the AM_Avatar mixin.  Avatars have a driver property that holds the viewId of the user controlling them.
+
+class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
+    get gamePawnType() { return "tutorial9Avatar" }
+
+    get color() { return this._color || [0.5, 0.5, 0.5] }
+
+    init(options) {
+        super.init(options);
+        this.subscribe("input", "pointerHit", this.doPointerHit);
+        this.listen("shove", this.beShoved);
+    }
+
+    doPointerHit(e) {
+        // e has a list of hits { actor, xyz, layers }
+        const { actor, layers } = e.hits[0];
+        if (layers.includes('avatar')) this.shoveOther(actor);
+    }
+
+    shoveOther(actor) {
+        if (actor === this) return; // you can't shove yourself
+
+        const away = v3_normalize(v3_sub(actor.translation, this.translation));
+        this.publish(actor.id, "shove", away);
+    }
+
+    beShoved(v) {
         const translation = v3_add(this.translation, v);
         if (this.driver) {
             this.snap({ translation });
         } else {
             this.set({ translation });
         }
-
     }
 
 }
-ColorActor.register('ColorActor');
+AvatarActor.register('AvatarActor');
 
 //------------------------------------------------------------------------------------------
 //-- Users ---------------------------------------------------------------------------------
@@ -91,8 +140,7 @@ class MyUser extends User {
         super.init(options);
         const base = this.wellKnownModel("ModelRoot").base;
         this.color = [this.random(), this.random(), this.random()];
-        this.avatar = ColorActor.create({
-            pawn: "AvatarPawn",
+        this.avatar = AvatarActor.create({
             parent: base,
             driver: this.userId,
             translation: [0, 1, -10]
@@ -124,14 +172,13 @@ export class MyModelRoot extends ModelRoot {
         super.init(options);
         console.log("Start model root!");
         this.base = BaseActor.create();
-        this.parent = TestActor.create({ pawn: "TestPawn", parent: this.base, translation: [0, 1, 0] });
-        this.child = ColorActor.create({ pawn: "ColorPawn", parent: this.parent, translation: [0, 0, -2] });
+        this.parent = TestActor.create({parent: this.base, translation: [0, 1, 0]});
+        this.child = ColorActor.create({parent: this.parent, translation: [0, 0, -2]});
 
         this.parent.behavior.start({ name: "SpinBehavior", axis: [0, -1, 0], tickRate: 500 });
         this.child.behavior.start({ name: "SpinBehavior", axis: [0, 0, 1], speed: 3 });
 
         this.spare0 = ColorActor.create({
-            pawn: "AvatarPawn",
             parent: this.base,
             driver: null,
             translation: [-2, 1, 10],
@@ -139,7 +186,6 @@ export class MyModelRoot extends ModelRoot {
         });
 
         this.spare1 = ColorActor.create({
-            pawn: "AvatarPawn",
             parent: this.base,
             driver: null,
             translation: [2, 1, 10],
