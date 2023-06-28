@@ -102,7 +102,10 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) 
     }
 
     doPointerHit(e) {
-        if (!this.driver) return; // only a driven actor can shove
+        // the avatar representing the view in which the click happened gets
+        // to shove a clicked avatar
+        const originatingView = e.viewId;
+        if (this.driver !== originatingView) return; // not this avatar's responsibility
 
         // e has a list of hits { actor, xyz, layers }
         const { actor, layers } = e.hits[0];
