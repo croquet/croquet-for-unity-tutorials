@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44403905, g: 0.49318177, b: 0.5722404, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -178,7 +178,8 @@ MonoBehaviour:
   croquetSessionRunning: 0
   croquetViewId: 
   loadingInProgress: 1
-  sessionNameValue: -999
+  defaultSessionName: 123
+  sessionName: 0
   simulateNetworkGlitch: 0
   networkGlitchDuration: 3
 --- !u!114 &294985723
@@ -469,7 +470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press the C-key to change color.
+  m_text: Press C to change color.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -722,7 +723,7 @@ GameObject:
   - component: {fileID: 1937544211}
   - component: {fileID: 1937544210}
   m_Layer: 5
-  m_Name: Tutorial1Canvas
+  m_Name: Tutorial5Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
