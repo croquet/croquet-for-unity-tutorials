@@ -1,6 +1,6 @@
 # Croquet for Unity Tutorials
 
-This repository contains Croquet for Unity (C4U) ports of Brian Upton's introductory tutorials for Worldcore.
+This repository contains Croquet for Unity (C4U) ports of Brian Upton's introductory tutorials for Worldcore. The Tutorial Documentation explaining each of the examples is available in Google Docs here: [Croquet for Unity Tutorials](https://docs.google.com/document/d/1XXBRe3H6pRdbKw7pfVStnIfaOzQd3d1A7DseA7kEobI/edit?usp=sharing). Anyone may comment on this document (for now). Please be respectful.
 
 The most important directories are the following:
 * `unity/` - a loadable Unity project, from which you can run apps in the editor or build standalone apps for deployment on iOS and Android.
