@@ -16,14 +16,14 @@ class ParentActor extends mix(Actor).with(AM_Spatial) {
     }
 
     moveLeft() {
-        console.log("left");
+        // console.log("left");
         const translation = this.translation;
         translation[0] += -1;
         this.set({translation});
     }
 
     moveRight() {
-        console.log("right");
+        // console.log("right");
         const translation = this.translation;
         translation[0] += 1;
         this.set({translation});

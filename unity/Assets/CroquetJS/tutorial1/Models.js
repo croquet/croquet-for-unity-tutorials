@@ -2,7 +2,8 @@
 
 // Every object in Worldcore is represented by an actor/pawn pair. Spawning an actor
 // automatically instantiates a corresponding pawn. The actor is replicated
-// across all clients, while the pawn is unique to each client.
+// across all clients, while the pawn is unique to each client. In Unity, the pawn is
+// a Unity object, usually generated from an instrumented prefab.
 
 import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
 
@@ -28,14 +29,14 @@ class TestActor extends mix(Actor).with(AM_Spatial) {
     }
 
     moveLeft() {
-        console.log("left");
+        // console.log("left");
         const translation = this.translation;
         translation[0] += -0.1;
         this.set({translation});
     }
 
     moveRight() {
-        console.log("right");
+        // console.log("right");
         const translation = this.translation;
         translation[0] += 0.1;
         this.set({translation});

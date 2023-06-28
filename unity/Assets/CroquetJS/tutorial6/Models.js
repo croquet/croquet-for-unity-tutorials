@@ -18,7 +18,8 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
         this.subscribe("input", "pointerHit", this.doPointerHit);
     }
 
-    doPointerHit(e) { console.log(e.hits);
+    doPointerHit(e) {
+        console.log(e.hits);
         // e has a list of hits { actor, xyz, layers }
         const { actor, xyz } = e.hits[0];
         if (actor === this) {

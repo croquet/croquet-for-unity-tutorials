@@ -17,21 +17,21 @@ class ParentActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
     }
 
     moveLeft() {
-        console.log("left");
+        // console.log("left");
         const translation = this.translation;
         translation[0] += -1;
         this.set({translation});
     }
 
     moveRight() {
-        console.log("right");
+        // console.log("right");
         const translation = this.translation;
         translation[0] += 1;
         this.set({translation});
     }
 
     reset() {
-        console.log("reset");
+        // console.log("reset");
         const rotation = q_identity();
         this.snap({rotation, translation:[0,0,0]});
     }
