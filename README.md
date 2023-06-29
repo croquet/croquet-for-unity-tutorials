@@ -66,11 +66,11 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ## Run the Tutorials
 
 
-In the Project Navigator, go to `Assets/Scenes` and double-click any of the `tutorial<n>.unity` scenes.
+In the Project Navigator, go to `Assets/Scenes` and double-click any of the `tutorial<n>.unity` scenes.  If a "TMP importer" dialog comes up at this point, hit the top button ("Import TMP Essentials") then close the dialog.
 
 In the editor's top menu, go to the `Croquet` drop-down and select `Build JS on Play` so that it has a check-mark next to it.
 
-Press the play button.  Because this is the first time you have built the app, it will run a full webpack build of the JavaScript code - eventually writing webpack's log to the Unity console, each line prefixed with "JS builder".  You should then see console output for startup of the app - ending with "Croquet session ready", at which point the app should start to run.
+Press the play button.  Because this is the first time you have built the app, it will run a full webpack build of the JavaScript code - eventually writing webpack's log to the Unity console, each line prefixed with "JS builder".  You should then see console output for startup of the app - ending with "Croquet session running!", at which point the app should start to run.
 
 ## Debug with Chrome
 
