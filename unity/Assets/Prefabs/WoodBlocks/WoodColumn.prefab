@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -3317179677228686170}
   - component: {fileID: 42176118890698242}
   m_Layer: 0
-  m_Name: woodColumn
+  m_Name: WoodColumn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,8 @@ MonoBehaviour:
   - Smoothed
   - Material
   staticProperties: []
-  watchedProperties: []
+  watchedProperties:
+  - color
 --- !u!1001 &1733904754247844551
 PrefabInstance:
   m_ObjectHideFlags: 0

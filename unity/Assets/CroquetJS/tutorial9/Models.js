@@ -22,7 +22,7 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
 
     doSpawn(xyz) {
         const translation = [...xyz];
-        ClickableActor.create({ pawn: "ClickPawn", parent: this, translation });
+        ClickableActor.create({parent: this, translation});
     }
 
 }
@@ -79,7 +79,7 @@ ClickableActor.register('ClickableActor');
 class ColorActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
     get gamePawnType() { return "woodCube" }
 
-    get color() { return this._color || [-1, 0, 0] } // bridge treats r = -1 as "don't recolour"
+    get color() { return this._color || [-1, 0, 0] } // our Material System treats r = -1 as "don't recolour"
 
 }
 ColorActor.register('ColorActor');
@@ -93,28 +93,22 @@ ColorActor.register('ColorActor');
 class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
     get gamePawnType() { return "tutorial9Avatar" }
 
-    get color() { return this._color || [0.5, 0.5, 0.5] }
+    get color() { return this._color || [-1, 0, 0] }
 
     init(options) {
         super.init(options);
         this.subscribe("input", "pointerHit", this.doPointerHit);
-        this.listen("shove", this.beShoved);
     }
 
     doPointerHit(e) {
-        // the avatar representing the view in which the click happened gets
-        // to shove a clicked avatar
         const originatingView = e.viewId;
         if (this.driver !== originatingView) return; // not this avatar's responsibility
 
-        // e has a list of hits { actor, xyz, layers }
         const { actor, layers } = e.hits[0];
-        if (layers.includes('avatar') && actor !== this) this.shoveOther(actor);
-    }
-
-    shoveOther(actor) {
-        const away = v3_normalize(v3_sub(actor.translation, this.translation));
-        this.publish(actor.id, "shove", away);
+        if (layers.includes('avatar') && actor !== this) {
+            const away = v3_normalize(v3_sub(actor.translation, this.translation));
+            actor.beShoved(away);
+        }
     }
 
     beShoved(v) {

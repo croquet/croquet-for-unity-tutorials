@@ -96,6 +96,7 @@ MonoBehaviour:
   - Avatar
   staticProperties: []
   watchedProperties:
+  - color
   - driver
 --- !u!1001 &1733904754247844551
 PrefabInstance:

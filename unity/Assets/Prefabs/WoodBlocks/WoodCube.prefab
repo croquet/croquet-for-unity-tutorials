@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5976533874015831447}
   - component: {fileID: -3406483136474457105}
   m_Layer: 0
-  m_Name: woodCube
+  m_Name: WoodCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,8 @@ MonoBehaviour:
   - Material
   - Interactable
   staticProperties: []
-  watchedProperties: []
+  watchedProperties:
+  - color
 --- !u!1001 &1247294650439926242
 PrefabInstance:
   m_ObjectHideFlags: 0

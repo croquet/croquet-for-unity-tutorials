@@ -132,4 +132,5 @@ MonoBehaviour:
   - Smoothed
   - Material
   staticProperties: []
-  watchedProperties: []
+  watchedProperties:
+  - color
