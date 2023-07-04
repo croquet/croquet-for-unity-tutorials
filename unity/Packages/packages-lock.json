@@ -8,7 +8,7 @@
         "com.unity.addressables": "1.19.19",
         "com.unity.inputsystem": "1.5.0"
       },
-      "hash": "21746eda1368c468a72ba14591ff563a75cfe7bb"
+      "hash": "e15229fc91b2251ec654621cb1ea919471e0035a"
     },
     "com.unity.addressables": {
       "version": "1.19.19",
@@ -135,7 +135,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "3647674386e3c844aa416fc744905b8286c56616"
+      "hash": "6b49b82199304381a43fb2bd3ec70833c242cd28"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
