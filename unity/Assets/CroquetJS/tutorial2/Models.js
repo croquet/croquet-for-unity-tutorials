@@ -1,6 +1,6 @@
 // Tutorial 2 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
+import { ModelRoot, Actor, mix, AM_Spatial, q_axisAngle, q_multiply } from "@croquet/worldcore-kernel";
 
 //------------------------------------------------------------------------------------------
 // ParentActor -----------------------------------------------------------------------------
@@ -39,7 +39,20 @@ ParentActor.register('ParentActor');
 // We also define another actor that doesn't subscribe to input events.
 
 class ChildActor extends mix(Actor).with(AM_Spatial) {
-    get gamePawnType() { return "basicCube" }
+    get gamePawnType() { return "smoothedCube" }
+
+    init(options) {
+        super.init(options);
+        this.rate = Math.random()*0.1+0.1;
+        this.doSpin();
+    }
+
+    doSpin() {
+        const q = q_axisAngle([0,1,0], this.rate);
+        const rotation = q_multiply(this.rotation, q);
+        this.set({rotation});
+        this.future(100).doSpin(); // this is where the magic happens
+    }
 }
 ChildActor.register('ChildActor');
 
