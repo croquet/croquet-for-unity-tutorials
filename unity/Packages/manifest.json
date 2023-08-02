@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.croquet.multiplayer": "https://github.com/croquet/croquet-for-unity-package.git#v0.7.6",
     "com.unity.addressables": "1.19.19",
     "com.unity.collab-proxy": "2.0.0",
     "com.unity.ide.rider": "3.0.18",
@@ -12,6 +11,7 @@
     "com.unity.timeline": "1.6.4",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.8.0",
+    "io.croquet.multiplayer": "https://github.com/croquet/croquet-for-unity-package.git#develop",
     "net.gree.unity-webview": "https://github.com/gree/unity-webview.git?path=/dist/package-nofragment",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
