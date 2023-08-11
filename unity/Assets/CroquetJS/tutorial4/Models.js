@@ -1,6 +1,7 @@
 // Tutorial 4 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, q_euler, toRad } from "@croquet/worldcore-kernel";
+import { Actor, mix, AM_Spatial, AM_Behavioral, q_euler, toRad } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
+import { GameModelRoot } from "../.js-build/build-tools/sources/game-support-models";
 
 //------------------------------------------------------------------------------------------
 // -- ParentActor --------------------------------------------------------------------------
@@ -62,7 +63,7 @@ ChildActor.register('ChildActor');
 //-- MyModelRoot ---------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     init(options) {
         super.init(options);

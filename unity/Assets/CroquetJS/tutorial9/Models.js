@@ -1,6 +1,7 @@
 // Tutorial 9 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
+import { Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
+import { GameModelRoot } from "../.js-build/build-tools/sources/game-support-models";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
@@ -159,10 +160,10 @@ MyUser.register('MyUser');
 // We add two spare avatars to the world. These avatars have no drivers, so they're available
 // for anyone to shove; they also change color when anyone presses "c".
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     static modelServices() {
-        return [MyUserManager];
+        return [MyUserManager, ...super.modelServices()];
     }
 
     init(options) {

@@ -83,9 +83,6 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - default
-    - fountain
-    - demolition
     - tutorial5
     - tutorial6
     - tutorial7

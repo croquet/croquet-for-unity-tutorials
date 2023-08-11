@@ -5,7 +5,8 @@
 // across all clients, while the pawn is unique to each client. In Unity, the pawn is
 // a Unity object, usually generated from an instrumented prefab.
 
-import { ModelRoot, Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
+import { Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
+import { GameModelRoot } from "../.js-build/build-tools/sources/game-support-models";
 
 //------------------------------------------------------------------------------------------
 // TestActor -------------------------------------------------------------------------------
@@ -55,7 +56,7 @@ TestActor.register('TestActor'); // All Worldcore actors must be registered afte
 
 // Both of these properties can be changed later using set().
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     init(options) {
         super.init(options);

@@ -59,6 +59,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe750c9735f1c4d079e419ab461df5b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pawnType: woodCube
+  defaultActorClass: 
   mixins:
   - Smoothed
   - Material
