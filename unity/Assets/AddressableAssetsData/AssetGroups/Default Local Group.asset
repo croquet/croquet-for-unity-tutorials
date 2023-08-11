@@ -28,9 +28,7 @@ MonoBehaviour:
   - m_GUID: c7860142b8166774a80931aec25507fe
     m_Address: woodColumn
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - tutorial8
-    - tutorial9
+    m_SerializedLabels: []
   - m_GUID: d6b5720d36d30406fa312e065ee0a7c1
     m_Address: woodCube
     m_ReadOnly: 0

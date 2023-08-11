@@ -1,6 +1,7 @@
 // Tutorial 3 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral } from "@croquet/worldcore-kernel";
+import { Actor, mix, AM_Spatial, AM_Behavioral } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
+import { GameModelRoot } from "../.js-build/build-tools/sources/game-support-models";
 
 //------------------------------------------------------------------------------------------
 // ParentActor -----------------------------------------------------------------------------
@@ -52,7 +53,7 @@ ChildActor.register('ChildActor');
 // After we create the parent and the child we give each one a different spin behavior.
 // When you start behaviors you can pass in options with the behavior name.
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     init(options) {
         super.init(options);
