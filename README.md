@@ -30,7 +30,7 @@ Note: this repository's large size is predominantly due to our including a speci
 Make sure you have the Unity Hub installed from
 https://unity.com/download
 
- > **NOTE:** For now, we **strongly recommend** using _exactly_ Unity Editor Version `2021.3.19f1` for C4U projects 
+ > **NOTE:** For now, we **strongly recommend** using _exactly_ Unity Editor Version `2021.3.19f1` for C4U projects
 
 2021.3.19f1 can be downloaded by pasting the following in your browser: `unityhub://2021.3.19f1/c9714fde33b6`  This deeplink to the Unity Hub should open an installation dialog for the correct version.
 
@@ -62,9 +62,13 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ## 5.0 Run the Tutorials
 In the Project Navigator, go to `Assets/Scenes` and double-click any of the `tutorial<n>.unity` scenes.  If a "TMP importer" dialog comes up at this point, hit the top button ("Import TMP Essentials") then close the dialog.
 
-In the editor's top menu, go to the `Croquet` drop-down and select `Build JS on Play` so that it has a check-mark next to it.
+In the editor's top menu, go to the `Croquet` drop-down and ensure that `Build JS on Play` has a check-mark next to it.
 
-Press the play button.  Because this is the first time you have built the app, it will run a full webpack build of the JavaScript code - eventually writing webpack's log to the Unity console, each line prefixed with "JS builder".  You should then see console output for startup of the app - ending with "Croquet session running!", at which point the app should start to run.
+Press the play button.  The first time you do so after installation, C4U will notice that you have not yet installed the JavaScript build tools from the package.  It will copy them across, and also run an `npm install` that fetches all Croquet and other dependencies that are needed.  Depending on network conditions, this could take some tens of seconds - during which, because of Unity's scheduling mechanisms, you won't see anything in the console.  Please wait for it to complete.
+
+In addition, because of the `Build JS on Play` setting, C4U will run a full webpack build of the JavaScript code - eventually adding webpack's output to the console, each line prefixed with "JS builder".  The first build for each app (i.e., each tutorial) will take the longest; on subsequent runs the build process should be faster.
+
+Eventually you should see the console output for startup of the app - ending with "Croquet scene for tutorial running", at which point the app's objects will appear.
 
 # Debugging Techniques
 ## Using a Web Browser to Debug the JavaScript Code
@@ -78,9 +82,7 @@ Now whenever you press play, the console output will include a line of the form 
 When you stop play in the Unity editor, the browser tab will automatically leave the Croquet session.  If you restart play, you will need to reload the tab to join the session again.
 
 ## Viewing JS Errors in Unity
-When _not_ running with an external browser, by default all JS console output in the "warn" and "error" categories will be transferred across the bridge and appear in the Unity console.
-
-[July 2023] In the near future we plan to provide a configuration setting on the Unity Croquet object, to let the developer select which log categories are transferred.
+The `Croquet Bridge` component's **JS Log Forwarding** property has checkboxes that let you select which categories of console output in the JavaScript session will be transferred across the bridge and appear in the Unity console.  By default, the "warn" and "error" categories are sent.
 
 # Making Sharable Builds
 _During Build our system should now warn about any incompatible state._
@@ -88,11 +90,13 @@ _During Build our system should now warn about any incompatible state._
 Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
 
 * of course, there must be an **Api Key** present in `CroquetSettings.asset`
-* the `Croquet Bridge` **Use Node JS** checkbox _must be cleared_ for anything other than a Windows build
-* all checkboxes under **Debug Logging Flags** should be cleared, so there is no wasteful logging happening behind the scenes
-* the **Wait For User Launch** checkbox must be cleared
+* on `Croquet Bridge` the **Use Node JS** checkbox _must_ be set for a Windows build, cleared otherwise
+* on `Croquet Bridge` the **Debug Force Scene Rebuild** checkbox _must_ be cleared
+* on `Croquet Runner` the **Wait For User Launch** checkbox _must_ be cleared
+* on `Croquet Runner` the **Run Offline** checkbox _must_ be cleared
+* ensuring that all checkboxes are cleared under **Debug Logging Flags** and **JS Log Forwarding** will reduce possibly resource-hungry logging
 
-Hit **Build**!
+Hit **Build**!  If any of the obligatory conditions listed above are not met, the build will be halted.  Fix the conditions and try again.
 
 ## Supplementary information for sharing MacOS builds
 
