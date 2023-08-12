@@ -178,8 +178,8 @@ MonoBehaviour:
   useNodeJS: 0
   appName: tutorial8
   defaultSessionName: 123
-  launchThroughMenu: 0
-  firstLevelScene: 
+  launchViaMenuIntoScene: 
+  debugForceSceneRebuild: 0
   croquetDebugLogging:
     session: 0
     messages: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
     classes: 0
     ticks: 0
   JSLogForwarding:
-    log: 1
+    log: 0
     warn: 1
     error: 1
   croquetSessionState: stopped
