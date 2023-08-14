@@ -87,7 +87,7 @@ The `Croquet Bridge` component's **JS Log Forwarding** property has checkboxes t
 # Making Sharable Builds
 Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
 
-* there must be an **Api Key** present in `CroquetSettings.asset`
+* There must be an **Api Key** present in `CroquetSettings.asset`
 * on `Croquet Bridge` the **Use Node JS** checkbox _must_ be set for a Windows build, cleared otherwise
 * on `Croquet Bridge` the **Debug Force Scene Rebuild** checkbox _must_ be cleared
 * on `Croquet Runner` the **Wait For User Launch** checkbox _must_ be cleared
