@@ -19,6 +19,7 @@ Install node.js and the node package manager (npm) for your platform here (LTS R
 
 
 ## 2.0 Clone the Repo
+Install git from https://git-scm.com/downloads
 
 ```
 git clone https://github.com/croquet/croquet-for-unity-tutorials.git
