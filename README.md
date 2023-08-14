@@ -85,11 +85,9 @@ When you stop play in the Unity editor, the browser tab will automatically leave
 The `Croquet Bridge` component's **JS Log Forwarding** property has checkboxes that let you select which categories of console output in the JavaScript session will be transferred across the bridge and appear in the Unity console.  By default, the "warn" and "error" categories are sent.
 
 # Making Sharable Builds
-_During Build our system should now warn about any incompatible state._
-
 Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
 
-* of course, there must be an **Api Key** present in `CroquetSettings.asset`
+* there must be an **Api Key** present in `CroquetSettings.asset`
 * on `Croquet Bridge` the **Use Node JS** checkbox _must_ be set for a Windows build, cleared otherwise
 * on `Croquet Bridge` the **Debug Force Scene Rebuild** checkbox _must_ be cleared
 * on `Croquet Runner` the **Wait For User Launch** checkbox _must_ be cleared
