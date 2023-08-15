@@ -128,7 +128,7 @@
         "com.unity.addressables": "1.19.19",
         "com.unity.inputsystem": "1.5.0"
       },
-      "hash": "6be3d07cd764f2a43c4b13c079735c6616b3a49e"
+      "hash": "af5da5efc21df2f7dc46b71cd45db31dba8fccb6"
     },
     "net.gree.unity-webview": {
       "version": "https://github.com/gree/unity-webview.git?path=/dist/package-nofragment",
