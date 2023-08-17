@@ -1,7 +1,7 @@
 // Tutorial 4 Models
 
 import { Actor, mix, AM_Spatial, AM_Behavioral, q_euler, toRad } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
-import { GameModelRoot } from "../.js-build/build-tools/sources/game-support-models";
+import { GameModelRoot } from "@croquet/game-models"; // eslint-disable-line import/no-unresolved
 
 //------------------------------------------------------------------------------------------
 // -- ParentActor --------------------------------------------------------------------------
