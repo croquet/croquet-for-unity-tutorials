@@ -5,8 +5,8 @@
 // across all clients, while the pawn is unique to each client. In Unity, the pawn is
 // a Unity object, usually generated from an instrumented prefab.
 
-import { Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
-import { GameModelRoot } from "@croquet/game-models"; // eslint-disable-line import/no-unresolved
+import { Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 // TestActor -------------------------------------------------------------------------------

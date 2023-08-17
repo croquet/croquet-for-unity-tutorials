@@ -1,7 +1,7 @@
 // Tutorial 2 Models
 
-import { Actor, mix, AM_Spatial, q_axisAngle, q_multiply } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
-import { GameModelRoot } from "@croquet/game-models"; // eslint-disable-line import/no-unresolved
+import { Actor, mix, AM_Spatial, q_axisAngle, q_multiply } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 // ParentActor -----------------------------------------------------------------------------

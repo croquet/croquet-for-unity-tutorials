@@ -1,7 +1,7 @@
 // Tutorial 9 Models
 
-import { Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
-import { GameModelRoot } from "@croquet/game-models"; // eslint-disable-line import/no-unresolved
+import { Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
