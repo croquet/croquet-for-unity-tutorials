@@ -6,7 +6,7 @@
 // a Unity object, usually generated from an instrumented prefab.
 
 import { Actor, mix, AM_Spatial } from "@croquet/worldcore-kernel"; // eslint-disable-line import/no-unresolved
-import { GameModelRoot } from "../.js-build/build-tools/sources/game-support-models";
+import { GameModelRoot } from "@croquet/game-models"; // eslint-disable-line import/no-unresolved
 
 //------------------------------------------------------------------------------------------
 // TestActor -------------------------------------------------------------------------------

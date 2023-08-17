@@ -1,4 +1,4 @@
+import { StartSession, GameViewRoot } from "@croquet/unity-bridge"; // eslint-disable-line import/no-unresolved
 import { MyModelRoot } from "./Models";
-import { StartSession, GameViewRoot } from "../.js-build/build-tools/sources/unity-bridge";
 
 StartSession(MyModelRoot, GameViewRoot);
