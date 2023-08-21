@@ -1,6 +1,7 @@
 // Tutorial 5 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, q_identity } from "@croquet/worldcore-kernel";
+import { Actor, mix, AM_Spatial, AM_Behavioral, q_identity } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 // -- ParentActor --------------------------------------------------------------------------
@@ -68,7 +69,7 @@ ChildActor.register('ChildActor');
 // stay in synch.
 
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     init(options) {
         super.init(options);

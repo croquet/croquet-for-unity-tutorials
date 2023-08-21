@@ -1,6 +1,7 @@
 // Tutorial 2 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, q_axisAngle, q_multiply } from "@croquet/worldcore-kernel";
+import { Actor, mix, AM_Spatial, q_axisAngle, q_multiply } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 // ParentActor -----------------------------------------------------------------------------
@@ -63,7 +64,7 @@ ChildActor.register('ChildActor');
 // We create three actors this time. A parent and two children. A child's translation is
 // performed in relation to its parent.
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     init(options) {
         super.init(options);

@@ -1,6 +1,7 @@
 // Tutorial 8 Models
 
-import { ModelRoot, Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User, AM_Avatar } from "@croquet/worldcore-kernel";
+import { Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User, AM_Avatar } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
@@ -140,10 +141,10 @@ MyUser.register('MyUser');
 //-- MyModelRoot ---------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-export class MyModelRoot extends ModelRoot {
+export class MyModelRoot extends GameModelRoot {
 
     static modelServices() {
-        return [MyUserManager];
+        return [MyUserManager, ...super.modelServices()];
     }
 
     init(options) {
