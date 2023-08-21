@@ -91,6 +91,7 @@ TextMesh\ Pro.meta
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
 # Croquet-built JavaScript and support code
-/[Aa]ssets/[Ss]treaming[Aa]ssets/tutorial*
+/[Aa]ssets/[Ss]treaming[Aa]ssets*
+/[Aa]ssets/[Pp]ackages*
 /[Aa]ssets/CroquetJS/build-tools
 /[Aa]ssets/CroquetJS/build-tools.meta
