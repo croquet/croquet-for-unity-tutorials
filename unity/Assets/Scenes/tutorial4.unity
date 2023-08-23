@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44403905, g: 0.49318177, b: 0.5722404, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -308,14 +308,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   appProperties: {fileID: 11400000, guid: 0cbbfb66f6f8147d48f8ae2dbf5c8047, type: 2}
   appName: tutorial4
-  useNodeJS: 0
-  croquetSessionRunning: 0
-  croquetViewId: 
-  loadingInProgress: 1
   defaultSessionName: 123
+  launchViaMenuIntoScene: 
+  debugForceSceneRebuild: 0
+  croquetDebugLogging:
+    session: 0
+    messages: 0
+    sends: 0
+    snapshot: 0
+    data: 0
+    hashing: 0
+    subscribe: 0
+    classes: 0
+    ticks: 0
+  JSLogForwarding:
+    log: 0
+    warn: 1
+    error: 1
+  croquetSessionState: stopped
   sessionName: 0
-  simulateNetworkGlitch: 0
-  networkGlitchDuration: 3
+  croquetViewId: 
+  croquetViewCount: 0
+  croquetActiveScene: 
+  croquetActiveSceneState: 
+  unitySceneState: preparing
+  triggerGlitchNow: 0
+  glitchDuration: 3
+  croquetSystems: []
 --- !u!114 &294985723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +348,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitForUserLaunch: 0
+  forceToUseNodeJS: 0
+  runOffline: 0
   localReflector: 
   showWebview: 0
 --- !u!114 &294985724
@@ -750,7 +771,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5, g: 0.8, b: 0.8, a: 1}
+  m_BackGroundColor: {r: 0.9056604, g: 0.6666136, b: 0.508366, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
