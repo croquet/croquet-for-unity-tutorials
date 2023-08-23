@@ -82,7 +82,7 @@ public class MouseLookAvatar : MonoBehaviour
             // +ve x delta => mouse moving right => object should spin clockwise when
             // seen from above, which (in Unity) means a +ve rotation around y.
             // +ve y delta => mouse moving up => -ve rotation about x.
-            yawDelta += (0.01f * Mathf.Rad2Deg * xyDelta.x)/Screen.width; // rotations work in opposite sense
+            yawDelta += (0.01f * Mathf.Rad2Deg * xyDelta.x); // rotations work in opposite sense
             pitch += (-0.01f * Mathf.Rad2Deg * xyDelta.y);
             pitch = Mathf.Clamp(pitch, -180, 180);
             // Debug.Log($"yawDelta {yawDelta} pitch {pitch}");
