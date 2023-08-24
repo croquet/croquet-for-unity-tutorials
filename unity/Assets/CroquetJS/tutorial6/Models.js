@@ -7,10 +7,20 @@ import { GameModelRoot } from "@croquet/game-models";
 // -- BaseActor ----------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// We added a ground plane called BaseActor. It listens for a message telling it to spawn
-// a new TestActor at xyz coordinates. The actors it creates use a special pawn
-// so we can recognize them and click on them.
+// We added a ground plane called BaseActor. Its pawn includes the Interactable
+// mixin, so the actor receives pointerHit events from Unity.
 
+// A pointerHit event lists all interactable actors whose pawns were on a raycast
+// triggered by the pointer.  In this example, the BaseActor handles all pointerHit
+// events and decides what to do in each case.
+
+// If the first hit is the BaseActor itself, it spawns a new TestActor and assigns
+// it a "layers" property value - an array of strings - that will be provided
+// if that actor appears in a future pointerHit event.
+
+// If the first hit target is not the BaseActor, but another actor with a layer entry
+// showing that it was spawned by the BaseActor, we publish a "kill" event
+// that the target will respond to by destroying itself.
 class BaseActor extends mix(Actor).with(AM_Spatial) {
     get gamePawnType() { return "groundPlane" }
 
@@ -20,18 +30,17 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
     }
 
     doPointerHit(e) {
-        console.log(e.hits);
         // e has a list of hits { actor, xyz, layers }
-        const { actor, xyz } = e.hits[0];
+        const { actor, xyz, layers } = e.hits[0];
         if (actor === this) {
             this.doSpawn(xyz);
-        } else {
+        } else if (layers.includes("spawnedByBase")) {
             this.publish(actor.id, "kill");
         }
     }
 
     doSpawn(xyz) {
-        TestActor.create({gamePawnType: "interactableCube", parent: this, translation: xyz});
+        TestActor.create({ parent: this, layers: ["spawnedByBase"], translation: xyz });
     }
 
 }
@@ -41,20 +50,18 @@ BaseActor.register('BaseActor');
 //-- TestActor ----------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
 
-// Test actors now listen for their pawns to say "kill". If they receive a kill event they
-// destroy themselves.
-//
-// Note that events said by a pawn go through the reflector. So if any pawn on any client
-// says "kill", the actor will destroy itself for all clients.
+// TestActor now uses interactableCube, which supports hit-testing on the
+// Unity side.  It also subscribes to any "kill" event published with the actor's
+// own id as scope, and responds by destroying itself.
 
 class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
-    get gamePawnType() { return this._gamePawnType || "woodCube" }
+    get gamePawnType() { return "interactableCube" }
 
     init(options) {
         super.init(options);
-        console.log(`init TestActor of type ${this.gamePawnType}`);
-        this.listen("kill", this.destroy);
+        this.subscribe(this.id, "kill", this.destroy);
     }
+
 }
 TestActor.register('TestActor');
 
@@ -78,7 +85,7 @@ export class MyModelRoot extends GameModelRoot {
 
     init(options) {
         super.init(options);
-        console.log("Starting model root!");
+        console.log("Start model root!");
         this.base = BaseActor.create();
         this.parent = TestActor.create({parent: this.base, translation:[0,1,0]});
         this.child = ColorActor.create({parent: this.parent, translation:[0,0,-2]});

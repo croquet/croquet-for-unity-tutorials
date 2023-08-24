@@ -22,8 +22,7 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
     }
 
     doSpawn(xyz) {
-        const translation = [...xyz];
-        ClickableActor.create({parent: this, translation});
+        ClickableActor.create({parent: this, translation: xyz});
     }
 
 }
@@ -41,6 +40,10 @@ TestActor.register('TestActor');
 //------------------------------------------------------------------------------------------
 //--ClickableActor ------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
+
+// In contrast to Tutorials 6 and 7, where all interaction is handled by the
+// BaseActor, the ClickableActor here takes responsibility for its own pointerHit
+// handling.
 
 class ClickableActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
     get gamePawnType() { return "woodCube" }
@@ -178,13 +181,13 @@ class InflateBehavior extends Behavior {
     get speed() { return this._speed || 0.5 }
 
     onStart() {
-        this.scale = this.actor.scale[0];
+        this.inflation = this.actor.scale[0];
     }
 
     do(delta) { // Increases the actor's scale until it reaches a target size
-        this.scale += this.speed * delta / 1000;
-        this.actor.set({ scale: [this.scale, this.scale, this.scale] });
-        if (this.scale > this.size) this.succeed();
+        this.inflation += this.speed * delta / 1000;
+        this.actor.set({ scale: [this.inflation, this.inflation, this.inflation] });
+        if (this.inflation > this.size) this.succeed();
     }
 
 }
