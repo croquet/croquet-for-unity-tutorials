@@ -22,8 +22,7 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
     }
 
     doSpawn(xyz) {
-        const translation = [...xyz];
-        ClickableActor.create({parent: this, translation});
+        ClickableActor.create({parent: this, translation: xyz});
     }
 
 }
@@ -41,6 +40,10 @@ TestActor.register('TestActor');
 //------------------------------------------------------------------------------------------
 //--ClickableActor ------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
+
+// In contrast to Tutorials 6 and 7, where all interaction is handled by the
+// BaseActor, the ClickableActor here takes responsibility for its own pointerHit
+// handling.
 
 class ClickableActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
     get gamePawnType() { return "woodCube" }

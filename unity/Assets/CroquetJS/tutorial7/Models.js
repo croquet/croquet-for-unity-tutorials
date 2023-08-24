@@ -72,17 +72,16 @@ class BaseActor extends mix(Actor).with(AM_Spatial) {
 
     doPointerHit(e) {
         // e has a list of hits { actor, xyz, layers }
-        const { actor, xyz } = e.hits[0];
+        const { actor, xyz, layers } = e.hits[0];
         if (actor === this) {
             this.doSpawn(xyz);
-        } else {
+        } else if (layers.includes("spawnedByBase")) {
             this.publish(actor.id, "kill");
         }
     }
 
     doSpawn(xyz) {
-        const translation = [...xyz];
-        TestActor.create({gamePawnType: "interactableCube", parent: this, translation});
+        TestActor.create({ parent: this, layers: ["spawnedByBase"], translation: xyz});
     }
 
 }
@@ -103,11 +102,11 @@ BaseActor.register('BaseActor');
 // the actor after it inflates to maximum size.
 
 class TestActor extends mix(Actor).with(AM_Spatial, AM_Behavioral) {
-    get gamePawnType() { return this._gamePawnType || "woodCube" }
+    get gamePawnType() { return "interactableCube" }
 
     init(options) {
         super.init(options);
-        this.listen("kill", this.doKill);
+        this.subscribe(this.id, "kill", this.doKill);
     }
 
     doKill() {
