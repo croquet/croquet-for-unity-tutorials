@@ -27,13 +27,13 @@ class InflateBehavior extends Behavior {
     get speed() { return this._speed || 0.5}
 
     onStart() {
-        this.scale = this.actor.scale[0];
+        this.inflation = this.actor.scale[0];
     }
 
     do(delta) { // Increases the actor's scale until it reaches a target size
-        this.scale += this.speed * delta/1000;
-        this.actor.set({scale:[this.scale,this.scale,this.scale]});
-        if (this.scale > this.size) this.succeed();
+        this.inflation += this.speed * delta/1000;
+        this.actor.set({scale: [this.inflation, this.inflation, this.inflation]});
+        if (this.inflation > this.size) this.succeed();
     }
 
 }
