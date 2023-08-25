@@ -72,7 +72,7 @@ Eventually you should see the console output for startup of the app - ending wit
 
 On both MacOS and Windows, you can choose to use an external browser such as Chrome to run the JavaScript code.  For debugging, this is more convenient than letting the C4U bridge start up an invisible WebView.
 
-In the tutorial scenes (while play is stopped), select the `Croquet` object in the scene hierarchy, then in that object's `Croquet Runner` component select the **Wait For User Launch** checkbox.
+In the tutorial scenes (while play is stopped), select the `Croquet` object in the scene hierarchy, then in that object's `Croquet Runner` component select the **Debug Using External Session** checkbox.
 
 Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Copy that address (if you click on the line, it will appear as selectable text in the view below the console) then use it to launch a new browser tab.  This should complete the startup of the app. All the JS developer tools (console, breakpoints etc) offered by the browser are available for working with the code.
 
@@ -86,7 +86,7 @@ Before building the app to deploy for a chosen platform (e.g., Windows or MacOS 
 
 * there must be an **Api Key** present in `CroquetSettings.asset`
 * on `Croquet Bridge` the **Debug Force Scene Rebuild** checkbox _must_ be cleared
-* on `Croquet Runner` the **Wait For User Launch** checkbox _must_ be cleared
+* on `Croquet Runner` the **Debug Using External Session** checkbox _must_ be cleared
 * on `Croquet Runner` the **Force To Use Node JS** checkbox _must_ be cleared for anything other than a Windows build
 * on `Croquet Runner` the **Run Offline** checkbox _must_ be cleared
 * ensuring that all checkboxes are cleared under **Debug Logging Flags** and **JS Log Forwarding** will reduce possibly resource-hungry logging
