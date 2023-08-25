@@ -37,9 +37,6 @@ https://unity.com/download
 
 In the `Unity Hub` app, select `Open => Add project from disk`, then navigate to the `croquet-for-unity-tutorials/unity` folder and hit `Add Project`.
 
-**Note:** During this first loading, Unity might warn that there appear to be script errors. It's fine to hit `Ignore` and continue.  It appears to be related to the project's dependencies, and to be harmless.
-
-
 ## 4.0 Set up your Croquet Developer Credentials
 
 In the Project Navigator (typically at bottom left), go to `Assets/Settings` and click `CroquetSettings.asset`.  The main field that you need to set up is the **Api Key**.
@@ -70,9 +67,9 @@ Eventually you should see the console output for startup of the app - ending wit
 # Debugging Techniques
 ## Using a Web Browser to Debug the JavaScript Code
 
-On both MacOS and Windows, you can choose to use an external browser such as Chrome to run the JavaScript code.  For debugging, this is more convenient than letting the C4U bridge start up an invisible WebView.
+On both MacOS and Windows, you can choose to use an external browser such as Chrome to run the JavaScript code.  For debugging, this is more convenient than letting the C4U bridge start up an invisible WebView or Node JS process.
 
-In the tutorial scenes (while play is stopped), select the `Croquet` object in the scene hierarchy, then in that object's `Croquet Runner` component select the **Debug Using External Session** checkbox.
+In a tutorial scene (while play is stopped), select the `Croquet` object in the scene hierarchy, then in that object's `Croquet Runner` component select the **Debug Using External Session** checkbox.
 
 Now whenever you press play, the console output will include a line of the form "ready for browser to load from http://localhost:...".  Copy that address (if you click on the line, it will appear as selectable text in the view below the console) then use it to launch a new browser tab.  This should complete the startup of the app. All the JS developer tools (console, breakpoints etc) offered by the browser are available for working with the code.
 
