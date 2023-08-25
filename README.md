@@ -1,6 +1,6 @@
 # Croquet for Unity Tutorials
 
-This repository contains Croquet for Unity (C4U) ports of Brian Upton's introductory tutorials for Worldcore. The Tutorial Documentation explaining each of the examples is available in Google Docs here: [Croquet for Unity Tutorials](https://docs.google.com/document/d/1XXBRe3H6pRdbKw7pfVStnIfaOzQd3d1A7DseA7kEobI/edit?usp=sharing). Anyone may comment on this document (for now). Please be respectful.
+This repository contains Croquet for Unity (C4U) ports of Brian Upton's introductory tutorials for Worldcore. The Tutorial Documentation explaining each of the examples is available in Google Docs here: [Croquet for Unity Tutorials](https://docs.google.com/document/d/1XXBRe3H6pRdbKw7pfVStnIfaOzQd3d1A7DseA7kEobI/edit?usp=sharing).
 
 The most important directories are the following:
 * `unity/` - a loadable Unity project, from which you can run apps in the editor or build standalone apps for deployment on iOS and Android.
@@ -49,7 +49,7 @@ The App Prefix is the way of identifying with your organization the Croquet apps
 ```
 which node
 ```
-On the Settings asset, fill in the **Path to Node** field with the path.
+On the `CroquetSettings` asset, fill in the **Path to Node** field with the path.
 
 
 
@@ -62,7 +62,7 @@ Press the play button.  The first time you do so after installation, C4U will no
 
 In addition, because of the `Build JS on Play` setting, C4U will run a full webpack build of the JavaScript code - eventually adding webpack's output to the console, each line prefixed with "JS builder".  The first build for each app (i.e., each tutorial) will take the longest; on subsequent runs the build process should be faster.
 
-Eventually you should see the console output for startup of the app - ending with "Croquet scene for tutorial running", at which point the app's objects will appear.
+Eventually you should see the console output for startup of the app - ending with "Croquet view for scene tutorial[n] running", at which point the app's objects will appear.
 
 # Debugging Techniques
 ## Using a Web Browser to Debug the JavaScript Code
