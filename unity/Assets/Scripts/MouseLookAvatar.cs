@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class MouseLookAvatar : MonoBehaviour
 {
     public Camera avatarCamera;
-    
+
     private readonly KeyCode[] keysOfInterest = new KeyCode[]
     {
         KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D, KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow,
@@ -20,11 +20,11 @@ public class MouseLookAvatar : MonoBehaviour
     private float yawDelta = 0;
     private float pitch = 0;
 
-    private string croquetHandle;    
+    private int croquetHandle;
     private CroquetAvatarComponent croquetAvatarComponent;
 
     private bool isActiveAvatarLastFrame = false;
-    
+
     void Start()
     {
         croquetHandle = GetComponent<CroquetEntityComponent>().croquetHandle;

@@ -8,9 +8,9 @@ public class OverheadAvatar : MonoBehaviour
     private int left = 0;
     private int right = 0;
 
-    private string croquetHandle;
+    private int croquetHandle;
     private CroquetAvatarComponent croquetAvatarComponent;
-    
+
     void Start()
     {
         croquetHandle = gameObject.GetComponent<CroquetEntityComponent>().croquetHandle;
@@ -62,7 +62,7 @@ public class OverheadAvatar : MonoBehaviour
                 break;
         }
     }
-    
+
     void HandleKeyUp(KeyCode keyCode)
     {
         switch (keyCode)
@@ -100,7 +100,7 @@ public class OverheadAvatar : MonoBehaviour
          */
 
         if (right + left == 0 && fore + back == 0) return;
-        
+
         float dt = Time.deltaTime;
         Quaternion rotation = transform.localRotation;
         float yaw = (right + left) * -3f * dt;
