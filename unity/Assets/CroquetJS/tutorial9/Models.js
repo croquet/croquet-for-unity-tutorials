@@ -91,7 +91,7 @@ ColorActor.register('ColorActor');
 
 // AvatarActor includes the AM_Avatar mixin.  Avatars have a driver property that holds the viewId of the user controlling them.
 
-class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
+class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar) {
     get gamePawnType() { return "tutorial9Avatar" }
 
     get color() { return this._color || [-1, 0, 0] }
@@ -141,6 +141,7 @@ class MyUser extends User {
         this.avatar = AvatarActor.create({
             parent: base,
             driver: this.userId,
+            layers: ['avatar'],
             translation: [0, 1, -10]
         });
     }
@@ -179,6 +180,7 @@ export class MyModelRoot extends GameModelRoot {
         this.spare0 = AvatarActor.create({
             parent: this.base,
             driver: null,
+            layers: ['avatar'],
             translation: [-2, 1, 10],
             rotation: q_axisAngle([0, 1, 0], toRad(-170))
         });
@@ -186,6 +188,7 @@ export class MyModelRoot extends GameModelRoot {
         this.spare1 = AvatarActor.create({
             parent: this.base,
             driver: null,
+            layers: ['avatar'],
             translation: [2, 1, 10],
             rotation: q_axisAngle([0, 1, 0], toRad(170))
         });

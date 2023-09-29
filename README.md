@@ -5,7 +5,7 @@ This repository contains Croquet for Unity (C4U) ports of Brian Upton's introduc
 The most important directories are the following:
 * `unity/` - a loadable Unity project, from which you can run apps in the editor or build standalone apps for deployment on iOS and Android.
 * `unity/Assets/Scenes/` - the scenes for running and deploying the nine tutorial examples.
-* `unity/Assets/CroquetJS/{tutorial1..tutorial9}` - JavaScript source for building the Croquet side of the tutorial scenes.  You can edit the code under this directory to change the tutorials' behavior.
+* `unity/Assets/CroquetJS/{tutorial1..tutorial9}` - JavaScript source for building the Croquet side of the tutorial scenes.  You can edit the code in these directories to change the tutorials' behavior.
 
 # Questions
 Please feel free to ask questions on our [discord](https://croquet.io/discord).
@@ -82,11 +82,10 @@ The `Croquet Bridge` component's **JS Log Forwarding** property has checkboxes t
 Before building the app to deploy for a chosen platform (e.g., Windows or MacOS standalone, or iOS or Android), there are some settings that you need to pay attention to:
 
 * there must be an **Api Key** present in `CroquetSettings.asset`
-* on `Croquet Bridge` the **Debug Force Scene Rebuild** checkbox _must_ be cleared
 * on `Croquet Runner` the **Debug Using External Session** checkbox _must_ be cleared
 * on `Croquet Runner` the **Force To Use Node JS** checkbox _must_ be cleared for anything other than a Windows build
 * on `Croquet Runner` the **Run Offline** checkbox _must_ be cleared
-* ensuring that all checkboxes are cleared under **Debug Logging Flags** and **JS Log Forwarding** will reduce possibly resource-hungry logging
+* on `Croquet Bridge`, ensuring that all checkboxes are cleared under **Croquet Debug Logging** and **JS Log Forwarding** will reduce possibly resource-hungry logging
 
 Hit **Build**!  If any of the obligatory conditions listed above are not met, the build will be halted.  Fix the conditions and try again.
 
