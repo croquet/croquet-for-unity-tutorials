@@ -94,7 +94,7 @@ ColorActor.register('ColorActor');
 
 // AvatarActor includes the AM_Avatar mixin.  Avatars have a driver property that holds the viewId of the user controlling them.
 
-class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Behavioral, AM_Avatar) {
+class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar) {
     get gamePawnType() { return "tutorial8Avatar" }
 
     get color() { return this._color || [0.5, 0.5, 0.5] }
