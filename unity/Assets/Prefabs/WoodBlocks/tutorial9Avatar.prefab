@@ -95,7 +95,7 @@ MonoBehaviour:
   - Smoothed
   - Material
   - Interactable
-  - Avatar
+  - Drivable
   staticProperties: []
   watchedProperties:
   - color

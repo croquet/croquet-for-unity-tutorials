@@ -1,7 +1,7 @@
 // Tutorial 9 Models
 
-import { Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, AM_Avatar, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
-import { GameModelRoot } from "@croquet/game-models";
+import { Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
+import { GameModelRoot, AM_Drivable } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ ColorActor.register('ColorActor');
 
 // AvatarActor includes the AM_Avatar mixin.  Avatars have a driver property that holds the viewId of the user controlling them.
 
-class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Avatar) {
+class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable) {
     get gamePawnType() { return "tutorial9Avatar" }
 
     get color() { return this._color || [-1, 0, 0] }

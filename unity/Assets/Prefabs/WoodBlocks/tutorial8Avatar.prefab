@@ -63,7 +63,7 @@ MonoBehaviour:
   mixins:
   - Smoothed
   - Material
-  - Avatar
+  - Drivable
   staticProperties: []
   watchedProperties:
   - color
