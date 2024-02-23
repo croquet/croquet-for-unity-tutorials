@@ -115,7 +115,7 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable) {
     beShoved(v) {
         const translation = v3_add(this.translation, v);
         if (this.driver) {
-            this.snap({ translation });
+            this.snapIncludingDriver({ translation });
         } else {
             this.set({ translation });
         }
