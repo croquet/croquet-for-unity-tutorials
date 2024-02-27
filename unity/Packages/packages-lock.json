@@ -121,13 +121,14 @@
       "url": "https://packages.unity.com"
     },
     "io.croquet.multiplayer": {
-      "version": "file:../../../croquet-for-unity-package",
+      "version": "https://github.com/croquet/croquet-for-unity-package.git#develop",
       "depth": 0,
-      "source": "local",
+      "source": "git",
       "dependencies": {
         "com.unity.addressables": "1.19.19",
         "com.unity.inputsystem": "1.5.0"
-      }
+      },
+      "hash": "0983dd1eac6a3623c7053931e75392b2592ea4d1"
     },
     "net.gree.unity-webview": {
       "version": "https://github.com/gree/unity-webview.git?path=/dist/package-nofragment",
