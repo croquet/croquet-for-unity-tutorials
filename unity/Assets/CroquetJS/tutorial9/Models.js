@@ -1,7 +1,7 @@
 // Tutorial 9 Models
 
-import { Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
-import { GameModelRoot, AM_Drivable } from "@croquet/game-models";
+import { Actor, mix, AM_Spatial, AM_Drivable, AM_Behavioral, Behavior, sphericalRandom, v3_add, v3_sub, v3_normalize, UserManager, User, q_axisAngle, toRad } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
@@ -115,7 +115,11 @@ class AvatarActor extends mix(Actor).with(AM_Spatial, AM_Drivable) {
     beShoved(v) {
         const translation = v3_add(this.translation, v);
         if (this.driver) {
-            this.snapIncludingDriver({ translation });
+            // the C4U bridge normally filters out all updates to a locally
+            // driven gameObject from its own actor.  override that filtering
+            // explicitly, so that even the view that normally drives this
+            // avatar is updated.
+            this.snapOverridingDriver({ translation });
         } else {
             this.set({ translation });
         }
