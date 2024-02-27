@@ -1,7 +1,7 @@
 // Tutorial 8 Models
 
-import { Actor, mix, AM_Spatial, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User } from "@croquet/worldcore-kernel";
-import { GameModelRoot, AM_Drivable } from "@croquet/game-models";
+import { Actor, mix, AM_Spatial, AM_Drivable, AM_Behavioral, Behavior, sphericalRandom, v3_add, UserManager, User } from "@croquet/worldcore-kernel";
+import { GameModelRoot } from "@croquet/game-models";
 
 //------------------------------------------------------------------------------------------
 //-- BaseActor -----------------------------------------------------------------------------
