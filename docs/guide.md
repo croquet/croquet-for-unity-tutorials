@@ -1,4 +1,4 @@
-![](images/image3.png)
+![](images/mq_unity_logo.svg)
 
 This document introduces key Multisynq concepts, serves as a companion to the tutorials found on our [Github](https://github.com/multisynq/m4u-tutorials) , as well as walking through other demo projects in order of complexity. If you have not already done so, please join our [Discord server](https://multisynq.io/discord/) where we maintain a Unity channel for support and discussion. 
 
