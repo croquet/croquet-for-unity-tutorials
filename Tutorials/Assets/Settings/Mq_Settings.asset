@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d6e369286035f43f2a8109a346170456, type: 3}
-  m_Name: CroquetSettings
+  m_Name: Mq_Settings
   m_EditorClassIdentifier: 
   apiKey: 1CMkndv22oOn5CxM2mMInrNeJJ5ECkxlG5g9Efbvt
   appPrefix: io.croquet.worldcore
