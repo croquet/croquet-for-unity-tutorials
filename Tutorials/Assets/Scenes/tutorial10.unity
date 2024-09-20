@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.49641275, b: 0.5748176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1209,10 +1209,10 @@ RectTransform:
   m_Father: {fileID: 928950516}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 765.8, y: 334.13}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 15.044952, y: 0.000030100346}
+  m_SizeDelta: {x: -30.090097, y: -0.00006020069}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2146102220
 MonoBehaviour:
@@ -1234,31 +1234,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color>
-
-    <color=#ffdd00>[<color=#5577ff>Synq</color>Command]</color>
-    / <color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color>
-
-    <size=-8>
-
-    Press
-    <color=#ffaa00>T</color>, <color=#ffaa00>H</color>, or <color=#ffaa00>L</color>
-
-    to
-    demo player damage. <color=#ffaa00>R</color> resets / heals.
-
-
-    <color=#ddd>Demo
-    uses files:</color></size>
-
-    <color=#ddd><size=-20>Assets / CroquetJs / tutorial10
-    / </size><color=white>PlayerHealth.cs</color> <size=-10>( demos <color=#ffaa00>[SynqVar]</color>
-    )</size>
-
-    <size=-20>Assets / CroquetJs / tutorial10 / </size><color=white>TakeDamage.cs
-    </color><size=-10>( demos <color=#ffdd00>[SynqCommand]</color> )</size>
-
-    </color>'
+  m_text: "<size=-15><align=center>Demonstration of:</size>\n<color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color><size=-10>
+    and</size> <color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color></align>\n<size=-14>\nDemo
+    Keymap:\n    <color=#ffaa00>T</color> Torso damage\n    <color=#ffaa00>H</color>
+    Head damage\n    <color=#ffaa00>L</color> Leg damage\n    <color=#ffaa00>R</color>
+    Reset / heal damage.\n    <color=#ffaa00>C</color> Gain coins.\n\n<color=#ddd>Demo
+    files:</color></size>\n<color=#ddd><size=-20>Assets / CroquetJs / tutorial10
+    / </size><size=-14><color=white>PlayerHealth.cs</color></size> <size=-14>( demos
+    <color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color> )</size>\n<size=-20>Assets
+    / CroquetJs / tutorial10 / </size><size=-14><color=white>TakeDamage.cs </color></size><size=-14>(
+    demos <color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color> )</size>\n</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1292,7 +1277,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0

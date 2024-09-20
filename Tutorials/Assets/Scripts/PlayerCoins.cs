@@ -27,3 +27,19 @@ public class PlayerCoins : SynqBehaviour {
   }
 }
 
+/*
+<color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color>
+<color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color>
+<size=-14>
+Demo Keymap:
+    <color=#ffaa00>T</color> - Torso damage
+    <color=#ffaa00>H</color> - Head damage
+    <color=#ffaa00>L</color> - Leg damage
+    <color=#ffaa00>R</color> - Reset / heal damage.
+    <color=#ffaa00>C</color> - Gain coins.
+
+<color=#ddd>Demo files:</color></size>
+<color=#ddd><size=-20>Assets / CroquetJs / tutorial10 / </size><color=white>PlayerHealth.cs</color> <size=-10>( demos <color=#ffaa00>[SynqVar]</color> )</size>
+<size=-20>Assets / CroquetJs / tutorial10 / </size><color=white>TakeDamage.cs </color><size=-10>( demos <color=#ffdd00>[SynqCommand]</color> )</size>
+</color>
+*/

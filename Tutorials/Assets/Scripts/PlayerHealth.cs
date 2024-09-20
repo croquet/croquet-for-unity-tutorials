@@ -38,19 +38,25 @@ public class PlayerHealth : SynqBehaviour {
   void OnGUI() { // Old school Unity UI! Yuck. But self-contained!   =]
     var scaleFactor = Screen.height / 400f; // bottom edge y
     // var y = Screen.height - (100 * scaleFactor);
-    var y = 10 * scaleFactor;
+    var y = 50 * scaleFactor;
+    var paneW = 150 * scaleFactor;
+    var paneH = 100 * scaleFactor;
+    var paneX = Screen.width - (10 * scaleFactor) - paneW;
+    var txtW = 100 * scaleFactor;
+    var txtX = Screen.width - (50 * scaleFactor) - txtW;
+    var lineH = 20 * scaleFactor;
     GUI.backgroundColor = new Color(0f, 0f, 0f, 0.5f);
-    GUI.Box(new Rect(0, y, 150 * scaleFactor, 100 * scaleFactor), ""); // panel background
+    GUI.Box(new Rect(paneX, y, paneW, paneH), ""); // panel background
     GUI.contentColor = Color.white;
 
     GUIStyle style = new GUIStyle();
-    style.alignment = TextAnchor.MiddleCenter;
+    style.alignment = TextAnchor.MiddleLeft;
     style.fontSize = (int)(20 * scaleFactor);
     style.normal.textColor = new Color(0.5f, 1f, 0.5f, 1f); // lime green
-    GUI.Label(new Rect(20 * scaleFactor, y + (10 * scaleFactor), 100 * scaleFactor, 20 * scaleFactor), $" Health: {health.ToString("F1")}",      style);
-    GUI.Label(new Rect(20 * scaleFactor, y + (30 * scaleFactor), 100 * scaleFactor, 20 * scaleFactor), $" Leg:    {legHealth.ToString("F1")}",   style);
-    GUI.Label(new Rect(20 * scaleFactor, y + (50 * scaleFactor), 100 * scaleFactor, 20 * scaleFactor), $" Torso:  {torsoHealth.ToString("F1")}", style);
-    GUI.Label(new Rect(20 * scaleFactor, y + (70 * scaleFactor), 100 * scaleFactor, 20 * scaleFactor), $" Head:   {headHealth.ToString("F1")}",  style);
+    GUI.Label(new Rect(txtX, y + (10 * scaleFactor), txtW, lineH), $" Health: {health.ToString("F1")}",      style);
+    GUI.Label(new Rect(txtX, y + (30 * scaleFactor), txtW, lineH), $" Leg:    {legHealth.ToString("F1")}",   style);
+    GUI.Label(new Rect(txtX, y + (50 * scaleFactor), txtW, lineH), $" Torso:  {torsoHealth.ToString("F1")}", style);
+    GUI.Label(new Rect(txtX, y + (70 * scaleFactor), txtW, lineH), $" Head:   {headHealth.ToString("F1")}",  style);
   }
 
 }

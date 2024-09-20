@@ -3,5 +3,5 @@
 // except for: StreamingAssets/, WebGLTemplates/, node_modules/, and  this file.
 // It is used to create a different Croquet session when code changes,
 // to avoid using old session state.
-export const BUILD_IDENTIFIER = '2c3f7012f6723856d615afd1d2311e325368e69e803a50beb1c5da82356b12dd'
+export const BUILD_IDENTIFIER = 'e2175d5982b81a43f0df4e60fbfe7ecec0df97f493730b7b391d8b8a2cd5dc57'
     
