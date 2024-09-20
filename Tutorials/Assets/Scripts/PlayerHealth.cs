@@ -1,17 +1,17 @@
 using UnityEngine;
 using Multisynq;
 
-public class PlayerHealth : SyncBehaviour {
+public class PlayerHealth : SynqBehaviour {
 
-  [SyncVar(CustomName = "hp", OnChangedCallback = nameof(OnHealthChanged) )] 
+  [SynqVar(CustomName = "hp", OnChangedCallback = nameof(OnHealthChanged) )] 
   public int health = 100;
 
-  [SyncVar] public int legHealth = 100;
-  [SyncVar] public int torsoHealth = 100;
-  [SyncVar(updateInterval=0.5f)] public int headHealth = 100;
+  [SynqVar] public int legHealth = 100;
+  [SynqVar] public int torsoHealth = 100;
+  [SynqVar(updateInterval=0.5f)] public int headHealth = 100;
 
   private void OnHealthChanged(int newValue) {
-    Debug.Log($"[SyncVar] Player health changed to {newValue}");
+    Debug.Log($"[SynqVar] Player health changed to {newValue}");
     if      (newValue <= 0) Die();
     else if (newValue < 70) LowHealthWarning();
   }

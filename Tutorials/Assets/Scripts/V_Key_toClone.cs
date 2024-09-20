@@ -1,10 +1,10 @@
 using UnityEngine;
 using Multisynq;
 
-class V_Key_toClone: SyncBehaviour {
+class V_Key_toClone: SynqBehaviour {
 
   void CloneMe() {
-    SyncClones_Mgr.SyncClone(gameObject);
+    SynqClones_Mgr.SynqClone(gameObject);
     // disable self so we done clone again with keypress
     enabled = false;
   }

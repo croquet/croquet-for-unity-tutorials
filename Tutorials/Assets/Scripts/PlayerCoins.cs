@@ -2,9 +2,9 @@ using UnityEngine;
 using Multisynq;
 
 //========== ||||||||||| ====================
-public class PlayerCoins : SyncBehaviour {
+public class PlayerCoins : SynqBehaviour {
 
-  [SyncVar]
+  [SynqVar]
   public int coins = 0;
 
   void Update() {

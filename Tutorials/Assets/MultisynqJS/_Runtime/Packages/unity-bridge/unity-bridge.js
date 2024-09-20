@@ -2217,7 +2217,8 @@ async function unityDrivenStartSession() {
   const password = "password";
   // include package version and the scene-definition string as options
   // just to force sessions with different values to be distinct
-  const options = { c4uPackageVersion: packageVersion, sceneText };
+  console.log(`Build identifier: ${globalThis.BUILD_IDENTIFIER}`);
+  const options = { c4uPackageVersion: packageVersion, sceneText, buildIdentifier: globalThis.BUILD_IDENTIFIER };
 
   // To debug Croquet Session start, uncomment  start_croquet button in index-webview_or_node.html
   const startButton = document.getElementById("start_croquet");

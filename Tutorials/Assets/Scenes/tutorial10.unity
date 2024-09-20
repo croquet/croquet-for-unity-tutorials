@@ -699,7 +699,7 @@ PrefabInstance:
     - target: {fileID: 3479632283134871797, guid: 1e816dfed6d2248eba7d62bdd192bdb9,
         type: 3}
       propertyPath: JSLogForwarding.log
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3479632283134871797, guid: 1e816dfed6d2248eba7d62bdd192bdb9,
         type: 3}
@@ -1234,10 +1234,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<color=#ffaa00>[<color=#5577ff>Sync</color>Var]</color>
+  m_text: '<color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color>
 
-    <color=#ffdd00>[<color=#5577ff>Sync</color>Command]</color>
-    / <color=#ffdd00>[<color=#5577ff>Sync</color>RPC]</color>
+    <color=#ffdd00>[<color=#5577ff>Synq</color>Command]</color>
+    / <color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color>
 
     <size=-8>
 
@@ -1252,11 +1252,11 @@ MonoBehaviour:
     uses files:</color></size>
 
     <color=#ddd><size=-20>Assets / CroquetJs / tutorial10
-    / </size><color=white>PlayerHealth.cs</color> <size=-10>( demos <color=#ffaa00>[SyncVar]</color>
+    / </size><color=white>PlayerHealth.cs</color> <size=-10>( demos <color=#ffaa00>[SynqVar]</color>
     )</size>
 
     <size=-20>Assets / CroquetJs / tutorial10 / </size><color=white>TakeDamage.cs
-    </color><size=-10>( demos <color=#ffdd00>[SyncCommand]</color> )</size>
+    </color><size=-10>( demos <color=#ffdd00>[SynqCommand]</color> )</size>
 
     </color>'
   m_isRightToLeft: 0

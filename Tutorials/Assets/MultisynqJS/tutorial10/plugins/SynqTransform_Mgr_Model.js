@@ -1,7 +1,7 @@
 
 import { Model } from '@croquet/croquet';
 
-export class SyncTransform_Mgr_Model extends Model {
+export class SynqTransform_Mgr_Model extends Model {
   get gamePawnType() { return '' }
   init(options) {
     super.init(options)
@@ -14,4 +14,4 @@ export class SyncTransform_Mgr_Model extends Model {
   rotChg(msg) { this.publish('Xform', 'setRot2', msg) }
   sclChg(msg) { this.publish('Xform', 'setScl2', msg) }
 }
-SyncTransform_Mgr_Model.register('TransformMgrModel')
+SynqTransform_Mgr_Model.register('TransformMgrModel')

@@ -4,32 +4,32 @@ using Multisynq;
 /*
   DamageFlash.cs
   A demonstration of using:
-    [SyncCommand]   and   [SyncRPC]   attributes 
+    [SynqCommand]   and   [SynqRPC]   attributes 
   to call methods sync-hronously on all networked clients.
 */
 //========== ||||||||||| ========================
-public class DamageFlash : SyncBehaviour {
+public class DamageFlash : SynqBehaviour {
   private float timer = 0;
   private bool showDamagePanel = false;
   private string damageMessage = "";
 
-  [SyncRPC] // identical to [SyncCommand] (Variant A)
+  [SynqRPC] // identical to [SynqCommand] (Variant A)
   public void TakeDamage(string bodyPart) {
     showDamagePanel = true;
     timer = Time.time;
     damageMessage = $"Damage: {bodyPart}";
-    Debug.Log($"[SyncCommand] DamageFlash.TakeDamage( {bodyPart} ) ");
+    Debug.Log($"[SynqCommand] DamageFlash.TakeDamage( {bodyPart} ) ");
   }
 
-  [SyncCommand] // identical to [SyncRPC] (Variant B)
+  [SynqCommand] // identical to [SynqRPC] (Variant B)
   public void Heal() {
     showDamagePanel = true;
     timer = Time.time;
     damageMessage = $"Heal all";
-    Debug.Log($"[SyncCommand] DamageFlash.Heal() ");
+    Debug.Log($"[SynqCommand] DamageFlash.Heal() ");
   }
-  // Methods with [SyncCommand] or [SyncRPC] attributes can be called from RPC() or CallSyncCommand()
-  // [SyncCommand] or [SyncRPC] are identical in functionality to make porting from legacy networking easier.
+  // Methods with [SynqCommand] or [SynqRPC] attributes can be called from RPC() or CallSynqCommand()
+  // [SynqCommand] or [SynqRPC] are identical in functionality to make porting from legacy networking easier.
 
   void Update() {
 
@@ -46,10 +46,10 @@ public class DamageFlash : SyncBehaviour {
       RPC(TakeDamage, RpcTarget.All, "Head");    // calls on all Views (Variant B)
     }
     else if (Input.GetKeyDown(KeyCode.L)) {
-      CallSyncCommand(TakeDamage, "Legs");       // calls on all Views (Variant C)
+      CallSynqCommand(TakeDamage, "Legs");       // calls on all Views (Variant C)
     }
     else if (Input.GetKeyDown(KeyCode.R)) {
-      CallSyncCommand(Heal);                     // calls on all Views (Variant C)
+      CallSynqCommand(Heal);                     // calls on all Views (Variant C)
     }
   }
 
