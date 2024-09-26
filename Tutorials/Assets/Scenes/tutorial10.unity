@@ -559,7 +559,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -1129,7 +1129,7 @@ MonoBehaviour:
   health: 100
   legHealth: 100
   torsoHealth: 100
-  headHealth: 100
+  armHealth: 100
 --- !u!1 &1963658000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1211,8 +1211,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 15.044952, y: 0.000030100346}
-  m_SizeDelta: {x: -30.090097, y: -0.00006020069}
+  m_AnchoredPosition: {x: 15.044922, y: 62.92498}
+  m_SizeDelta: {x: -30.090097, y: -141.54996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2146102220
 MonoBehaviour:
@@ -1236,13 +1236,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: "<size=-15><align=center>Demonstration of:</size>\n<color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color><size=-10>
     and</size> <color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color></align>\n<size=-14>\nDemo
-    Keymap:\n    <color=#ffaa00>T</color> Torso damage\n    <color=#ffaa00>H</color>
-    Head damage\n    <color=#ffaa00>L</color> Leg damage\n    <color=#ffaa00>R</color>
-    Reset / heal damage.\n    <color=#ffaa00>C</color> Gain coins.\n\n<color=#ddd>Demo
-    files:</color></size>\n<color=#ddd><size=-20>Assets / CroquetJs / tutorial10
-    / </size><size=-14><color=white>PlayerHealth.cs</color></size> <size=-14>( demos
-    <color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color> )</size>\n<size=-20>Assets
-    / CroquetJs / tutorial10 / </size><size=-14><color=white>TakeDamage.cs </color></size><size=-14>(
+    Keymap:<size=-37>\n\n</size>  <color=#aaa>[ <color=#55ff55><b>H</b></color> ]</color>
+    - Heal all\n  <color=#aaa>[ <color=#ff4444><b>L</b></color> ]</color> - Leg damage\n 
+    <color=#aaa>[ <color=#ff4444><b>T</b></color> ]</color> - Torso damage\n  <color=#aaa>[
+    <color=#ff4444>A</color> ]</color> - Arm damage\n  <color=#aaa>[ <color=#ffff00><b>C</b></color>
+    ]</color> - Coins +1\n\n<color=#ddd>Demo files:</color></size>\n<color=#ddd><size=-20>Assets
+    / Scripts / </size><size=-14><color=white>PlayerHealth.cs</color></size> <size=-17>(
+    demos <color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color> )</size>\n<size=-20>Assets
+    / Scripts / </size><size=-14><color=white>DamageFlash.cs </color></size><size=-17>(
     demos <color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color> )</size>\n</color>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1270,8 +1271,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.5
-  m_fontSizeBase: 34.5
+  m_fontSize: 41.8
+  m_fontSizeBase: 41.8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1370,7 +1371,7 @@ MonoBehaviour:
   health: 100
   legHealth: 100
   torsoHealth: 100
-  headHealth: 100
+  armHealth: 100
 --- !u!114 &4346149723542427824
 MonoBehaviour:
   m_ObjectHideFlags: 0

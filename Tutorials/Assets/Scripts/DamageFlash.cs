@@ -42,13 +42,13 @@ public class DamageFlash : SynqBehaviour {
     if (Input.GetKeyDown(KeyCode.T)) {
       RPC("TakeDamage", RpcTarget.All, "Torso"); // calls on all Views (Variant A)
     }
-    else if (Input.GetKeyDown(KeyCode.H)) {
-      RPC(TakeDamage, RpcTarget.All, "Head");    // calls on all Views (Variant B)
-    }
     else if (Input.GetKeyDown(KeyCode.L)) {
       CallSynqCommand(TakeDamage, "Legs");       // calls on all Views (Variant C)
     }
-    else if (Input.GetKeyDown(KeyCode.R)) {
+    else if (Input.GetKeyDown(KeyCode.A)) {
+      RPC(TakeDamage, RpcTarget.All, "Arm");    // calls on all Views (Variant B)
+    }
+    else if (Input.GetKeyDown(KeyCode.H)) {
       CallSynqCommand(Heal);                     // calls on all Views (Variant C)
     }
   }
@@ -59,13 +59,16 @@ public class DamageFlash : SynqBehaviour {
       // A fullscreen transparent red or green panel with text
       int scale = (int)(Screen.width / 800.0f);
       int left = Screen.width / 2 * scale;
+      int height = Screen.height/4;
+      int width = Screen.width/2;
+      int top = Screen.height - height;
       var isHeal = damageMessage.Contains("Heal");
       GUI.color = (isHeal) ?  new Color(0, 1, 0, 0.8f) : new Color(1, 0, 0, 0.8f); // Semi-transparent green or red
-      GUI.DrawTexture(new Rect(left, 0, Screen.width/2, Screen.height), Texture2D.whiteTexture); // Fullscreen panel
+      GUI.DrawTexture(new Rect(left, top, width, height), Texture2D.whiteTexture);
       GUIStyle style = new() { alignment = TextAnchor.MiddleCenter, fontSize = 45 * scale };
       style.normal.textColor = (isHeal) ? Color.white : Color.white; // Green or red text
       GUI.color = style.normal.textColor;
-      GUI.Label(new Rect(left, 0, Screen.width/2, Screen.height), damageMessage, style); // Text: "Heal" or Damage: ______
+      GUI.Label(new Rect(left, top, width, height), damageMessage, style); // Text: "Heal" or Damage: ______
     }
   }
 

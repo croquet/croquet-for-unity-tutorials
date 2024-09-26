@@ -10,36 +10,44 @@ public class PlayerCoins : SynqBehaviour {
   void Update() {
     if (Input.GetKeyDown(KeyCode.C)) coins += 1;
   }
-
   //-- ||||| ----------------------------------------
   void OnGUI() { // Old school Unity UI! Yuck. But self-contained!   =]
-    var scaleFactor = Screen.height / 400f;
-    var y = 150 * scaleFactor;
+    var scl   = Screen.height / 400f;
+    int xOffset = 20;
+    var y     = 185 * scl;
+    var paneW = 150 * scl;
+    var paneH = 40 * scl;
+    var paneX = Screen.width - ((xOffset+10) * scl) - paneW;
+    var txtW  = 100 * scl;
+    var txtX  = Screen.width - ((xOffset+50) * scl) - txtW;
+    var lineH = 20 * scl;
+
     GUI.backgroundColor = new Color(0f, 0f, 0f, 0.5f); // Black panel
-    GUI.Box(new Rect(0, y, 120 * scaleFactor, 45 * scaleFactor), ""); // Panel background
+    GUI.Box(new Rect(paneX, y, paneW, paneH), ""); // panel background
     GUI.contentColor = Color.white;
 
     GUIStyle style = new GUIStyle();
-    style.alignment = TextAnchor.MiddleCenter;
-    style.fontSize = (int)(20 * scaleFactor);
+    style.alignment = TextAnchor.MiddleLeft;
+    style.fontSize = (int)(20 * scl);
     style.normal.textColor = new Color(1f, 1f, 0.5f, 1f); // Yellow
-    GUI.Label(new Rect(10 * scaleFactor, y + (10 * scaleFactor), 100 * scaleFactor, 20 * scaleFactor), $"Coins: {coins}", style);
+    GUI.Label(new Rect(txtX, y + (10 * scl), txtW, lineH), $" Coins:     {coins}", style);
   }
 }
 
 /*
-<color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color>
-<color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color>
+<size=-15><align=center>Demonstration of:</size>
+<color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color><size=-10> and</size> <color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color></align>
 <size=-14>
-Demo Keymap:
-    <color=#ffaa00>T</color> - Torso damage
-    <color=#ffaa00>H</color> - Head damage
-    <color=#ffaa00>L</color> - Leg damage
-    <color=#ffaa00>R</color> - Reset / heal damage.
-    <color=#ffaa00>C</color> - Gain coins.
+Demo Keymap:<size=-37>
+
+</size>  <color=#aaa>[ <color=#55ff55><b>H</b></color> ]</color> - Heal all
+  <color=#aaa>[ <color=#ff4444><b>L</b></color> ]</color> - Leg damage
+  <color=#aaa>[ <color=#ff4444><b>T</b></color> ]</color> - Torso damage
+  <color=#aaa>[ <color=#ff4444>A</color> ]</color> - Arm damage
+  <color=#aaa>[ <color=#ffff00><b>C</b></color> ]</color> - Coins +1
 
 <color=#ddd>Demo files:</color></size>
-<color=#ddd><size=-20>Assets / CroquetJs / tutorial10 / </size><color=white>PlayerHealth.cs</color> <size=-10>( demos <color=#ffaa00>[SynqVar]</color> )</size>
-<size=-20>Assets / CroquetJs / tutorial10 / </size><color=white>TakeDamage.cs </color><size=-10>( demos <color=#ffdd00>[SynqCommand]</color> )</size>
+<color=#ddd><size=-20>Assets / Scripts / </size><size=-14><color=white>PlayerHealth.cs</color></size> <size=-17>( demos <color=#ffaa00>[<color=#5577ff>Synq</color>Var]</color> )</size>
+<size=-20>Assets / Scripts / </size><size=-14><color=white>DamageFlash.cs </color></size><size=-17>( demos <color=#ffdd00>[<color=#5577ff>Synq</color>RPC]</color> )</size>
 </color>
 */
